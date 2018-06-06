@@ -8,8 +8,8 @@ import java.nio.file.StandardCopyOption;
 
 import javax.imageio.ImageIO;
 
-import beans.Livro;
-import beans.Usuario;
+import dto.Livro;
+import dto.Usuario;
 import utilidades.Log;
 
 public class GerenciadorArquivos {

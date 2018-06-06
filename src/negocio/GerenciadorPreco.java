@@ -7,9 +7,9 @@ import java.util.Date;
 
 import basedados.BaseDadosException;
 import basedados.GerenciadorBaseDados;
-import beans.Livro;
-import beans.Promocao;
-import beans.Usuario;
+import dto.Livro;
+import dto.Promocao;
+import dto.Usuario;
 
 public class GerenciadorPreco {
 	private final static double DESCONTO_ANIVERSARIO = 0.7;

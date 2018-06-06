@@ -9,8 +9,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import beans.Livro;
-import beans.Promocao;
+import dto.Livro;
+import dto.Promocao;
 import main.Contexto;
 import negocio.NegocioException;
 import utilidades.Log;

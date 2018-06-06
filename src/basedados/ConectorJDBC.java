@@ -46,6 +46,10 @@ public abstract class ConectorJDBC {
 					"Problemas no acesso ao banco de dados.");
 		}
 	}
+	
+	protected ConectorJDBC() throws BaseDadosException {
+		this(DB.MYSQL);
+	}
 
 	protected void abreConexao() throws BaseDadosException {
 		String dbURL = this.db == DB.MYSQL ? MYSQL_URL : POSTGRES_URL;

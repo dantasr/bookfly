@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import beans.Usuario;
+import dto.Usuario;
 import main.Contexto;
 import negocio.NegocioException;
 import utilidades.Log;

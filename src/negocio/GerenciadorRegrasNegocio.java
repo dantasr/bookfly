@@ -10,14 +10,14 @@ import utilidades.Log;
 import basedados.BaseDadosException;
 import basedados.GerenciadorBaseDados;
 import basedados.GerenciadorBaseDadosJDBC;
-import beans.Aluguel;
-import beans.Livro;
-import beans.Promocao;
-import beans.Usuario;
-import beans.Venda;
 import cartoes.Cartao;
 import cartoes.CartaoSemSaldoException;
 import cartoes.GerenciadorCartoes;
+import dto.Aluguel;
+import dto.Livro;
+import dto.Promocao;
+import dto.Usuario;
+import dto.Venda;
 import main.Contexto;
 
 public class GerenciadorRegrasNegocio {

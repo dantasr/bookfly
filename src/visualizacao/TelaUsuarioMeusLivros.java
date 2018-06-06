@@ -24,10 +24,10 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
 import arquivos.GerenciadorArquivos;
-import beans.Aluguel;
-import beans.Livro;
-import beans.Usuario;
-import beans.Venda;
+import dto.Aluguel;
+import dto.Livro;
+import dto.Usuario;
+import dto.Venda;
 
 public class TelaUsuarioMeusLivros extends JFrame {
 

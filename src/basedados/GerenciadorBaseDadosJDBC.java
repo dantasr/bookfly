@@ -9,12 +9,12 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import dto.Aluguel;
+import dto.Livro;
+import dto.Promocao;
+import dto.Usuario;
+import dto.Venda;
 import utilidades.Log;
-import beans.Aluguel;
-import beans.Livro;
-import beans.Promocao;
-import beans.Usuario;
-import beans.Venda;
 import main.Contexto;
 
 public class GerenciadorBaseDadosJDBC extends ConectorJDBC implements GerenciadorBaseDados {
@@ -785,7 +785,7 @@ public class GerenciadorBaseDadosJDBC extends ConectorJDBC implements Gerenciado
 	}
 	
 	public void removeUsuario(int codigoUsuario) throws BaseDadosException {
-		// deveriamos remover as vendas/alugueis dele tbm, mas isso n altera mt.
+		// deveriamos r as vendas/alugueis dele tbm, mas isso n altera mt.
 		// se ele n existe tanto faz se existem vendas pra ele ou n...
 		abreConexao();
 		preparaComandoSQL("delete from Usuario where codigo = ?");

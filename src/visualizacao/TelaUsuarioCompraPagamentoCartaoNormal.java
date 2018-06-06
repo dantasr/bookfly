@@ -8,10 +8,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import basedados.BaseDadosException;
-import beans.Livro;
-import beans.Usuario;
 import cartoes.Cartao;
 import cartoes.GerenciadorCartoes;
+import dto.Livro;
+import dto.Usuario;
 import main.Contexto;
 import negocio.NegocioException;
 import utilidades.Log;

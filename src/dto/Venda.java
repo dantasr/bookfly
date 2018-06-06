@@ -1,21 +1,17 @@
-package beans;
+package dto;
 
-import java.sql.Timestamp;
-
-public class Aluguel {
+public class Venda {
 	private int codigo;
 	private Livro livro;
 	private Usuario usuario;
-	private Timestamp expiracao;
 	
-	public Aluguel() {}
+	public Venda() {}
 
-	public Aluguel(int codigo, Livro livro, Usuario usuario, Timestamp expiracao) {
+	public Venda(int codigo, Livro livro, Usuario usuario) {
 		super();
 		this.codigo = codigo;
 		this.livro = livro;
 		this.usuario = usuario;
-		this.expiracao = expiracao;
 	}
 
 	public int getCodigo() {
@@ -40,13 +36,5 @@ public class Aluguel {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
-	}
-
-	public Timestamp getExpiracao() {
-		return expiracao;
-	}
-
-	public void setExpiracao(Timestamp expiracao) {
-		this.expiracao = expiracao;
 	}
 }

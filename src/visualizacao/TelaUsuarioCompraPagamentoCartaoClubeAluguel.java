@@ -7,9 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import beans.Livro;
-import beans.Usuario;
-import beans.Venda;
+import dto.Livro;
+import dto.Usuario;
+import dto.Venda;
 import main.Contexto;
 import negocio.NegocioException;
 import utilidades.Log;

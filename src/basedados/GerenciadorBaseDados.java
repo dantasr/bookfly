@@ -3,12 +3,12 @@ package basedados;
 import java.util.LinkedList;
 import java.util.List;
 
-import beans.Promocao;
-import beans.Venda;
+import dto.Aluguel;
+import dto.Livro;
+import dto.Promocao;
+import dto.Usuario;
+import dto.Venda;
 import negocio.NegocioException;
-import beans.Aluguel;
-import beans.Livro;
-import beans.Usuario;
 
 public interface GerenciadorBaseDados {
 	// INSERÇÕES

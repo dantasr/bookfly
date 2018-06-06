@@ -17,7 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.table.DefaultTableModel;
 
-import beans.Livro;
+import dto.Livro;
 import main.Contexto;
 import negocio.NegocioException;
 import utilidades.Log;

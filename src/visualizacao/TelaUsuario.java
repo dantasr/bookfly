@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import arquivos.GerenciadorArquivos;
-import beans.Livro;
+import dto.Livro;
 import main.Contexto;
 import negocio.NegocioException;
 import utilidades.IconeLabel;
