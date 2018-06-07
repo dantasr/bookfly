@@ -8,8 +8,8 @@ import javax.swing.JOptionPane;
 
 import utilidades.Log;
 import basedados.BaseDadosException;
-import basedados.GerenciadorBaseDados;
-import basedados.GerenciadorBaseDadosJDBC;
+import basedados.FachadaBaseDados;
+import basedados.FachadaBaseDadosDao;
 import cartoes.Cartao;
 import cartoes.CartaoSemSaldoException;
 import cartoes.GerenciadorCartoes;
@@ -22,9 +22,9 @@ import main.Contexto;
 
 public class GerenciadorRegrasNegocio {
 
-	private GerenciadorBaseDados gerenciadorBaseDados;
+	private FachadaBaseDados gerenciadorBaseDados;
 
-	public GerenciadorRegrasNegocio(GerenciadorBaseDados db) {
+	public GerenciadorRegrasNegocio(FachadaBaseDados db) {
 		this.gerenciadorBaseDados = db;
 	}
 

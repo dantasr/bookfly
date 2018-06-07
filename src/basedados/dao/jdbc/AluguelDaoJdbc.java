@@ -19,7 +19,7 @@ public class AluguelDaoJdbc extends ConectorDaoJdbc implements AluguelDao {
 	private LivroDao livroDao;
 	private UsuarioDao usuarioDao;
 	
-	protected AluguelDaoJdbc(LivroDao livroDao, UsuarioDao usuarioDao) throws BaseDadosException {
+	public AluguelDaoJdbc(LivroDao livroDao, UsuarioDao usuarioDao) throws BaseDadosException {
 		super();
 		this.livroDao = livroDao;
 		this.usuarioDao = usuarioDao;

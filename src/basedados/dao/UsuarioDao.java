@@ -10,6 +10,8 @@ public interface UsuarioDao {
 	public Usuario busca(int codigoUsuario) throws BaseDadosException;
 	public List<Usuario> listaTodos() throws BaseDadosException;
 	public void remove(int codigoUsuario)throws BaseDadosException;
+	public void altera(Usuario usuario) throws BaseDadosException;
+	
 	public List<Usuario> buscaPorNome(String usuario) throws BaseDadosException;
 	public Usuario buscaPorNomeExato(String nome) throws BaseDadosException;
 }

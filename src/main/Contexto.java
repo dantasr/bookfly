@@ -3,8 +3,8 @@ package main;
 import java.util.Date;
 
 import basedados.BaseDadosException;
-import basedados.GerenciadorBaseDados;
-import basedados.GerenciadorBaseDadosJDBC;
+import basedados.FachadaBaseDados;
+import basedados.FachadaBaseDadosDao;
 import cartoes.GerenciadorElo;
 import cartoes.GerenciadorMastercard;
 import cartoes.GerenciadorVisa;
@@ -15,7 +15,7 @@ import negocio.GerenciadorRegrasNegocio;
 import negocio.NegocioException;
 
 public class Contexto {
-	private GerenciadorBaseDados db;
+	private FachadaBaseDados db;
 	private GerenciadorRegrasNegocio gerenciadorRegrasNegocio;
 	private GerenciadorPreco gerenciadorPreco;
 	private GerenciadorMastercard gerenciadorMastercard;
@@ -25,7 +25,7 @@ public class Contexto {
 	private Livro livroAtual;
 	
 	public Contexto() throws BaseDadosException {
-		db = new GerenciadorBaseDadosJDBC();
+		db = new FachadaBaseDadosDao();
 		gerenciadorRegrasNegocio = new GerenciadorRegrasNegocio(db);
 		gerenciadorPreco = new GerenciadorPreco(db);
 		gerenciadorMastercard = new GerenciadorMastercard();

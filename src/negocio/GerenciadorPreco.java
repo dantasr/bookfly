@@ -6,16 +6,16 @@ import java.time.Instant;
 import java.util.Date;
 
 import basedados.BaseDadosException;
-import basedados.GerenciadorBaseDados;
+import basedados.FachadaBaseDados;
 import dto.Livro;
 import dto.Promocao;
 import dto.Usuario;
 
 public class GerenciadorPreco {
 	private final static double DESCONTO_ANIVERSARIO = 0.7;
-	private GerenciadorBaseDados baseDados;
+	private FachadaBaseDados baseDados;
 	
-	public GerenciadorPreco(GerenciadorBaseDados db) {
+	public GerenciadorPreco(FachadaBaseDados db) {
 		this.baseDados = db;
 	}
 	

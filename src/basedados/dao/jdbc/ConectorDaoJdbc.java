@@ -53,9 +53,4 @@ public class ConectorDaoJdbc extends ConectorJDBC {
 	protected String getDbName() {
 		return jaCriouBD ? DB_NAME : "";
 	}
-
-	@Override
-	protected DB getDB() {
-		return DATABASE;
-	}
 }
