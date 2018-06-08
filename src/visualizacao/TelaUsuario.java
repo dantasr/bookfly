@@ -89,7 +89,7 @@ public class TelaUsuario extends JFrame {
 		JButton btnHistorico = new JButton("Hist\u00F3rico");
 		btnHistorico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new TelaUsuarioMeuHistorico().setVisible(true);
+				new TelaUsuarioMeuHistorico(contexto).setVisible(true);
 			}
 		});
 		btnHistorico.setBounds(186, 44, 89, 23);

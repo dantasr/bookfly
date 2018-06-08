@@ -3,6 +3,8 @@ package basedados;
 import java.sql.Date;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+
 import basedados.ConectorJDBC.DB;
 import basedados.dao.AluguelDao;
 import basedados.dao.LivroDao;
@@ -17,6 +19,7 @@ import basedados.dao.jdbc.UsuarioDaoJdbc;
 import basedados.dao.jdbc.VendaDaoJdbc;
 import dto.Livro;
 import dto.Usuario;
+import utilidades.Log;
 
 public class ScriptCriacaoDB extends ConectorDaoJdbc {
 	private AluguelDao aluguelDao;
@@ -34,8 +37,28 @@ public class ScriptCriacaoDB extends ConectorDaoJdbc {
 		vendaDao = new VendaDaoJdbc(livroDao, usuarioDao);
 	}
 	
+	public void criaTabelasBD() throws BaseDadosException {
+		try {
+			criaBancoDeDados();
+			criaTabelaLivro();
+			criaTabelaUsuario();
+			criaTabelaAluguel();
+			criaTabelaPromocao();
+			criaTabelaVenda();
+			populaTabelas();
+		} catch (SQLException e) {
+			Log.gravaLog(e);
+			throw new BaseDadosException(
+					"Erro ao tentar criar o banco de dados.");
+		}
+	}
+	
 	public static void main(String[] args) {
-		//new ScriptCriacaoDB();
+		try {
+			new ScriptCriacaoDB().criaTabelasBD();
+		} catch (BaseDadosException e) {
+			JOptionPane.showMessageDialog(null, "Erro ao criar o banco de dados.\n" + e.getMessage());
+		}
 	}
 
 	private void criaTabelaVenda() throws SQLException, BaseDadosException {

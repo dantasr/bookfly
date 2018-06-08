@@ -1,6 +1,7 @@
 package basedados.dao.jdbc;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,9 +28,10 @@ public class VendaDaoJdbc extends ConectorDaoJdbc implements VendaDao {
 		abreConexao();
 
 		try {
-			preparaComandoSQL("insert into Venda (codigoLivro, codigoUsuario) values (?, ?)");
+			preparaComandoSQL("insert into Venda (codigoLivro, codigoUsuario, dataDaVenda) values (?, ?, ?)");
 			pstmt.setInt(1, venda.getLivro().getCodigo());
 			pstmt.setInt(2, venda.getUsuario().getCodigo());
+			pstmt.setTimestamp(3, venda.getDataDaVenda());
 			pstmt.execute();
 		} catch (SQLException e) {
 			Log.gravaLog(e);
@@ -42,7 +44,7 @@ public class VendaDaoJdbc extends ConectorDaoJdbc implements VendaDao {
 	@Override
 	public Venda busca(int codigo) throws BaseDadosException {
 		abreConexao();
-		preparaComandoSQL("select codigoLivro, codigoUsuario from Venda where codigo=" + codigo);
+		preparaComandoSQL("select codigoLivro, codigoUsuario, dataDaVenda from Venda where codigo=" + codigo);
 		Venda venda = null;
 
 		try {
@@ -51,8 +53,9 @@ public class VendaDaoJdbc extends ConectorDaoJdbc implements VendaDao {
 			if (rs.next()) {
 				int codigoLivro = rs.getInt(1);
 				int codigoUsuario = rs.getInt(2);
+				Timestamp dataDaVenda = rs.getTimestamp(3);
 
-				venda = new Venda(codigo, livroDao.busca(codigoLivro), usuarioDao.busca(codigoUsuario));
+				venda = new Venda(codigo, livroDao.busca(codigoLivro), usuarioDao.busca(codigoUsuario), dataDaVenda);
 			}
 		} catch (SQLException e) {
 			Log.gravaLog(e);
@@ -70,7 +73,7 @@ public class VendaDaoJdbc extends ConectorDaoJdbc implements VendaDao {
 		LinkedList<Integer> codigoUsuarioDasVendas = new LinkedList<Integer>();
 		abreConexao();
 
-		preparaComandoSQL("select codigo, codigoLivro, codigoUsuario from Venda");
+		preparaComandoSQL("select codigo, codigoLivro, codigoUsuario, dataDaVenda from Venda");
 
 		try {
 			rs = pstmt.executeQuery();
@@ -79,8 +82,9 @@ public class VendaDaoJdbc extends ConectorDaoJdbc implements VendaDao {
 				int codigo = rs.getInt(1);
 				int codigoLivro = rs.getInt(2);
 				int codigoUsuario = rs.getInt(3);
+				Timestamp dataDaVenda = rs.getTimestamp(2);
 
-				Venda venda = new Venda(codigo, null, null);
+				Venda venda = new Venda(codigo, null, null, dataDaVenda);
 				codigoLivroDasVendas.add(codigoLivro);
 				codigoUsuarioDasVendas.add(codigoUsuario);
 				vendas.add(venda);
@@ -111,7 +115,7 @@ public class VendaDaoJdbc extends ConectorDaoJdbc implements VendaDao {
 		Usuario usuario = usuarioDao.busca(codigoUsuario);
 		abreConexao();
 
-		preparaComandoSQL("select codigo, codigoLivro from Venda WHERE codigoUsuario = ?");
+		preparaComandoSQL("select codigo, codigoLivro, dataDaVenda from Venda WHERE codigoUsuario = ?");
 
 		try {
 			pstmt.setInt(1, codigoUsuario);
@@ -120,8 +124,9 @@ public class VendaDaoJdbc extends ConectorDaoJdbc implements VendaDao {
 			while (rs.next()) {
 				int codigo = rs.getInt(1);
 				int codigoLivro = rs.getInt(2);
+				Timestamp dataDaVenda = rs.getTimestamp(3);
 
-				Venda venda = new Venda(codigo, null, usuario);
+				Venda venda = new Venda(codigo, null, usuario, dataDaVenda);
 				codigoLivroDasVendas.add(codigoLivro);
 				vendas.add(venda);
 			}

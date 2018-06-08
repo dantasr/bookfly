@@ -12,7 +12,6 @@ import basedados.dao.LivroDao;
 import basedados.dao.UsuarioDao;
 import dto.Aluguel;
 import dto.Usuario;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import utilidades.Log;
 
 public class AluguelDaoJdbc extends ConectorDaoJdbc implements AluguelDao {
@@ -30,7 +29,7 @@ public class AluguelDaoJdbc extends ConectorDaoJdbc implements AluguelDao {
 		abreConexao();
 
 		try {
-			preparaComandoSQL("insert into Aluguel (codigoLivro, codigoUsuario, dataDoAluguel, expiracao) " + "values (?, ?, ?)");
+			preparaComandoSQL("insert into Aluguel (codigoLivro, codigoUsuario, dataDoAluguel, expiracao) " + "values (?, ?, ?, ?)");
 			pstmt.setInt(1, aluguel.getLivro().getCodigo());
 			pstmt.setInt(2, aluguel.getUsuario().getCodigo());
 			pstmt.setTimestamp(3, aluguel.getDataDoAluguel());
@@ -114,7 +113,7 @@ public class AluguelDaoJdbc extends ConectorDaoJdbc implements AluguelDao {
 	@Override
 	public void remove(int codigoAluguel) throws BaseDadosException {
 		// TODO Auto-generated method stub
-		throw new NotImplementedException();
+		return;
 	}
 
 	@Override
