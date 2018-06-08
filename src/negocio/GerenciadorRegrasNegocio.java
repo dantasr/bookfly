@@ -21,49 +21,41 @@ import dto.Venda;
 import main.Contexto;
 
 public class GerenciadorRegrasNegocio {
-
-	private FachadaBaseDados gerenciadorBaseDados;
+	private FachadaBaseDados fachadaBaseDados;
+	private RegrasNegocioUsuario regrasNegocioUsuario;
+	private RegrasNegocioLivro regrasNegocioLivro;
+	private RegrasNegocioPromocao regrasNegocioPromocao;
 
 	public GerenciadorRegrasNegocio(FachadaBaseDados db) {
-		this.gerenciadorBaseDados = db;
+		this.fachadaBaseDados = db;
+		
+		regrasNegocioUsuario = new RegrasNegocioUsuario(fachadaBaseDados);
+		regrasNegocioLivro = new RegrasNegocioLivro(fachadaBaseDados);
+		regrasNegocioPromocao = new RegrasNegocioPromocao(fachadaBaseDados);
 	}
 
-	///////////////////////////////CADASTRA USUARIO///////////////////////////////////////////////////////////////////////////
 	public void cadastraUsuario(int codigo, String nome, Date dataNascimento, String telefone, String cpf,
 			String senha) throws NegocioException {
-		Usuario usuario = new Usuario(codigo, nome, dataNascimento, telefone, cpf, senha, 0, false, true);
-		try {
-			gerenciadorBaseDados.insereUsuario(usuario);
-		} catch (BaseDadosException e) {
-			Log.gravaLog(e);
-			throw new NegocioException("Problemas no acesso ao banco de dados.");
-		}
+		regrasNegocioUsuario.cadastraUsuario(codigo, nome, dataNascimento, telefone, cpf, senha);
 	}
+	
 	public void cadastraUsuario(int codigo, String nome, int dia, int mes, int ano, String telefone, String cpf,
 			String senha) throws NegocioException {
-		cadastraUsuario(codigo, nome, new Date(ano, mes, dia), telefone, cpf, senha);
+		regrasNegocioUsuario.cadastraUsuario(codigo, nome, dia, mes, ano, telefone, cpf, senha);
 	}
 
-	///////////////////////////////CADASTRA LIVRO////////////////////////////////////////////////////////////////////////////
 	public void cadastraLivro(int codigo, String nome, String autor, String editora, int preco, Date dataLancamento) throws NegocioException {
-		Livro livro = new Livro(codigo, nome, autor, editora, preco, dataLancamento);
-		try {
-			gerenciadorBaseDados.insereLivro(livro);
-		} catch (BaseDadosException e) {
-			Log.gravaLog(e);
-			throw new NegocioException("Problemas no acesso ao banco de dados.");
-		}
+		regrasNegocioLivro.cadastraLivro(codigo, nome, autor, editora, preco, dataLancamento);
 	}
+	
 	public void cadastraLivro(int codigo, String nome, String autor, String editora, int preco, int dia, int mes, int ano) throws NegocioException {
-		Date dataLancamento = new Date(ano, mes, dia);
-		cadastraLivro(codigo, nome, autor, editora, preco, dataLancamento);
+		regrasNegocioLivro.cadastraLivro(codigo, nome, autor, editora, preco, dia, mes, ano);
 	}
 
-	///////////////////////////////CADASTRA PROMOCAO////////////////////////////////////////////////////////////////////////////
 	public void cadastraPromocao(int codigo,Contexto contexto, int novoPreco) throws NegocioException {
 		try {
 			Promocao promocao = new Promocao(codigo,contexto.getGerenciadorRegrasNegocio().buscaLivro(codigo),novoPreco);
-			gerenciadorBaseDados.inserePromocao(promocao);
+			fachadaBaseDados.inserePromocao(promocao);
 		} catch (BaseDadosException e) {
 			Log.gravaLog(e);
 			throw new NegocioException("Problemas no acesso ao banco de dados.");
@@ -72,28 +64,18 @@ public class GerenciadorRegrasNegocio {
 
 	///////////////////////////////LISTA USUARIOS///////////////////////////////////////////////////////////////////////////
 	public List<Usuario> listaUsuarios() throws NegocioException {
-		try {
-			return gerenciadorBaseDados.listaUsuarios();
-		} catch (BaseDadosException e) {
-			Log.gravaLog(e);
-			throw new NegocioException("Problemas no acesso ao banco de dados.");
-		}
+		return regrasNegocioUsuario.listaUsuarios();
 	}
 
 	///////////////////////////////LISTA LIVROS///////////////////////////////////////////////////////////////////////////
 	public List<Livro> listaLivros() throws NegocioException {
-		try {
-			return gerenciadorBaseDados.listaLivros();
-		} catch (BaseDadosException e) {
-			Log.gravaLog(e);
-			throw new NegocioException("Problemas no acesso ao banco de dados.");
-		}
+		return regrasNegocioLivro.listaLivros();
 	}
 
 	///////////////////////////////LISTA VENDAS///////////////////////////////////////////////////////////////////////////
 	public List<Venda> listaVendas() throws NegocioException {
 		try {
-			return gerenciadorBaseDados.listaVendas();
+			return fachadaBaseDados.listaVendas();
 		} catch (BaseDadosException e) {
 			Log.gravaLog(e);
 			throw new NegocioException("Problemas no acesso ao banco de dados.");
@@ -103,7 +85,7 @@ public class GerenciadorRegrasNegocio {
 	///////////////////////////////LISTA ALUGUEIS///////////////////////////////////////////////////////////////////////////
 	public List<Aluguel> listaAlugueis() throws NegocioException {
 		try {
-			return gerenciadorBaseDados.listaAlugueis();
+			return fachadaBaseDados.listaAlugueis();
 		} catch (BaseDadosException e) {
 			Log.gravaLog(e);
 			throw new NegocioException("Problemas no acesso ao banco de dados.");
@@ -112,17 +94,12 @@ public class GerenciadorRegrasNegocio {
 
 	///////////////////////////////BUSCA USUARIO POR NOME EXATO///////////////////////////////////////////////////////////////////////////
 	public Usuario buscaUsuarioPorNomeExato(String nome) throws NegocioException {
-		try {
-			return gerenciadorBaseDados.buscaUsuarioPorNomeExato(nome);
-		} catch (BaseDadosException e) {
-			Log.gravaLog(e);
-			throw new NegocioException("Problemas no acesso ao banco de dados.");
-		}
+		return regrasNegocioUsuario.buscaUsuarioPorNomeExato(nome);
 	}
 	///////////////////////////////BUSCA PROMOCAO///////////////////////////////////////////////////////////////////////////
 	public Promocao buscaPromocao(int codigoLivro) throws NegocioException {
 		try {
-			return gerenciadorBaseDados.buscaPromocao(codigoLivro);
+			return fachadaBaseDados.buscaPromocao(codigoLivro);
 		} catch (BaseDadosException e) {
 			Log.gravaLog(e);
 			throw new NegocioException("Problemas no acesso ao banco de dados.");
@@ -131,60 +108,33 @@ public class GerenciadorRegrasNegocio {
 
 	///////////////////////////////BUSCA LIVRO POR NOME EXATO///////////////////////////////////////////////////////////////////////////
 	public Livro buscaLivroPorNomeExato(String nome) throws NegocioException {
-		try {
-			return gerenciadorBaseDados.buscaLivroPorNomeExato(nome);
-		} catch (BaseDadosException e) {
-			Log.gravaLog(e);
-			throw new NegocioException("Problemas no acesso ao banco de dados.");
-		}
+		return regrasNegocioLivro.buscaLivroPorNomeExato(nome);
 	}
-
-
 
 	///////////////////////////////BUSCA LIVRO POR NOME///////////////////////////////////////////////////////////////////////////
 	public List<Livro> buscaLivrosPorNome(String nome) throws NegocioException {
-		try {
-			return gerenciadorBaseDados.buscaLivrosPorNome(nome);
-		} catch (BaseDadosException e) {
-			Log.gravaLog(e);
-			throw new NegocioException("Problemas no acesso ao banco de dados.");
-		}
+		return regrasNegocioLivro.buscaLivrosPorNome(nome);
 	}
 
 	///////////////////////////////BUSCA USUARIO POR NOME///////////////////////////////////////////////////////////////////////////
 	public List<Usuario> buscaUsuariosPorNome(String nome) throws NegocioException {
-		try {
-			return gerenciadorBaseDados.buscaUsuariosPorNome(nome);
-		} catch (BaseDadosException e) {
-			Log.gravaLog(e);
-			throw new NegocioException("Problemas no acesso ao banco de dados.");
-		}
+		return regrasNegocioUsuario.buscaUsuariosPorNome(nome);
 	}
 
 	////////////// BUSCA USUARIO ////////////////////
 	public Usuario buscaUsuario(int codigo) throws NegocioException {
-		try {
-			return gerenciadorBaseDados.buscaUsuario(codigo);
-		} catch (BaseDadosException e) {
-			Log.gravaLog(e);
-			throw new NegocioException("Problemas no acesso ao banco de dados.");
-		}
+		return regrasNegocioUsuario.buscaUsuario(codigo);
 	}
 
 	////////////// BUSCA LIVRO ////////////////////
 	public Livro buscaLivro(int codigo) throws NegocioException {
-		try {
-			return gerenciadorBaseDados.buscaLivro(codigo);
-		} catch (BaseDadosException e) {
-			Log.gravaLog(e);
-			throw new NegocioException("Problemas no acesso ao banco de dados.");
-		}
+		return regrasNegocioLivro.buscaLivro(codigo);
 	}
 
 	////////////// BUSCA VENDA ////////////////////
 	public Venda buscaVenda(int codigo) throws NegocioException {
 		try {
-			return gerenciadorBaseDados.buscaVenda(codigo);
+			return fachadaBaseDados.buscaVenda(codigo);
 		} catch (BaseDadosException e) {
 			Log.gravaLog(e);
 			throw new NegocioException("Problemas no acesso ao banco de dados.");
@@ -194,7 +144,7 @@ public class GerenciadorRegrasNegocio {
 	////////////// BUSCA ALUGUEL ////////////////////
 	public Aluguel buscaAluguel(int codigo) throws NegocioException {
 		try {
-			return gerenciadorBaseDados.buscaAluguel(codigo);
+			return fachadaBaseDados.buscaAluguel(codigo);
 		} catch (BaseDadosException e) {
 			Log.gravaLog(e);
 			throw new NegocioException("Problemas no acesso ao banco de dados.");
@@ -208,9 +158,9 @@ public class GerenciadorRegrasNegocio {
 
 		usuario.setSaldoCartaoClube(usuario.getSaldoCartaoClube() - preco);
 		try {
-			gerenciadorBaseDados.alteraUsuario(usuario);
+			fachadaBaseDados.alteraUsuario(usuario);
 			Venda venda = new Venda(0, livro, usuario);
-			gerenciadorBaseDados.insereVenda(venda);
+			fachadaBaseDados.insereVenda(venda);
 		} catch (BaseDadosException e) {
 			Log.gravaLog(e);
 			throw new NegocioException("Problemas no acesso ao banco de dados.");
@@ -230,7 +180,7 @@ public class GerenciadorRegrasNegocio {
 
 		try {
 			Venda venda = new Venda(0, livro, usuario);
-			gerenciadorBaseDados.insereVenda(venda);
+			fachadaBaseDados.insereVenda(venda);
 		} catch (BaseDadosException e) {
 			Log.gravaLog(e);
 			throw new NegocioException("Problemas no acesso ao banco de dados!");
@@ -253,7 +203,7 @@ public class GerenciadorRegrasNegocio {
 
 		usuario.setSaldoCartaoClube(usuario.getSaldoCartaoClube() + valor);
 		try {
-			gerenciadorBaseDados.alteraUsuario(usuario);
+			fachadaBaseDados.alteraUsuario(usuario);
 		} catch (BaseDadosException e) {
 			Log.gravaLog(e);
 			throw new NegocioException("Problemas no acesso ao banco de dados!");
@@ -262,7 +212,7 @@ public class GerenciadorRegrasNegocio {
 
 	public List<Promocao> buscaPromocaoLista(int codigoPromocao) throws NegocioException {
 		try {
-			return gerenciadorBaseDados.buscaPromocaoLista(codigoPromocao);
+			return fachadaBaseDados.buscaPromocaoLista(codigoPromocao);
 		} catch (BaseDadosException e) {
 			Log.gravaLog(e);
 			throw new NegocioException("Problemas no acesso ao banco de dados.");
@@ -271,7 +221,7 @@ public class GerenciadorRegrasNegocio {
 
 	public List<Venda> buscaVendasDoUsuario(int codigoUsuario) throws NegocioException {
 		try {
-			return gerenciadorBaseDados.buscaVendasDoUsuario(codigoUsuario);
+			return fachadaBaseDados.buscaVendasDoUsuario(codigoUsuario);
 		} catch (BaseDadosException e) {
 			Log.gravaLog(e);
 			throw new NegocioException("Problemas no acesso ao banco de dados.");
@@ -280,7 +230,7 @@ public class GerenciadorRegrasNegocio {
 
 	public List<Aluguel> buscaAlugueisDoUsuario(int codigoUsuario) throws NegocioException {
 		try {
-			return gerenciadorBaseDados.buscaAlugueisDoUsuario(codigoUsuario);
+			return fachadaBaseDados.buscaAlugueisDoUsuario(codigoUsuario);
 		} catch (BaseDadosException e) {
 			Log.gravaLog(e);
 			throw new NegocioException("Problemas no acesso ao banco de dados.");
@@ -288,45 +238,17 @@ public class GerenciadorRegrasNegocio {
 	}
 
 	public void desativaUsuario(int codigoUsuario) throws NegocioException {
-		if (codigoUsuario == 1) {
-			throw new NegocioException("Admin nao pode ser desativado.");
-		}
-
-		try {
-			Usuario usuario = buscaUsuario(codigoUsuario);
-			if (usuario.isAtivado()) {
-				usuario.setAtivado(false);
-				gerenciadorBaseDados.alteraUsuario(usuario);
-			}
-			else {
-				throw new NegocioException("Usuario ja esta Desativado.");
-			}
-		} catch (BaseDadosException e) {
-			Log.gravaLog(e);
-			throw new NegocioException("Problemas no acesso ao banco de dados.");
-		}
+		regrasNegocioUsuario.desativaUsuario(codigoUsuario);
 	}
 
 
 	public void ativaUsuario(int codigoUsuario) throws NegocioException {
-		try {
-			Usuario usuario = buscaUsuario(codigoUsuario);
-			if (usuario.isAtivado() == false) {
-				usuario.setAtivado(true);
-				gerenciadorBaseDados.alteraUsuario(usuario);
-			}
-			else {
-				throw new NegocioException("Usuario ja esta Ativado.");
-			}
-		} catch (BaseDadosException e) {
-			Log.gravaLog(e);
-			throw new NegocioException("Problemas no acesso ao banco de dados.");
-		}
+		regrasNegocioUsuario.ativaUsuario(codigoUsuario);
 	}
 
 	public void removePromocao(int codigoLivro) throws NegocioException {
 		try {
-			gerenciadorBaseDados.removePromocao(codigoLivro);
+			fachadaBaseDados.removePromocao(codigoLivro);
 		} catch (BaseDadosException e) {
 			Log.gravaLog(e);
 			throw new NegocioException("Problemas no acesso ao banco de dados.");
@@ -334,20 +256,10 @@ public class GerenciadorRegrasNegocio {
 	}
 
 	public void removeLivro(int codigoLivro) throws NegocioException {
-		try {
-			gerenciadorBaseDados.removeLivro(codigoLivro);
-		} catch (BaseDadosException e) {
-			Log.gravaLog(e);
-			throw new NegocioException("Problemas no acesso ao banco de dados.");
-		}
+		regrasNegocioLivro.removeLivro(codigoLivro);
 	}
 
 	public List<Livro> listaLivrosRecentes(int limite) throws NegocioException {
-		try {
-			return gerenciadorBaseDados.listaLivrosRecentes(limite);
-		} catch (BaseDadosException e) {
-			Log.gravaLog(e);
-			throw new NegocioException("Problemas no acesso ao banco de dados.");
-		}
+		return regrasNegocioLivro.listaLivrosRecentes(limite);
 	}
 }
