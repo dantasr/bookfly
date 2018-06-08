@@ -6,15 +6,17 @@ public class Aluguel {
 	private int codigo;
 	private Livro livro;
 	private Usuario usuario;
+	private Timestamp dataDoAluguel;
 	private Timestamp expiracao;
 	
 	public Aluguel() {}
 
-	public Aluguel(int codigo, Livro livro, Usuario usuario, Timestamp expiracao) {
+	public Aluguel(int codigo, Livro livro, Usuario usuario, Timestamp dataDoAluguel, Timestamp expiracao) {
 		super();
 		this.codigo = codigo;
 		this.livro = livro;
 		this.usuario = usuario;
+		this.dataDoAluguel = dataDoAluguel;
 		this.expiracao = expiracao;
 	}
 
@@ -40,6 +42,14 @@ public class Aluguel {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+	
+	public Timestamp getDataDoAluguel() {
+		return dataDoAluguel;
+	}
+	
+	public void setDataDoAluguel(Timestamp dataDoAluguel) {
+		this.dataDoAluguel = dataDoAluguel;
 	}
 
 	public Timestamp getExpiracao() {

@@ -30,10 +30,11 @@ public class AluguelDaoJdbc extends ConectorDaoJdbc implements AluguelDao {
 		abreConexao();
 
 		try {
-			preparaComandoSQL("insert into Aluguel (codigoLivro, codigoUsuario, expiracao) " + "values (?, ?, ?)");
+			preparaComandoSQL("insert into Aluguel (codigoLivro, codigoUsuario, dataDoAluguel, expiracao) " + "values (?, ?, ?)");
 			pstmt.setInt(1, aluguel.getLivro().getCodigo());
 			pstmt.setInt(2, aluguel.getUsuario().getCodigo());
-			pstmt.setTimestamp(3, aluguel.getExpiracao());
+			pstmt.setTimestamp(3, aluguel.getDataDoAluguel());
+			pstmt.setTimestamp(4, aluguel.getExpiracao());
 			pstmt.execute();
 		} catch (SQLException e) {
 			Log.gravaLog(e);
@@ -46,7 +47,7 @@ public class AluguelDaoJdbc extends ConectorDaoJdbc implements AluguelDao {
 	@Override
 	public Aluguel busca(int codigo) throws BaseDadosException {
 		abreConexao();
-		preparaComandoSQL("select codigoLivro, codigoUsuario, expiracao from Aluguel where codigo=" + codigo);
+		preparaComandoSQL("select codigoLivro, codigoUsuario, dataDoAluguel, expiracao from Aluguel where codigo=" + codigo);
 		Aluguel aluguel = null;
 
 		try {
@@ -55,8 +56,9 @@ public class AluguelDaoJdbc extends ConectorDaoJdbc implements AluguelDao {
 			if (rs.next()) {
 				int codigoLivro = rs.getInt(1);
 				int codigoUsuario = rs.getInt(2);
-				Timestamp expiracao = rs.getTimestamp(3);
-				aluguel = new Aluguel(codigo, livroDao.busca(codigoLivro), usuarioDao.busca(codigoUsuario), expiracao);
+				Timestamp dataDoAluguel = rs.getTimestamp(3);
+				Timestamp expiracao = rs.getTimestamp(4);
+				aluguel = new Aluguel(codigo, livroDao.busca(codigoLivro), usuarioDao.busca(codigoUsuario), dataDoAluguel, expiracao);
 			}
 		} catch (SQLException e) {
 			Log.gravaLog(e);
@@ -74,7 +76,7 @@ public class AluguelDaoJdbc extends ConectorDaoJdbc implements AluguelDao {
 		LinkedList<Integer> codigoUsuarioDosAlugueis = new LinkedList<Integer>();
 		abreConexao();
 
-		preparaComandoSQL("select codigo, codigoLivro, codigoUsuario, expiracao from Aluguel");
+		preparaComandoSQL("select codigo, codigoLivro, codigoUsuario, dataDoAluguel, expiracao from Aluguel");
 
 		try {
 			rs = pstmt.executeQuery();
@@ -83,9 +85,10 @@ public class AluguelDaoJdbc extends ConectorDaoJdbc implements AluguelDao {
 				int codigo = rs.getInt(1);
 				int codigoLivro = rs.getInt(2);
 				int codigoUsuario = rs.getInt(3);
-				Timestamp expiracao = rs.getTimestamp(4);
+				Timestamp dataDoAluguel = rs.getTimestamp(4);
+				Timestamp expiracao = rs.getTimestamp(5);
 
-				Aluguel aluguel = new Aluguel(codigo, null, null, expiracao);
+				Aluguel aluguel = new Aluguel(codigo, null, null, dataDoAluguel, expiracao);
 				codigoLivroDosAlugueis.add(codigoLivro);
 				codigoUsuarioDosAlugueis.add(codigoUsuario);
 				alugueis.add(aluguel);
@@ -121,7 +124,7 @@ public class AluguelDaoJdbc extends ConectorDaoJdbc implements AluguelDao {
 		Usuario usuario = usuarioDao.busca(codigoUsuario);
 		abreConexao();
 
-		preparaComandoSQL("select codigo, codigoLivro, expiracao from Aluguel where codigoUsuario = ?");
+		preparaComandoSQL("select codigo, codigoLivro, dataDoAluguel, expiracao from Aluguel where codigoUsuario = ?");
 
 		try {
 			pstmt.setInt(1, codigoUsuario);
@@ -130,9 +133,10 @@ public class AluguelDaoJdbc extends ConectorDaoJdbc implements AluguelDao {
 			while (rs.next()) {
 				int codigo = rs.getInt(1);
 				int codigoLivro = rs.getInt(2);
+				Timestamp dataDoAluguel = rs.getTimestamp(3);
 				Timestamp expiracao = rs.getTimestamp(4);
 
-				Aluguel aluguel = new Aluguel(codigo, null, usuario, expiracao);
+				Aluguel aluguel = new Aluguel(codigo, null, usuario, dataDoAluguel, expiracao);
 				codigoLivroDosAlugueis.add(codigoLivro);
 				alugueis.add(aluguel);
 			}

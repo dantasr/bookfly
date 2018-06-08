@@ -100,7 +100,8 @@ public class ScriptCriacaoDB extends ConectorDaoJdbc {
 		preparaComandoSQL("create table if not exists Aluguel ("
 				+ "codigo int unsigned not null auto_increment primary key," 
 				+ "codigoLivro int unsigned not null,"
-				+ "codigoUsuario int unsigned not null," 
+				+ "codigoUsuario int unsigned not null,"
+				+ "dataDoAluguel datetime not null," 
 				+ "expiracao datetime not null,"
 				+ "constraint fk_Aluguel_Livro FOREIGN KEY (codigoLivro) REFERENCES Livro (codigo),"
 				+ "constraint fk_Aluguel_Usuario FOREIGN KEY (codigoUsuario) REFERENCES Usuario (codigo))");
