@@ -1,11 +1,11 @@
-package basedados;
+package instalacao;
 
 import java.sql.Date;
 import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-import basedados.ConectorJDBC.DB;
+import basedados.BaseDadosException;
 import basedados.dao.AluguelDao;
 import basedados.dao.LivroDao;
 import basedados.dao.PromocaoDao;
@@ -52,21 +52,15 @@ public class ScriptCriacaoDB extends ConectorDaoJdbc {
 					"Erro ao tentar criar o banco de dados.");
 		}
 	}
-	
-	public static void main(String[] args) {
-		try {
-			new ScriptCriacaoDB().criaTabelasBD();
-		} catch (BaseDadosException e) {
-			JOptionPane.showMessageDialog(null, "Erro ao criar o banco de dados.\n" + e.getMessage());
-		}
-	}
 
 	private void criaTabelaVenda() throws SQLException, BaseDadosException {
 		abreConexao();
 		preparaComandoSQL(
 				"create table if not exists Venda ("
 						+ "codigo int unsigned not null auto_increment primary key,"
-						+ "codigoLivro int unsigned not null," + "codigoUsuario int unsigned not null,"
+						+ "codigoLivro int unsigned not null,"
+						+ "codigoUsuario int unsigned not null,"
+						+ "dataDaVenda datetime not null,"
 						+ "constraint fk_Venda_Livro FOREIGN KEY (codigoLivro) REFERENCES Livro (codigo),"
 						+ "constraint fk_Venda_Usuario FOREIGN KEY (codigoUsuario) REFERENCES Usuario (codigo))");
 		pstmt.execute();
@@ -134,8 +128,12 @@ public class ScriptCriacaoDB extends ConectorDaoJdbc {
 
 	/////////////////////////////CRIA BANCO DE DADOS///////////////////////////////////////////////////////////////////////////
 	private void criaBancoDeDados() throws SQLException, BaseDadosException {
+		// freire tb fez isso. não me culpem.
+		String copiaDbName = DB_NAME;
+		DB_NAME = "";
 		abreConexao();
 		jaCriouBD = true;
+		DB_NAME = copiaDbName;
 		preparaComandoSQL("create database if not exists " + getDbName());
 		pstmt.execute();
 		fechaConexao();

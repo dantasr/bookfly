@@ -4,53 +4,23 @@ import java.sql.SQLException;
 
 import basedados.BaseDadosException;
 import basedados.ConectorJDBC;
+import basedados.dao.jdbc.ConectorDaoJdbc;
 import utilidades.Log;
 
 /**
  * Classe que serve de base para os cartões MasterCard, Visa e ELO.
  * Possui a grande parte das funcoes que elas vão usar. 
  */
-public abstract class GerenciadorCartoes extends ConectorJDBC {
-	protected static final String PASSWORD = "nico0812"; //INSERIR SUA SENHA 
-	protected static final String USER = "root";
-	protected static final String HOST = "localhost";
-	
-	protected boolean jaCriouBD;
-	
+public abstract class GerenciadorCartoes extends ConectorDaoJdbc {
 	public GerenciadorCartoes() throws BaseDadosException {
-		super(DB.MYSQL);
+		super();
 		
-		try {
-			criaBancoDeDados();
-			criaTabelaCartoes();
-			populaTabelas();
-		} catch (SQLException e) {
-			Log.gravaLog(e);
-			throw new BaseDadosException("Erro ao criar as tabelas dos cartões.");
-		}
-	}
-	
-	@Override
-	protected String getUser() {
-		return USER;
+		DB_NAME = "cartao" + getNomeOperadoraCartao();
 	}
 
-	@Override
-	protected String getPassword() {
-		return PASSWORD;
-	}
-
-	@Override
-	protected String getDbHost() {
-		return HOST;
-	}
+	protected boolean jaCriouBD;
 
 	public abstract String getNomeOperadoraCartao();
-	
-	@Override
-	protected String getDbName() {
-		return jaCriouBD ? getNomeOperadoraCartao() : "";
-	}
 	
 	public Cartao buscaCartao(int codigoCartao) throws BaseDadosException {
 		Cartao cartao = null;
@@ -108,26 +78,6 @@ public abstract class GerenciadorCartoes extends ConectorJDBC {
 		
 		cartao.setSaldo(cartao.getSaldo() - valor);
 		alteraCartao(cartao);
-	}
-	
-	protected void criaBancoDeDados() throws SQLException, BaseDadosException {
-		abreConexao();
-		jaCriouBD = true;
-		preparaComandoSQL("create database if not exists " + getDbName());
-		pstmt.execute();
-		fechaConexao();
-	}
-	
-	protected void criaTabelaCartoes() throws SQLException, BaseDadosException {
-		abreConexao();
-		preparaComandoSQL("create table if not exists Cartao ("
-				+ "codigo int unsigned not null primary key,"
-				+ "ano int unsigned not null,"
-				+ "mes int unsigned not null,"
-				+ "cvv int unsigned not null,"
-				+ "saldo int unsigned not null)");
-		pstmt.execute();
-		fechaConexao();
 	}
 	
 	protected void insereCartao(Cartao cartao) throws BaseDadosException, SQLException {

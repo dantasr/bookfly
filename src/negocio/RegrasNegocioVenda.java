@@ -45,10 +45,10 @@ public class RegrasNegocioVenda {
 		}
 
 		usuario.setSaldoCartaoClube(usuario.getSaldoCartaoClube() - preco);
-		Timestamp dataDaVenda = new Timestamp(Instant.now());
+		Timestamp dataDaVenda = Timestamp.from(Instant.now());
 		try {
 			fachadaBaseDados.alteraUsuario(usuario);
-			Venda venda = new Venda(0, livro, usuario);
+			Venda venda = new Venda(0, livro, usuario, dataDaVenda);
 			fachadaBaseDados.insereVenda(venda);
 		} catch (BaseDadosException e) {
 			Log.gravaLog(e);
@@ -56,7 +56,7 @@ public class RegrasNegocioVenda {
 		}
 	}
 	
-	public void vendeLivroCartaoNormal(GerenciadorCartoes gerenciadorCartoes, Cartao cartao, Usuario usuario, Livro livro, int preco, Timestamp dataDaVenda) throws NegocioException {
+	public void vendeLivroCartaoNormal(GerenciadorCartoes gerenciadorCartoes, Cartao cartao, Usuario usuario, Livro livro, int preco) throws NegocioException {
 		try {
 			gerenciadorCartoes.realizarDebito(cartao, preco);
 		} catch (CartaoSemSaldoException e) {
@@ -68,6 +68,7 @@ public class RegrasNegocioVenda {
 		}
 
 		try {
+			Timestamp dataDaVenda = Timestamp.from(Instant.now());
 			Venda venda = new Venda(0, livro, usuario, dataDaVenda);
 			fachadaBaseDados.insereVenda(venda);
 		} catch (BaseDadosException e) {

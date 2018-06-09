@@ -3,6 +3,8 @@ package visualizacao;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -52,7 +54,7 @@ public class TelaUsuarioMeuHistorico extends JFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"Tipo", "Titulo", "Data", "Objeto"
+				"Tipo", "Titulo", "Data"
 			}
 		));
 		scrollPane.setViewportView(tableListaHistorico);
@@ -62,10 +64,12 @@ public class TelaUsuarioMeuHistorico extends JFrame {
 	
 	private void preencheDados() {
 		Usuario atual = contexto.getUsuarioAtual();
+		
 		try {
 			List<Venda> vendas = contexto.getGerenciadorRegrasNegocio().buscaVendasDoUsuario(atual.getCodigo());
 			List<Aluguel> alugueis = contexto.getGerenciadorRegrasNegocio().buscaAlugueisDoUsuario(atual.getCodigo());
 			
+			clearTable((DefaultTableModel) tableListaHistorico.getModel());
 			adicionaVendas(vendas);
 			adicionaAlugueis(alugueis);
 		} catch (NegocioException e) {
@@ -74,14 +78,21 @@ public class TelaUsuarioMeuHistorico extends JFrame {
 	}
 	
 	private String formataData(Timestamp data) {
-		return "xdxdxd";
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		return dateFormat.format(data);
+	}
+	
+	private void clearTable(DefaultTableModel model) {
+		while (model.getRowCount() > 0) {
+			model.removeRow(0);
+		}
 	}
 	
 	private void adicionaVendas(List<Venda> vendas) {
 		DefaultTableModel model = (DefaultTableModel) tableListaHistorico.getModel();
 
 		for (Venda venda : vendas) {
-			model.addRow(new Object[] { "Venda", venda.getLivro().getNome(), formataData(venda.getDataDaVenda()), venda });
+			model.addRow(new Object[] { "Venda", venda.getLivro().getNome(), formataData(venda.getDataDaVenda()) });
 		}
 	}
 	
@@ -89,7 +100,7 @@ public class TelaUsuarioMeuHistorico extends JFrame {
 		DefaultTableModel model = (DefaultTableModel) tableListaHistorico.getModel();
 
 		for (Aluguel aluguel : alugueis) {
-			model.addRow(new Object[] { "Aluguel", aluguel.getLivro().getNome(), formataData(aluguel.getDataDoAluguel()), aluguel });
+			model.addRow(new Object[] { "Aluguel", aluguel.getLivro().getNome(), formataData(aluguel.getDataDoAluguel()) });
 		}
 	}
 }

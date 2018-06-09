@@ -9,12 +9,12 @@ import basedados.ConectorJDBC;
 
 public class ConectorDaoJdbc extends ConectorJDBC {
 
-	private static String PASSWORD;
-	private static String USER;
-	private static String HOST;
-	private static String DB_NAME;
-	private static DB DATABASE;
-	protected static boolean jaCriouBD;
+	private String PASSWORD;
+	private String USER;
+	private String HOST;
+	protected String DB_NAME;
+	private DB DATABASE;
+	protected boolean jaCriouBD;
 	
 	public ConectorDaoJdbc() throws BaseDadosException {
 		Properties props = new Properties();
@@ -51,6 +51,6 @@ public class ConectorDaoJdbc extends ConectorJDBC {
 
 	@Override
 	protected String getDbName() {
-		return jaCriouBD ? DB_NAME : "";
+		return DB_NAME;
 	}
 }
