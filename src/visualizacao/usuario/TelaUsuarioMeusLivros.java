@@ -1,4 +1,4 @@
-package visualizacao;
+package visualizacao.usuario;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -6,13 +6,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import main.Contexto;
 import negocio.NegocioException;
 import utilidades.LeitorPDF;
 import utilidades.Log;
@@ -24,6 +24,8 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
 import arquivos.GerenciadorArquivos;
+import controller.FrontController;
+import controller.FrontController.Request;
 import dto.Aluguel;
 import dto.Livro;
 import dto.Usuario;
@@ -33,15 +35,15 @@ public class TelaUsuarioMeusLivros extends JFrame {
 
 	private JPanel contentPane;
 	private JTable tableListaLivros;
-	private Contexto contexto;
+	private FrontController frontController;
 	private GerenciadorArquivos gerenciadorArquivos = new GerenciadorArquivos();
 
 	/**
 	 * Create the frame.
-	 * @param contexto 
+	 * @param frontController 
 	 */
-	public TelaUsuarioMeusLivros(Contexto contexto) {
-		this.contexto = contexto;
+	public TelaUsuarioMeusLivros(FrontController frontController) {
+		this.frontController = frontController;
 		
 		setTitle("BOOKFLY");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -101,6 +103,13 @@ public class TelaUsuarioMeusLivros extends JFrame {
 			livro = ((Aluguel) vendaOuAluguel).getLivro();
 		}
 		
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		hashMap.put("usuario", usuario);
+		hashMap.put("livro", livro);
+		
+		frontController.dispatchRequest(Request.USUARIO_LER_LIVRO, hashMap);
+		
+		// TODO Tirar daqui
 		File arquivo = gerenciadorArquivos.obterArquivoPdf(livro);
 		if (arquivo == null) {
 			JOptionPane.showMessageDialog(null, "Arquivo do livro não encontrado.");
@@ -146,11 +155,11 @@ public class TelaUsuarioMeusLivros extends JFrame {
 	private void preencherTabela() {
 		limpaTabela();
 		
-		Usuario atual = contexto.getUsuarioAtual();
+		Usuario atual = frontController.getUsuarioAtual();
 		try {
-			List<Venda> vendas = contexto.getGerenciadorRegrasNegocio().buscaVendasDoUsuario(atual.getCodigo());
+			List<Venda> vendas = frontController.getGerenciadorRegrasNegocio().buscaVendasDoUsuario(atual.getCodigo());
 			adicionaVendas(vendas);
-			List<Aluguel> alugueis = contexto.getGerenciadorRegrasNegocio().buscaAlugueisDoUsuario(atual.getCodigo());
+			List<Aluguel> alugueis = frontController.getGerenciadorRegrasNegocio().buscaAlugueisDoUsuario(atual.getCodigo());
 			adicionaAlugueis(alugueis);
 		} catch (NegocioException e) {
 			Log.gravaLog(e);

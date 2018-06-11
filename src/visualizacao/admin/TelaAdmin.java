@@ -1,4 +1,4 @@
-package visualizacao;
+package visualizacao.admin;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -7,26 +7,29 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import main.Contexto;
+import controller.FrontController;
+import controller.IAcceptRequests;
+import controller.FrontController.Request;
 import negocio.NegocioException;
 
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.awt.event.ActionEvent;
 
-public class TelaAdmin extends JFrame {
+public class TelaAdmin extends JFrame implements IAcceptRequests {
 
 	private JPanel contentPane;
-	private Contexto contexto;
+	private FrontController frontController;
 	private JLabel lblNomeusuario;
 
 	/**
 	 * Create the frame.
 	 */
-	public TelaAdmin(Contexto contexto) {
+	public TelaAdmin(FrontController frontController) {
 		setTitle("ADMIN");
-		this.contexto = contexto;
+		this.frontController = frontController;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -46,12 +49,7 @@ public class TelaAdmin extends JFrame {
 		JButton btnPesquisar = new JButton("Pesquisar/Remover");
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					new TelaAdminPesquisaRemoveClienteProduto(contexto).setVisible(true);
-				} catch (NegocioException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				frontController.dispatchRequest(Request.ADMIN_ABRIR_PESQUISA);
 			}
 		});
 		btnPesquisar.setBounds(36, 149, 188, 66);
@@ -60,7 +58,7 @@ public class TelaAdmin extends JFrame {
 		JButton btnRegistrar = new JButton("Registrar");
 		btnRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new TelaAdminRegistro(contexto).setVisible(true);
+				frontController.dispatchRequest(Request.ADMIN_ABRIR_TELA_REGISTRAR);
 			}
 		});
 		btnRegistrar.setBounds(36, 80, 89, 66);
@@ -69,8 +67,8 @@ public class TelaAdmin extends JFrame {
 		JButton btnNewButton_7 = new JButton("Sair");
 		btnNewButton_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				fecharTela();
-				new TelaLogin(contexto).setVisible(true);
+				frontController.dispatchRequest(Request.ADMIN_SAIR);
+				//fecharTela();
 			}
 		});
 		btnNewButton_7.setBounds(335, 227, 89, 23);
@@ -85,7 +83,13 @@ public class TelaAdmin extends JFrame {
 	private void atualizarCampos() {
 		this.lblNomeusuario.setText(contexto.getUsuarioAtual().getNome());
 	}
+	
 	private void fecharTela() {
 		super.dispose();
+	}
+
+	@Override
+	public void show(HashMap<String, Object> params) {
+		
 	}
 }

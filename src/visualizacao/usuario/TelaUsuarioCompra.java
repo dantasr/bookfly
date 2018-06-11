@@ -1,4 +1,4 @@
-package visualizacao;
+package visualizacao.usuario;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -7,12 +7,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controller.FrontController;
+import controller.FrontController.Request;
 import dto.Livro;
-import main.Contexto;
 
 import javax.swing.JLayeredPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
 import javax.swing.JLabel;
@@ -24,11 +26,11 @@ public class TelaUsuarioCompra extends JFrame {
 
 	private JPanel contentPane;
 	private final ButtonGroup buttonGroupFormaPagamento = new ButtonGroup();
-	private Contexto contexto;
+	private FrontController frontController;
 	private Livro livro;
 
-	public TelaUsuarioCompra(Contexto contexto, Livro livro) {
-		this.contexto = contexto;
+	public TelaUsuarioCompra(FrontController frontController, Livro livro) {
+		this.frontController = frontController;
 		this.livro = livro;
 		
 		setTitle("BOOKFLY");
@@ -62,8 +64,10 @@ public class TelaUsuarioCompra extends JFrame {
 		JButton btnCartoClube = new JButton("Cart\u00E3o Clube");
 		btnCartoClube.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new TelaUsuarioCompraPagamentoCartaoClube(contexto, livro, null).setVisible(true);
-				setVisible(false);
+				HashMap<String, Object> hashMap = new HashMap<String, Object>();
+				hashMap.put("livro", livro);
+/*TODO usuario*/hashMap.put("usuario",usuario);
+				frontController.dispatchRequest(Request.USUARIO_EXIBE_TELA_COMPRA_CARTAO_CLUBE, hashMap);	
 			}
 		});
 		btnCartoClube.setBounds(32, 76, 109, 79);
@@ -72,9 +76,10 @@ public class TelaUsuarioCompra extends JFrame {
 		JButton btnCartoComum = new JButton("Cart\u00E3o comum");
 		btnCartoComum.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new TelaUsuarioCompraPagamentoCartaoNormal(contexto, livro).setVisible(true);
-				
-				setVisible(false);
+				HashMap<String, Object> hashMap = new HashMap<String, Object>();
+				hashMap.put("livro", livro);
+/*TODO usuario*/hashMap.put("usuario",usuario);
+				frontController.dispatchRequest(Request.USUARIO_EXIBE_TELA_COMPRA_CARTAO_COMUM, hashMap);
 			}
 		});
 		btnCartoComum.setBounds(228, 76, 109, 79);

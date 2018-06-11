@@ -1,4 +1,4 @@
-package visualizacao;
+package visualizacao.usuario;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -7,23 +7,25 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controller.FrontController;
+import controller.FrontController.Request;
 import dto.Livro;
-import main.Contexto;
 
 import javax.swing.JLabel;
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.awt.event.ActionEvent;
 
 public class TelaUsuarioAluga extends JFrame {
 
 	private JPanel contentPane;
 	private Livro livro;
-	private Contexto contexto;
-	public TelaUsuarioAluga(Contexto contexto, Livro livro) {
-		this.contexto = contexto;
+	private FrontController frontController;
+	public TelaUsuarioAluga(FrontController frontController, Livro livro) {
+		this.frontController = frontController;
 		this.livro = livro;
 		
 		setTitle("BOOKFLY");
@@ -36,9 +38,8 @@ public class TelaUsuarioAluga extends JFrame {
 		JLabel lblAoAlugarUm_1 = new JLabel("Ao alugar um dos nossos produtos, \r\nvoc\u00EA ter\u00E1 direito de us\u00E1-lo livremente ");
 		lblAoAlugarUm_1.setBounds(10, 35, 437, 14);
 		contentPane.add(lblAoAlugarUm_1);
-		int saldo = contexto.getUsuarioAtual().getSaldoCartaoClube();
-		int precoParcela = 2*(livro.getPreco()/15);
-		int valorFinalC = saldo - 3*(precoParcela);
+		int saldo = frontController.getUsuarioAtual().getSaldoCartaoClube();
+		// TODO PRECO DO ALUGUEL
 		
 		JLabel lblNewLabel = new JLabel("durante um per\u00EDodo de 3 dias. \r\n Ap\u00F3s esse prazo,\r\n o produto ser\u00E1 automaticamente");
 		lblNewLabel.setBounds(10, 49, 414, 14);
@@ -63,9 +64,10 @@ public class TelaUsuarioAluga extends JFrame {
 		JButton button = new JButton("Comprar");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new TelaUsuarioCompraPagamentoCartaoClubeAluguel(contexto, livro,saldo,precoParcela,valorFinalC).setVisible(true);
 				
-				setVisible(false);
+				HashMap<String, Object> hashMap = new HashMap<String, Object>();
+				hashMap.put("livro",livro);
+				frontController.dispatchRequest(Request.USUARIO_EXIBE_TELA_PAGAMENTO_ALUGUEL, hashMap);				
 			}
 		});
 		button.setBounds(10, 203, 119, 47);

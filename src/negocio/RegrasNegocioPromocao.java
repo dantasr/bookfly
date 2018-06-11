@@ -1,6 +1,5 @@
 package negocio;
 
-import main.Contexto;
 import utilidades.Log;
 import dto.Promocao;
 
@@ -8,6 +7,7 @@ import java.util.List;
 
 import basedados.BaseDadosException;
 import basedados.FachadaBaseDados;
+import controller.FrontController;
 
 public class RegrasNegocioPromocao {
 	private FachadaBaseDados fachadaBaseDados;
@@ -16,9 +16,9 @@ public class RegrasNegocioPromocao {
 		this.fachadaBaseDados = fachadaBaseDados;
 	}
 	
-	public void cadastraPromocao(int codigo,Contexto contexto, int novoPreco) throws NegocioException {
+	public void cadastraPromocao(int codigo,FrontController frontController, int novoPreco) throws NegocioException {
 		try {
-			Promocao promocao = new Promocao(codigo,contexto.getGerenciadorRegrasNegocio().buscaLivro(codigo),novoPreco);
+			Promocao promocao = new Promocao(codigo,frontController.getGerenciadorRegrasNegocio().buscaLivro(codigo),novoPreco);
 			fachadaBaseDados.inserePromocao(promocao);
 		} catch (BaseDadosException e) {
 			Log.gravaLog(e);

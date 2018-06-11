@@ -5,10 +5,16 @@ import java.util.List;
 import basedados.BaseDadosException;
 import basedados.FachadaBaseDados;
 import dto.Aluguel;
+import dto.Livro;
 import utilidades.Log;
 
 public class RegrasNegocioAluguel {
 	private FachadaBaseDados fachadaBaseDados;
+	
+	public int calculaPrecoDoLivroAlugado(Livro livro) {
+		return 3*(2*(livro.getPreco()/15));
+	}
+	
 	
 	public RegrasNegocioAluguel(FachadaBaseDados fachadaBaseDados) {
 		this.fachadaBaseDados = fachadaBaseDados;

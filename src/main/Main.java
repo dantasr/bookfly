@@ -4,9 +4,10 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import basedados.BaseDadosException;
+import controller.FrontController;
 import negocio.NegocioException;
 import utilidades.Log;
-import visualizacao.TelaLogin;
+import visualizacao.principal.TelaLogin;
 
 public class Main {
 
@@ -16,9 +17,9 @@ public class Main {
 		} catch (Exception e) {
 		}
 		
-		Contexto contexto;
+		FrontController frontController;
 		try {
-			contexto = new Contexto();
+			frontController = new FrontController();
 		} catch (BaseDadosException ex) {
 			Log.gravaLog(ex);
 
@@ -26,7 +27,7 @@ public class Main {
 			return;
 		}
 
-		TelaLogin telaLogin = new TelaLogin(contexto);
+		TelaLogin telaLogin = new TelaLogin(frontController);
 		telaLogin.setVisible(true);
 	}
 

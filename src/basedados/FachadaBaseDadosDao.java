@@ -19,13 +19,13 @@ import basedados.dao.jdbc.LivroDaoJdbc;
 import basedados.dao.jdbc.PromocaoDaoJdbc;
 import basedados.dao.jdbc.UsuarioDaoJdbc;
 import basedados.dao.jdbc.VendaDaoJdbc;
+import controller.FrontController;
 import dto.Aluguel;
 import dto.Livro;
 import dto.Promocao;
 import dto.Usuario;
 import dto.Venda;
 import utilidades.Log;
-import main.Contexto;
 
 public class FachadaBaseDadosDao implements FachadaBaseDados {
 

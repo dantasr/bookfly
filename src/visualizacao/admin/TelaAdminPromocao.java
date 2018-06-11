@@ -1,4 +1,4 @@
-package visualizacao;
+package visualizacao.admin;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -7,8 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controller.FrontController;
+import controller.FrontController.Request;
 import dto.Livro;
-import main.Contexto;
 import negocio.NegocioException;
 
 import javax.swing.JLabel;
@@ -16,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.awt.event.ActionEvent;
 
 public class TelaAdminPromocao extends JFrame {
@@ -23,7 +25,7 @@ public class TelaAdminPromocao extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	
-	public TelaAdminPromocao(Contexto contexto, int codigo) {
+	public TelaAdminPromocao(FrontController frontController, int codigo) {
 		setTitle("ADMIN");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 275, 172);
@@ -46,12 +48,11 @@ public class TelaAdminPromocao extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				String promo = textField.getText();
 				int valorF = Integer.parseInt(promo);
-				try {
-					contexto.getGerenciadorRegrasNegocio().cadastraPromocao(codigo,contexto, valorF);
-					JOptionPane.showMessageDialog(null, "Promoção cadastrada com sucesso!");
-				} catch (NegocioException e) {
-					JOptionPane.showMessageDialog(null, "Erro na entrada de valor!");
-				}
+					
+					HashMap<String, Object> hashMap = new HashMap<String, Object>();
+					hashMap.put("codigoLivro", codigo);
+					hashMap.put("valorPromo", valorF);
+					frontController.dispatchRequest(Request.ADMIN_CADASTRA_PROMO, hashMap);
 			}
 		});
 		btnNewButton.setBounds(136, 79, 113, 43);
@@ -60,7 +61,7 @@ public class TelaAdminPromocao extends JFrame {
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				fecharPromocao();
+				//fecharPromocao();
 			}
 		});
 		btnVoltar.setBounds(10, 99, 89, 23);

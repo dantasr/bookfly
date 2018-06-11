@@ -1,4 +1,4 @@
-package visualizacao;
+package visualizacao.usuario;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -8,8 +8,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import arquivos.GerenciadorArquivos;
+import controller.FrontController;
+import controller.FrontController.Request;
 import dto.Livro;
-import main.Contexto;
 import negocio.NegocioException;
 import utilidades.IconeLabel;
 import utilidades.Log;
@@ -22,12 +23,13 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
 import java.util.Date;
+import java.util.HashMap;
 import java.awt.event.ActionEvent;
 
 public class TelaUsuarioLivro extends JFrame {
 
 	private JPanel contentPane;
-	private Contexto contexto;
+	private FrontController frontController;
 	private JLabel labelTitulo;
 	private JLabel lblAutor;
 	private JLabel lblEditora;
@@ -39,11 +41,11 @@ public class TelaUsuarioLivro extends JFrame {
 	 * Create the frame.
 	 * @throws NegocioException 
 	 */
-	public TelaUsuarioLivro(Contexto contexto, Livro livro) throws NegocioException {
-		contexto.getGerenciadorRegrasNegocio();
+	public TelaUsuarioLivro(FrontController frontController, Livro livro) throws NegocioException {
+		frontController.getGerenciadorRegrasNegocio();
 		setTitle("BOOKFLY");
 		this.livro = livro;
-		this.contexto=contexto;
+		this.frontController=frontController;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -99,7 +101,11 @@ public class TelaUsuarioLivro extends JFrame {
 		JButton btnAlugar = new JButton("Alugar");
 		btnAlugar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new TelaUsuarioAluga(contexto, livro).setVisible(true);
+				HashMap<String, Object> hashMap = new HashMap<String, Object>();
+				hashMap.put("usuario", usuario);
+				hashMap.put("livro", livro);
+				
+				frontController.dispatchRequest(Request.USUARIO_EXIBE_TELA_ALUGUEL, hashMap);
 			}
 		});
 		btnAlugar.setBounds(335, 7, 89, 44);
@@ -108,7 +114,11 @@ public class TelaUsuarioLivro extends JFrame {
 		JButton btnComprar = new JButton("Comprar");
 		btnComprar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new TelaUsuarioCompra(contexto, livro).setVisible(true);
+				HashMap<String, Object> hashMap = new HashMap<String, Object>();
+				hashMap.put("usuario", usuario);
+				hashMap.put("livro", livro);
+				
+				frontController.dispatchRequest(Request.USUARIO_EXIBE_TELA_COMPRA, hashMap);
 			}
 		});
 		btnComprar.setBounds(335, 62, 89, 43);
@@ -132,7 +142,7 @@ public class TelaUsuarioLivro extends JFrame {
 			JButton btnNewButton = new JButton("Promo\u00E7\u00F5es");
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					new TelaUsuarioPromocao(contexto, livro).setVisible(true);
+					new TelaUsuarioPromocao(frontController, livro).setVisible(true);
 				}
 			});
 			btnNewButton.setBounds(335, 112, 89, 23);

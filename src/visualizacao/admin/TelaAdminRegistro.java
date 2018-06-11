@@ -1,4 +1,4 @@
-package visualizacao;
+package visualizacao.admin;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.sql.Date;
+import java.util.HashMap;
+
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,8 +21,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import arquivos.GerenciadorArquivos;
+import controller.FrontController;
+import controller.FrontController.Request;
 import dto.Livro;
-import main.Contexto;
 import negocio.NegocioException;
 import utilidades.IconeLabel;
 import utilidades.Log;
@@ -45,16 +48,16 @@ public class TelaAdminRegistro extends JFrame {
 	private File campoImagem;
 	private JLabel lblImagemLivro;
 	
-	private Contexto contexto;
+	private FrontController frontController;
 	private Validador validador = new Validador();
 	private GerenciadorArquivos gerenciadorArquivos = new GerenciadorArquivos();
 
 	/**
 	 * Create the frame.
 	 */
-	public TelaAdminRegistro(Contexto contexto) {
+	public TelaAdminRegistro(FrontController frontController) {
 		setTitle("ADMIN");
-		this.contexto = contexto;
+		this.frontController = frontController;
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -186,22 +189,26 @@ public class TelaAdminRegistro extends JFrame {
 			Date data = validador.validaData(campoData.getText(), "Data");
 			validador.validaArquivo(campoPdf, "pdf");
 			validador.validaArquivo(campoImagem, "imagem");
-			contexto.getGerenciadorRegrasNegocio().cadastraLivro(codigo, titulo, autor, editora, preco, data);
-			Livro livro = new Livro(codigo, titulo, autor, editora, preco, data);
-			gerenciadorArquivos.salvarImagemDoLivro(livro, campoImagem);
-			gerenciadorArquivos.salvarArquivoPdf(livro, campoPdf);
-			JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
-		}catch(NegocioException r) {
-			Log.gravaLog(r);
-			JOptionPane.showMessageDialog(null, r.getMessage());
+			
+			HashMap<String, Object> hashMap = new HashMap<String, Object>();
+			
+			hashMap.put("codigo", codigo);
+			hashMap.put("titulo", titulo);
+			hashMap.put("autor", autor);
+			hashMap.put("preco", preco);
+			hashMap.put("editora", editora);
+			hashMap.put("data", data);
+			hashMap.put("campoPdf", campoPdf);
+			hashMap.put("campoImagem", campoImagem);
+			frontController.dispatchRequest(Request.ADMIN_CADASTRA_LIVRO, hashMap);
+		//	Livro livro = new Livro(codigo, titulo, autor, editora, preco, data);
+		//	gerenciadorArquivos.salvarImagemDoLivro(livro, campoImagem);
+		//	gerenciadorArquivos.salvarArquivoPdf(livro, campoPdf);
+		//	JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
 		}
 		catch (ValidacaoException e) {
 			Log.gravaLog(e);
 			JOptionPane.showMessageDialog(null, e.getMessage());
-		} catch (IOException e) {
-			Log.gravaLog(e);
-			JOptionPane.showMessageDialog(null, e.getMessage());
-			
 		}
 	}
 }

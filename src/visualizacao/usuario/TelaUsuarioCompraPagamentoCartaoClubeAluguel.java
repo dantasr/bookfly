@@ -1,4 +1,4 @@
-package visualizacao;
+package visualizacao.usuario;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -7,10 +7,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controller.FrontController;
+import controller.FrontController.Request;
 import dto.Livro;
 import dto.Usuario;
 import dto.Venda;
-import main.Contexto;
 import negocio.NegocioException;
 import utilidades.Log;
 
@@ -21,6 +22,7 @@ import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.awt.event.ActionEvent;
 
 public class TelaUsuarioCompraPagamentoCartaoClubeAluguel extends JFrame {
@@ -28,13 +30,13 @@ public class TelaUsuarioCompraPagamentoCartaoClubeAluguel extends JFrame {
 	private JPanel contentPane;
 	private JLabel lblAvisoSemSaldo;
 	private Livro livro;
-	private Contexto contexto;
+	private FrontController frontController;
 
 	/**
 	 * Create the frame.
 	 */
-	public TelaUsuarioCompraPagamentoCartaoClubeAluguel(Contexto contexto, Livro livro, int saldo, int valorParcela, int valorFinal) {
-		this.contexto = contexto;
+	public TelaUsuarioCompraPagamentoCartaoClubeAluguel(FrontController frontController, Livro livro, int saldo, int valorParcela, int valorFinal) {
+		this.frontController = frontController;
 		this.livro = livro;
 		
 		setTitle("BOOKFLY");
@@ -113,14 +115,19 @@ public class TelaUsuarioCompraPagamentoCartaoClubeAluguel extends JFrame {
 	}
 	
 	private void adicionaSaldo() {
-		new TelaUsuarioInsereCredito(contexto, () -> this.atualizarCampos()).setVisible(true);;
+		new TelaUsuarioInsereCredito(frontController, () -> this.atualizarCampos()).setVisible(true);;
 	}
 
 	private void realizaCompra() {
-		Usuario atual = contexto.getUsuarioAtual();
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		hashMap.put("usuario", usuario);
+		hashMap.put("livro", livro);
+		frontController.dispatchRequest(Request.USUARIO_REALIZA_ALUGUEL_CARTAO_CLUBE, hashMap);
+		
+		Usuario atual = frontController.getUsuarioAtual();
 		int precoLivro = 0;
 		try {
-			precoLivro = contexto.getGerenciadorPreco().calcularPrecoParaLivro(livro, null, atual, true);
+			precoLivro = frontController.getGerenciadorPreco().calcularPrecoParaLivro(livro, null, atual, true);
 		} catch (NegocioException e) {
 			Log.gravaLog(e);
 			JOptionPane.showMessageDialog(null, e.getMessage());
@@ -133,7 +140,7 @@ public class TelaUsuarioCompraPagamentoCartaoClubeAluguel extends JFrame {
 		}
 		
 		try {
-			contexto.getGerenciadorRegrasNegocio().vendeLivroCartaoClube(atual, livro, precoLivro);
+			frontController.getGerenciadorRegrasNegocio().vendeLivroCartaoClube(atual, livro, precoLivro);
 			JOptionPane.showMessageDialog(null, "Comprado com sucesso!");
 			setVisible(false);
 		} catch (NegocioException e) {
@@ -142,10 +149,10 @@ public class TelaUsuarioCompraPagamentoCartaoClubeAluguel extends JFrame {
 	}
 
 	private void atualizarCampos() {
-		Usuario atual = contexto.getUsuarioAtual();
+		Usuario atual = frontController.getUsuarioAtual();
 		int precoLivro = 0;
 		try {
-			precoLivro = contexto.getGerenciadorPreco().calcularPrecoParaLivro(livro, null, atual, true);
+			precoLivro = frontController.getGerenciadorPreco().calcularPrecoParaLivro(livro, null, atual, true);
 		} catch (NegocioException e) {
 			Log.gravaLog(e);
 			JOptionPane.showMessageDialog(null, e.getMessage());

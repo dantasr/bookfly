@@ -1,4 +1,4 @@
-package visualizacao;
+package visualizacao.usuario;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -10,8 +10,9 @@ import javax.swing.border.EmptyBorder;
 import basedados.BaseDadosException;
 import cartoes.Cartao;
 import cartoes.GerenciadorCartoes;
+import controller.FrontController;
+import controller.FrontController.Request;
 import dto.Usuario;
-import main.Contexto;
 import negocio.NegocioException;
 import utilidades.Log;
 import utilidades.ValidacaoException;
@@ -28,6 +29,7 @@ import javax.swing.JButton;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.ButtonGroup;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.function.Function;
 import java.awt.event.ActionEvent;
 
@@ -43,7 +45,7 @@ public class TelaUsuarioInsereCredito extends JFrame {
 	private JRadioButton rdbtnMasterCard;
 	private JRadioButton rdbtnElo;
 	private final ButtonGroup buttonGroupFormaPagamento = new ButtonGroup();
-	private Contexto contexto;
+	private FrontController frontController;
 	private Validador validador = new Validador();
 	private Runnable callbackCompra;
 	private JLabel lblValorsaldo;
@@ -51,8 +53,8 @@ public class TelaUsuarioInsereCredito extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaUsuarioInsereCredito(Contexto contexto, Runnable callbackCompra) {
-		this.contexto = contexto;
+	public TelaUsuarioInsereCredito(FrontController frontController, Runnable callbackCompra) {
+		this.frontController = frontController;
 		this.callbackCompra = callbackCompra;
 		
 		setTitle("BOOKFLY");
@@ -142,16 +144,16 @@ public class TelaUsuarioInsereCredito extends JFrame {
 	}
 
 	private void atualizaCampos() {
-		lblValorsaldo.setText("" + contexto.getUsuarioAtual().getSaldoCartaoClube());
+		lblValorsaldo.setText("" + frontController.getUsuarioAtual().getSaldoCartaoClube());
 	}
 
-	private GerenciadorCartoes obtemGerenciadorCartoes() {
+	private String obtemGerenciadorCartoes() {
 		if (rdbtnMasterCard.isSelected())
-			return contexto.getGerenciadorMastercard();
+			return "MasterCard";
 		else if (rdbtnVisa.isSelected())
-			return contexto.getGerenciadorVisa();
+			return "Visa";
 		else if (rdbtnElo.isSelected())
-			return contexto.getGerenciadorElo();
+			return "Elo";
 		
 		return null;
 	}
@@ -172,7 +174,16 @@ public class TelaUsuarioInsereCredito extends JFrame {
 			return;
 		}
 		
-		GerenciadorCartoes gerenciadorCartoes = obtemGerenciadorCartoes();
+		String gerenciadorCartoes = obtemGerenciadorCartoes();
+		
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		hashMap.put("usuario", usuario);
+		hashMap.put("cartaoCodigo", codigo);
+		hashMap.put("cartaoAno", ano);
+		hashMap.put("cartaoMes", mes);
+		hashMap.put("cartaoOperadora", gerenciadorCartoes);
+		
+		frontController.dispatchRequest(Request.USUARIO_INSERE_CREDITO, hashMap);
 		Cartao cartao = null;
 		try {
 			cartao = gerenciadorCartoes.buscaCartaoComCampos(codigo, ano, mes, cvv);
@@ -183,9 +194,9 @@ public class TelaUsuarioInsereCredito extends JFrame {
 			return;
 		}
 		
-		Usuario atual = contexto.getUsuarioAtual();
+		Usuario atual = frontController.getUsuarioAtual();
 		try {
-			contexto.getGerenciadorRegrasNegocio().insereCreditoCartaoClube(gerenciadorCartoes, cartao, atual, valor);
+			frontController.getGerenciadorRegrasNegocio().insereCreditoCartaoClube(gerenciadorCartoes, cartao, atual, valor);
 			JOptionPane.showMessageDialog(null, "Crédito inserido com sucesso!");
 			this.setVisible(false);
 			this.callbackCompra.run();

@@ -1,4 +1,4 @@
-package visualizacao;
+package visualizacao.usuario;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -9,9 +9,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import controller.FrontController;
+import controller.FrontController.Request;
 import dto.Livro;
 import dto.Promocao;
-import main.Contexto;
 import negocio.NegocioException;
 import utilidades.Log;
 
@@ -21,17 +22,18 @@ import javax.swing.JOptionPane;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
 import java.util.List;
 
 public class TelaUsuarioPromocao extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
-	private Contexto contexto ;
+	private FrontController frontController ;
 	private Livro livro ;
 
-	public TelaUsuarioPromocao(Contexto contexto, Livro livro) {
-		this.contexto = contexto ;
+	public TelaUsuarioPromocao(FrontController frontController, Livro livro) {
+		this.frontController = frontController ;
 		this.livro = livro;
 		setTitle("BOOKFLY");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -57,8 +59,12 @@ public class TelaUsuarioPromocao extends JFrame {
 				int codigo = (int) table.getModel().getValueAt(row, 0);
 				Promocao promocao;
 				try {
-					promocao = contexto.getGerenciadorRegrasNegocio().buscaPromocao(codigo);
-					new TelaUsuarioCompraPagamentoCartaoClube(contexto, livro, promocao).setVisible(true);
+					HashMap<String, Object> hashMap = new HashMap<String, Object>();
+					hashMap.put("usuario", usuario);
+					hashMap.put("livro", livro);
+					hashMap.put("codigoPromocao", codigo);
+					
+					frontController.dispatchRequest(Request.USUARIO_EXIBE_TELA_COMPRA, hashMap);
 				} catch (NegocioException e) {
 					Log.gravaLog(e);
 					JOptionPane.showMessageDialog(null, "Erro ao carregar promocao");
@@ -103,7 +109,7 @@ public class TelaUsuarioPromocao extends JFrame {
 
 	private void realizaPesquisaPromocao() {
 		try {
-			List<Promocao> resultados = contexto.getGerenciadorRegrasNegocio().buscaPromocaoLista(livro.getCodigo());
+			List<Promocao> resultados = frontController.getGerenciadorRegrasNegocio().buscaPromocaoLista(livro.getCodigo());
 			
 			if(resultados.size() != 0) {
 				montaTabelaPromocoes(resultados);

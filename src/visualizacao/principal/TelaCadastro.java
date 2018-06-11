@@ -1,4 +1,4 @@
-package visualizacao;
+package visualizacao.principal;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -7,8 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controller.FrontController;
+import controller.FrontController.Request;
 import dto.Usuario;
-import main.Contexto;
 import negocio.NegocioException;
 import utilidades.Log;
 import utilidades.ValidacaoException;
@@ -20,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.util.HashMap;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 
@@ -30,16 +32,16 @@ public class TelaCadastro extends JFrame {
 	private JTextField campoDataNascimento;
 	private JTextField campoCpf;
 	private JTextField campoTelefone;
-	private Contexto contexto;
+	private FrontController frontController;
 	private Validador validador = new Validador();
 	private JPasswordField campoSenha;
 
 	/**
 	 * Create the frame.
 	 */
-	public TelaCadastro(Contexto contexto) {
+	public TelaCadastro(FrontController frontController) {
 		setTitle("CADASTRO");
-		this.contexto = contexto;
+		this.frontController = frontController;
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -125,15 +127,23 @@ public class TelaCadastro extends JFrame {
 			Date dataNascimento = validador.validaData(campoDataNascimento.getText(), "Data de Nascimento");
 			String cpf = validador.validaNaoVazio(campoCpf.getText(), 15, "CPF");
 			String telefone = validador.validaNaoVazio(campoTelefone.getText(), 50, "Telefone");
-			contexto.getGerenciadorRegrasNegocio().cadastraUsuario(0, nome, dataNascimento, telefone, cpf, senha);
-			JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
-			this.setVisible(false);
+			
+			HashMap<String, Object> hashMap = new HashMap<String, Object>();
+			
+			hashMap.put("nome", nome);
+			hashMap.put("senha", senha);
+			hashMap.put("dataNascimento", dataNascimento);
+			hashMap.put("cpf", cpf);
+			hashMap.put("telefone", telefone);
+			frontController.dispatchRequest(Request.LOGIN_CADASTRA_USUARIO, hashMap);
+			
+			
+		//	frontController.getGerenciadorRegrasNegocio().cadastraUsuario(0, nome, dataNascimento, telefone, cpf, senha);
+		//	JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
+		//	this.setVisible(false);
 		} catch (ValidacaoException e) {
 			Log.gravaLog(e);
 			JOptionPane.showMessageDialog(null, e.getMessage());
-		} catch (NegocioException e) {
-			Log.gravaLog(e);
-			JOptionPane.showMessageDialog(null, "Erro durante o cadastro:\n" + e.getMessage());
 		}
 	}
 	private void fecharCadastro() {

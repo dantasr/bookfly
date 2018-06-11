@@ -1,4 +1,4 @@
-package visualizacao;
+package visualizacao.usuario;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -8,11 +8,13 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import arquivos.GerenciadorArquivos;
+import controller.FrontController;
+import controller.FrontController.Request;
 import dto.Livro;
-import main.Contexto;
 import negocio.NegocioException;
 import utilidades.IconeLabel;
 import utilidades.Log;
+import visualizacao.principal.TelaLogin;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -23,6 +25,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.net.MalformedURLException;
+import java.util.HashMap;
 import java.util.List;
 
 public class TelaUsuario extends JFrame {
@@ -33,7 +36,7 @@ public class TelaUsuario extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JLabel lblNomeusuario;
-	private Contexto contexto;
+	private FrontController frontController;
 	private JLabel[] capasRecentes;
 	private JLabel[] titulosRecentes;
 	private GerenciadorArquivos gerenciadorArquivos = new GerenciadorArquivos();
@@ -41,9 +44,9 @@ public class TelaUsuario extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaUsuario(Contexto contexto) {
+	public TelaUsuario(FrontController frontController) {
 		setTitle("BOOKFLY");
-		this.contexto = contexto;
+		this.frontController = frontController;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -80,7 +83,7 @@ public class TelaUsuario extends JFrame {
 		JButton btnLivros = new JButton("Livros");
 		btnLivros.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new TelaUsuarioMeusLivros(contexto).setVisible(true);
+				new TelaUsuarioMeusLivros(frontController).setVisible(true);
 			}
 		});
 		btnLivros.setBounds(96, 44, 89, 23);
@@ -89,7 +92,7 @@ public class TelaUsuario extends JFrame {
 		JButton btnHistorico = new JButton("Hist\u00F3rico");
 		btnHistorico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new TelaUsuarioMeuHistorico(contexto).setVisible(true);
+				new TelaUsuarioMeuHistorico(frontController).setVisible(true);
 			}
 		});
 		btnHistorico.setBounds(186, 44, 89, 23);
@@ -103,7 +106,7 @@ public class TelaUsuario extends JFrame {
 		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				fecharTela();
-				new TelaLogin(contexto).setVisible(true);
+				new TelaLogin(frontController).setVisible(true);
 			}
 		});
 		btnSair.setBounds(335, 227, 89, 23);
@@ -140,10 +143,9 @@ public class TelaUsuario extends JFrame {
 	}
 
 	private void atualizarCampos() {
-		this.lblNomeusuario.setText(contexto.getUsuarioAtual().getNome());
-		
+		this.lblNomeusuario.setText(frontController.getUsuarioAtual().getNome());
 		try {
-			List<Livro> recentes = contexto.getGerenciadorRegrasNegocio().listaLivrosRecentes(3);
+			List<Livro> recentes = frontController.getGerenciadorRegrasNegocio().listaLivrosRecentes(3);
 			for (int i = 0; i < recentes.size(); i++) {
 				Livro livro = recentes.get(i);
 				
@@ -162,8 +164,10 @@ public class TelaUsuario extends JFrame {
 	}
 	
 	private void geraResultado() {
-		String termo = textField.getText();
-		new TelaUsuarioResultadoPesquisa(contexto,termo);
+		String pesquisa = textField.getText();
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		hashMap.put("pesquisa", pesquisa);
+		frontController.dispatchRequest(Request.USUARIO_REALIZA_PESQUISA, hashMap);
 	}
 	private void fecharTela() {
 		super.dispose();

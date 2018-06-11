@@ -1,4 +1,4 @@
-package visualizacao;
+package visualizacao.principal;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -7,8 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controller.FrontController;
+import controller.FrontController.Request;
 import dto.Usuario;
-import main.Contexto;
 import negocio.NegocioException;
 import utilidades.Log;
 
@@ -22,13 +23,15 @@ import java.awt.event.ActionEvent;
 import javax.swing.JRadioButton;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.HashMap;
+
 import javax.swing.JPasswordField;
 
 public class TelaLogin extends JFrame {
 	/**
 	 * 
 	 */
-	private Contexto contexto;
+	private FrontController frontController;
 	private JPanel contentPane;
 	private JTextField login;
 	private JPasswordField senha;
@@ -36,8 +39,8 @@ public class TelaLogin extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaLogin(Contexto contexto) {
-		this.contexto = contexto;
+	public TelaLogin(FrontController frontController) {
+		this.frontController = frontController;
 
 		setTitle("BOOKFLY");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -90,7 +93,7 @@ public class TelaLogin extends JFrame {
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new TelaCadastro(contexto).setVisible(true);
+				new TelaCadastro(frontController).setVisible(true);
 			}
 		});
 		btnCadastrar.setBounds(151, 121, 89, 23);
@@ -104,36 +107,9 @@ public class TelaLogin extends JFrame {
 			return;
 		}
 		
-		try {
-			Usuario usuario = contexto.getGerenciadorRegrasNegocio().buscaUsuarioPorNomeExato(login.getText());
-			if (usuario == null) {
-				JOptionPane.showMessageDialog(null, "Usuario não existe!");
-				return;
-			}
-			
-			if (!usuario.isAtivado()) {
-				JOptionPane.showMessageDialog(null, "Usuario não está ativado!");
-				return;
-			}
-			
-			if (!senha.getText().equals(usuario.getSenha())) {
-				JOptionPane.showMessageDialog(null, "Senha incorreta!");
-				return;
-			}
-
-			// Login feito com sucesso, trocar para tela de administrador ou cliente, dependendo do
-			// tipo do usuário.
-			contexto.setUsuarioAtual(usuario);
-			this.setVisible(false);
-
-			if (usuario.isAdministrador()) {
-				new TelaAdmin(contexto).setVisible(true);
-			} else {
-				new TelaUsuario(contexto).setVisible(true);
-			}
-		} catch (NegocioException e) {
-			Log.gravaLog(e);
-			JOptionPane.showMessageDialog(null, "Erro no banco de dados.");
-		}
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();		
+		hashMap.put("usuario", login.getText());
+		hashMap.put("senha", senha.getText());
+		frontController.dispatchRequest(Request.LOGIN_REALIZA_LOGIN, hashMap);
 	}
 }

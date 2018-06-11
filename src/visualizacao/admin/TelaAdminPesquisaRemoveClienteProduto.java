@@ -1,4 +1,4 @@
-package visualizacao;
+package visualizacao.admin;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -11,9 +11,10 @@ import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import controller.FrontController;
+import controller.FrontController.Request;
 import dto.Livro;
 import dto.Usuario;
-import main.Contexto;
 import negocio.NegocioException;
 import utilidades.Log;
 
@@ -26,6 +27,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
@@ -38,16 +40,16 @@ public class TelaAdminPesquisaRemoveClienteProduto extends JFrame {
 	private JTextField campoPesquisaProduto;
 	private JTable tableResultadosUsuario;
 	private JTable tableResultadosProduto;
-	private Contexto contexto;
+	private FrontController frontController;
 	private int codigo = -1;
 
 	/**
 	 * Create the frame.
 	 * @throws NegocioException 
 	 */
-	public TelaAdminPesquisaRemoveClienteProduto(Contexto contexto) throws NegocioException {
+	public TelaAdminPesquisaRemoveClienteProduto(FrontController contexto) throws NegocioException {
 		setTitle("ADMIN");
-		this.contexto = contexto;
+		this.frontController = contexto;
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -84,6 +86,7 @@ public class TelaAdminPesquisaRemoveClienteProduto extends JFrame {
 		JButton btnDesativaUsuario = new JButton("Desativa");
 		btnDesativaUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				desativaUsuario();
 			}
 		});
@@ -234,14 +237,12 @@ public class TelaAdminPesquisaRemoveClienteProduto extends JFrame {
 		DefaultTableModel model = (DefaultTableModel) tableResultadosUsuario.getModel();
 		int codigo = (int) model.getValueAt(row, 0);
 		
-		try {
-			contexto.getGerenciadorRegrasNegocio().desativaUsuario(codigo);
-			realizaPesquisaUsuario();
+			HashMap<String, Object> hashMap = new HashMap<String, Object>();
+			hashMap.put("codigoUsuario", codigo);
+			frontController.dispatchRequest(Request.ADMIN_DESATIVA_USUARIO, hashMap);
+			//realizaPesquisaUsuario();
 			JOptionPane.showMessageDialog(null, "Usuario desativado com sucesso!");
-		} catch (NegocioException e) {
-			Log.gravaLog(e);
-			JOptionPane.showMessageDialog(null, e.getMessage());
-		}
+
 	}
 	
 	private void ativaUsuario() {
@@ -252,15 +253,13 @@ public class TelaAdminPesquisaRemoveClienteProduto extends JFrame {
 		}
 		DefaultTableModel model = (DefaultTableModel) tableResultadosUsuario.getModel();
 		int codigo = (int) model.getValueAt(row, 0);
-		
-		try {
-			contexto.getGerenciadorRegrasNegocio().ativaUsuario(codigo);
-			realizaPesquisaUsuario();
+
+			HashMap<String, Object> hashMap = new HashMap<String, Object>();
+			hashMap.put("codigoUsuario", codigo);
+			frontController.dispatchRequest(Request.ADMIN_ATIVA_USUARIO, hashMap);			
+			
+			//realizaPesquisaUsuario();
 			JOptionPane.showMessageDialog(null, "Usuario Ativado com sucesso!");
-		} catch (NegocioException e) {
-			Log.gravaLog(e);
-			JOptionPane.showMessageDialog(null, e.getMessage());
-		}
 	}
 
 	private void removeProduto() {
@@ -270,14 +269,11 @@ public class TelaAdminPesquisaRemoveClienteProduto extends JFrame {
 		DefaultTableModel model = (DefaultTableModel) tableResultadosProduto.getModel();
 		int codigo = (int) model.getValueAt(row, 0);
 		
-		try {
-			contexto.getGerenciadorRegrasNegocio().removeLivro(codigo);
-			realizaPesquisaProduto();
+			HashMap<String, Object> hashMap = new HashMap<String, Object>();
+			hashMap.put("codigoProduto", codigo);
+			frontController.dispatchRequest(Request.ADMIN_REMOVE_PRODUTO, hashMap);
+			//realizaPesquisaProduto();
 			JOptionPane.showMessageDialog(null, "Produto removido com sucesso!");
-		} catch (NegocioException e) {
-			Log.gravaLog(e);
-			JOptionPane.showMessageDialog(null, e.getMessage());
-		}
 	}
 
 	private void clearTable(DefaultTableModel model) {
@@ -307,23 +303,18 @@ public class TelaAdminPesquisaRemoveClienteProduto extends JFrame {
 
 	private void realizaPesquisaProduto() {
 		String termo = campoPesquisaProduto.getText();
-		try {
-			List<Livro> resultados = contexto.getGerenciadorRegrasNegocio().buscaLivrosPorNome(termo);
-			montaTabelaLivros(resultados);
-		} catch (NegocioException e) {
-			Log.gravaLog(e);
-			JOptionPane.showMessageDialog(null, e.getMessage());
-		}
+			HashMap<String, Object> hashMap = new HashMap<String, Object>();
+			hashMap.put("termoPesquisa", termo);
+			frontController.dispatchRequest(Request.ADMIN_PESQUISA_PRODUTO, hashMap);
+			//montaTabelaLivros(resultados);
 	}
 	
 	private void realizaPesquisaUsuario() {
 		String termo = campoPesquisaProduto.getText();
-		try {
-			List<Usuario> resultados = contexto.getGerenciadorRegrasNegocio().buscaUsuariosPorNome(termo);
-			montaTabelaUsuarios(resultados);
-		} catch (NegocioException e) {
-			Log.gravaLog(e);
-			JOptionPane.showMessageDialog(null, e.getMessage());
-		}
+			
+			HashMap<String, Object> hashMap = new HashMap<String, Object>();
+			hashMap.put("termoPesquisa", termo);
+			frontController.dispatchRequest(Request.ADMIN_PESQUISA_USUARIO, hashMap);
+			//montaTabelaUsuarios(resultados);
 	}
 }

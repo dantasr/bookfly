@@ -1,4 +1,4 @@
-package visualizacao;
+package visualizacao.usuario;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -16,23 +16,23 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
+import controller.FrontController;
 import dto.Aluguel;
 import dto.Usuario;
 import dto.Venda;
-import main.Contexto;
 import negocio.NegocioException;
 
 public class TelaUsuarioMeuHistorico extends JFrame {
 
 	private JPanel contentPane;
 	private JTable tableListaHistorico;
-	private Contexto contexto;
+	private FrontController frontController;
 
 	/**
 	 * Create the frame.
 	 */
-	public TelaUsuarioMeuHistorico(Contexto contexto) {
-		this.contexto = contexto;
+	public TelaUsuarioMeuHistorico(FrontController frontController) {
+		this.frontController = frontController;
 		setTitle("BOOKFLY");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -63,11 +63,11 @@ public class TelaUsuarioMeuHistorico extends JFrame {
 	}
 	
 	private void preencheDados() {
-		Usuario atual = contexto.getUsuarioAtual();
+		Usuario atual = frontController.getUsuarioAtual();
 		
 		try {
-			List<Venda> vendas = contexto.getGerenciadorRegrasNegocio().buscaVendasDoUsuario(atual.getCodigo());
-			List<Aluguel> alugueis = contexto.getGerenciadorRegrasNegocio().buscaAlugueisDoUsuario(atual.getCodigo());
+			List<Venda> vendas = frontController.getGerenciadorRegrasNegocio().buscaVendasDoUsuario(atual.getCodigo());
+			List<Aluguel> alugueis = frontController.getGerenciadorRegrasNegocio().buscaAlugueisDoUsuario(atual.getCodigo());
 			
 			clearTable((DefaultTableModel) tableListaHistorico.getModel());
 			adicionaVendas(vendas);

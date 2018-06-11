@@ -13,12 +13,12 @@ import basedados.FachadaBaseDadosDao;
 import cartoes.Cartao;
 import cartoes.CartaoSemSaldoException;
 import cartoes.GerenciadorCartoes;
+import controller.FrontController;
 import dto.Aluguel;
 import dto.Livro;
 import dto.Promocao;
 import dto.Usuario;
 import dto.Venda;
-import main.Contexto;
 
 public class FachadaRegrasNegocio {
 	private FachadaBaseDados fachadaBaseDados;
@@ -57,8 +57,8 @@ public class FachadaRegrasNegocio {
 		regrasNegocioLivro.cadastraLivro(codigo, nome, autor, editora, preco, dia, mes, ano);
 	}
 
-	public void cadastraPromocao(int codigo,Contexto contexto, int novoPreco) throws NegocioException {
-		regrasNegocioPromocao.cadastraPromocao(codigo, contexto, novoPreco);
+	public void cadastraPromocao(int codigo,FrontController frontController, int novoPreco) throws NegocioException {
+		regrasNegocioPromocao.cadastraPromocao(codigo, frontController, novoPreco);
 	}
 
 	///////////////////////////////LISTA USUARIOS///////////////////////////////////////////////////////////////////////////

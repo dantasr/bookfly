@@ -1,4 +1,5 @@
-package visualizacao;
+package visualizacao.principal;
+ackage visualizacao;
 
 import java.util.HashMap;
 

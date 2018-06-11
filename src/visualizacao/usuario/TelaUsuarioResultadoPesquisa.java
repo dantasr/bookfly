@@ -1,7 +1,8 @@
-package visualizacao;
+package visualizacao.usuario;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -17,10 +18,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.table.DefaultTableModel;
 
+import controller.FrontController;
+import controller.FrontController.Request;
 import dto.Livro;
-import main.Contexto;
 import negocio.NegocioException;
 import utilidades.Log;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
@@ -30,14 +33,14 @@ public class TelaUsuarioResultadoPesquisa extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
-	private Contexto contexto;
+	private FrontController frontController;
 
 	/**
 	 * Create the frame.
 	 */
-	public TelaUsuarioResultadoPesquisa(Contexto contexto, String termo) {
+	public TelaUsuarioResultadoPesquisa(FrontController frontController, String termo) {
 		setTitle("BOOKFLY");
-		this.contexto = contexto;
+		this.frontController = frontController;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -75,9 +78,11 @@ public class TelaUsuarioResultadoPesquisa extends JFrame {
 				int codigo = Integer.parseInt(table.getModel().getValueAt(row, 0).toString());
 				
 				try {
-					Livro livro = contexto.getGerenciadorRegrasNegocio().buscaLivro(codigo);
-					new TelaUsuarioLivro(contexto, livro).setVisible(true);
-					setVisible(false);
+					HashMap<String, Object> hashMap = new HashMap<String, Object>();
+					hashMap.put("usuario", usuario);
+					hashMap.put("codigoLivro", codigo);
+					
+					frontController.dispatchRequest(Request.USUARIO_DESCREVE_LIVRO, hashMap);
 				} catch (NegocioException e) {
 					e.printStackTrace();
 				}
@@ -120,7 +125,7 @@ public class TelaUsuarioResultadoPesquisa extends JFrame {
 	
 	private void realizaPesquisaProduto(String termo) {
 		try {
-			List<Livro> resultados = contexto.getGerenciadorRegrasNegocio().buscaLivrosPorNome(termo);
+			List<Livro> resultados = frontController.getGerenciadorRegrasNegocio().buscaLivrosPorNome(termo);
 			if(resultados.size() != 0) {
 				montaTabelaLivros(resultados);
 				this.setVisible(true);

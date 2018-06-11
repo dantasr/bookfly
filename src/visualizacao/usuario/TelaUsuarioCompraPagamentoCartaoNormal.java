@@ -1,4 +1,4 @@
-package visualizacao;
+package visualizacao.usuario;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -10,9 +10,10 @@ import javax.swing.border.EmptyBorder;
 import basedados.BaseDadosException;
 import cartoes.Cartao;
 import cartoes.GerenciadorCartoes;
+import controller.FrontController;
+import controller.FrontController.Request;
 import dto.Livro;
 import dto.Usuario;
-import main.Contexto;
 import negocio.NegocioException;
 import utilidades.Log;
 import utilidades.ValidacaoException;
@@ -27,6 +28,7 @@ import java.awt.Color;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.awt.event.ActionEvent;
 
 public class TelaUsuarioCompraPagamentoCartaoNormal extends JFrame {
@@ -39,15 +41,15 @@ public class TelaUsuarioCompraPagamentoCartaoNormal extends JFrame {
 	private JRadioButton radioVisa;
 	private JRadioButton radioMaster;
 	private JRadioButton radioElo;
-	private Contexto contexto;
+	private FrontController frontController;
 	private Livro livro;
 	private Validador validador = new Validador();
 
 	/**
 	 * Launch the application.
 	 */
-	public TelaUsuarioCompraPagamentoCartaoNormal(Contexto contexto, Livro livro) {
-		this.contexto = contexto;
+	public TelaUsuarioCompraPagamentoCartaoNormal(FrontController frontController, Livro livro) {
+		this.frontController = frontController;
 		this.livro = livro;
 		
 		setTitle("BOOKFLY");
@@ -132,13 +134,13 @@ public class TelaUsuarioCompraPagamentoCartaoNormal extends JFrame {
 		contentPane.add(btnVoltar);
 	}
 	
-	private GerenciadorCartoes obtemGerenciadorCartoes() {
+	private String obtemGerenciadorCartoes() {
 		if (radioMaster.isSelected())
-			return contexto.getGerenciadorMastercard();
+			return "MasterCard";
 		else if (radioVisa.isSelected())
-			return contexto.getGerenciadorVisa();
+			return "Visa";
 		else if (radioElo.isSelected())
-			return contexto.getGerenciadorElo();
+			return "Elo";
 		
 		return null;
 	}
@@ -158,7 +160,17 @@ public class TelaUsuarioCompraPagamentoCartaoNormal extends JFrame {
 			return;
 		}
 		
-		GerenciadorCartoes gerenciadorCartoes = obtemGerenciadorCartoes();
+		String gerenciadorCartoes = obtemGerenciadorCartoes();
+		
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		hashMap.put("usuario", usuario);
+		hashMap.put("livro", livro);
+		hashMap.put("cartaoCodigo", codigo);
+		hashMap.put("cartaoAno", ano);
+		hashMap.put("cartaoMes", mes);
+		
+		frontController.dispatchRequest(Request.USUARIO_REALIZA_COMPRA_CARTAO_NORMAL, hashMap);
+		
 		Cartao cartao = null;
 		try {
 			cartao = gerenciadorCartoes.buscaCartaoComCampos(codigo, ano, mes, cvv);
@@ -169,10 +181,10 @@ public class TelaUsuarioCompraPagamentoCartaoNormal extends JFrame {
 			return;
 		}
 		
-		Usuario atual = contexto.getUsuarioAtual();
+		Usuario atual = frontController.getUsuarioAtual();
 		int precoLivro;
 		try {
-			precoLivro = contexto.getGerenciadorPreco().calcularPrecoParaLivro(livro, null, atual, false);
+			precoLivro = frontController.getGerenciadorPreco().calcularPrecoParaLivro(livro, null, atual, false);
 		} catch (NegocioException e) {
 			Log.gravaLog(e);
 			JOptionPane.showMessageDialog(null, e.getMessage());
@@ -186,7 +198,7 @@ public class TelaUsuarioCompraPagamentoCartaoNormal extends JFrame {
 		}
 		
 		try {
-			contexto.getGerenciadorRegrasNegocio().vendeLivroCartaoNormal(gerenciadorCartoes, cartao, atual, livro, precoLivro);
+			frontController.getGerenciadorRegrasNegocio().vendeLivroCartaoNormal(gerenciadorCartoes, cartao, atual, livro, precoLivro);
 			JOptionPane.showMessageDialog(null, "Livro comprado com sucesso!");
 			setVisible(false);
 		} catch (NegocioException e) {
