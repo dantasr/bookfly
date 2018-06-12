@@ -1,11 +1,8 @@
 package negocio;
 
-import utilidades.Log;
-
 import java.time.Instant;
 import java.util.Date;
 
-import basedados.BaseDadosException;
 import basedados.FachadaBaseDados;
 import dto.Livro;
 import dto.Promocao;

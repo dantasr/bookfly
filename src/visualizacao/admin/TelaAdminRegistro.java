@@ -1,18 +1,12 @@
 package visualizacao.admin;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.sql.Date;
 import java.util.HashMap;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,19 +17,16 @@ import javax.swing.border.EmptyBorder;
 import arquivos.GerenciadorArquivos;
 import controller.FrontController;
 import controller.FrontController.Request;
-import dto.Livro;
-import negocio.NegocioException;
+import controller.IAcceptRequests;
 import utilidades.IconeLabel;
 import utilidades.Log;
 import utilidades.SeletorDeArquivos;
 import utilidades.ValidacaoException;
 import utilidades.Validador;
 
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import java.awt.Canvas;
 
-public class TelaAdminRegistro extends JFrame {
+public class TelaAdminRegistro extends JFrame implements IAcceptRequests {
 
 	private JPanel contentPane;
 	private JTextField campoCodProduto;

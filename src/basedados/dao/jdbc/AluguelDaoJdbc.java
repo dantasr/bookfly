@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import basedados.BaseDadosException;
-import basedados.ConectorJDBC;
 import basedados.dao.AluguelDao;
 import basedados.dao.LivroDao;
 import basedados.dao.UsuarioDao;

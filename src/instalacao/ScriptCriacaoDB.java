@@ -3,8 +3,6 @@ package instalacao;
 import java.sql.Date;
 import java.sql.SQLException;
 
-import javax.swing.JOptionPane;
-
 import basedados.BaseDadosException;
 import basedados.dao.AluguelDao;
 import basedados.dao.LivroDao;

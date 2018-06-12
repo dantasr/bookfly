@@ -1,13 +1,6 @@
 package basedados;
 
-import java.sql.Date;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-
-import javax.swing.JOptionPane;
 
 import basedados.dao.AluguelDao;
 import basedados.dao.LivroDao;
@@ -19,13 +12,11 @@ import basedados.dao.jdbc.LivroDaoJdbc;
 import basedados.dao.jdbc.PromocaoDaoJdbc;
 import basedados.dao.jdbc.UsuarioDaoJdbc;
 import basedados.dao.jdbc.VendaDaoJdbc;
-import controller.FrontController;
 import dto.Aluguel;
 import dto.Livro;
 import dto.Promocao;
 import dto.Usuario;
 import dto.Venda;
-import utilidades.Log;
 
 public class FachadaBaseDadosDao implements FachadaBaseDados {
 

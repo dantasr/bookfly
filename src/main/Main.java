@@ -5,7 +5,6 @@ import javax.swing.UIManager;
 
 import basedados.BaseDadosException;
 import controller.FrontController;
-import negocio.NegocioException;
 import utilidades.Log;
 import visualizacao.principal.TelaLogin;
 

@@ -2,45 +2,111 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2018-05-25T14:55:12</date>
-  <millis>1527270912310</millis>
+  <date>2018-06-08T23:28:05.236943Z</date>
+  <millis>1528500485236</millis>
+  <nanos>943000</nanos>
   <sequence>0</sequence>
   <logger>java.util.logging.Logger</logger>
   <level>SEVERE</level>
   <class>utilidades.Log</class>
   <method>gravaLog</method>
   <thread>17</thread>
-  <message>javax.imageio.IIOException: Can't read input file!</message>
+  <message>com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'cartaoelo.usuario' doesn't exist</message>
   <exception>
-    <message>javax.imageio.IIOException: Can't read input file!</message>
+    <message>com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'cartaoelo.usuario' doesn't exist</message>
     <frame>
-      <class>javax.imageio.ImageIO</class>
-      <method>read</method>
+      <class>jdk.internal.reflect.NativeConstructorAccessorImpl</class>
+      <method>newInstance0</method>
     </frame>
     <frame>
-      <class>arquivos.GerenciadorArquivos</class>
-      <method>carregarImagem</method>
-      <line>46</line>
+      <class>jdk.internal.reflect.NativeConstructorAccessorImpl</class>
+      <method>newInstance</method>
+      <line>62</line>
     </frame>
     <frame>
-      <class>arquivos.GerenciadorArquivos</class>
-      <method>carregarImagemDoLivro</method>
-      <line>67</line>
+      <class>jdk.internal.reflect.DelegatingConstructorAccessorImpl</class>
+      <method>newInstance</method>
+      <line>45</line>
     </frame>
     <frame>
-      <class>visualizacao.TelaUsuario</class>
-      <method>atualizarCampos</method>
-      <line>151</line>
+      <class>java.lang.reflect.Constructor</class>
+      <method>newInstance</method>
+      <line>488</line>
     </frame>
     <frame>
-      <class>visualizacao.TelaUsuario</class>
-      <method>&lt;init&gt;</method>
-      <line>139</line>
+      <class>com.mysql.jdbc.Util</class>
+      <method>handleNewInstance</method>
+      <line>425</line>
+    </frame>
+    <frame>
+      <class>com.mysql.jdbc.Util</class>
+      <method>getInstance</method>
+      <line>408</line>
+    </frame>
+    <frame>
+      <class>com.mysql.jdbc.SQLError</class>
+      <method>createSQLException</method>
+      <line>944</line>
+    </frame>
+    <frame>
+      <class>com.mysql.jdbc.MysqlIO</class>
+      <method>checkErrorPacket</method>
+      <line>3976</line>
+    </frame>
+    <frame>
+      <class>com.mysql.jdbc.MysqlIO</class>
+      <method>checkErrorPacket</method>
+      <line>3912</line>
+    </frame>
+    <frame>
+      <class>com.mysql.jdbc.MysqlIO</class>
+      <method>sendCommand</method>
+      <line>2530</line>
+    </frame>
+    <frame>
+      <class>com.mysql.jdbc.MysqlIO</class>
+      <method>sqlQueryDirect</method>
+      <line>2683</line>
+    </frame>
+    <frame>
+      <class>com.mysql.jdbc.ConnectionImpl</class>
+      <method>execSQL</method>
+      <line>2486</line>
+    </frame>
+    <frame>
+      <class>com.mysql.jdbc.PreparedStatement</class>
+      <method>executeInternal</method>
+      <line>1858</line>
+    </frame>
+    <frame>
+      <class>com.mysql.jdbc.PreparedStatement</class>
+      <method>executeQuery</method>
+      <line>1966</line>
+    </frame>
+    <frame>
+      <class>basedados.dao.jdbc.UsuarioDaoJdbc</class>
+      <method>buscaPorNomeExato</method>
+      <line>188</line>
+    </frame>
+    <frame>
+      <class>basedados.FachadaBaseDadosDao</class>
+      <method>buscaUsuarioPorNomeExato</method>
+      <line>128</line>
+    </frame>
+    <frame>
+      <class>negocio.RegrasNegocioUsuario</class>
+      <method>buscaUsuarioPorNomeExato</method>
+      <line>45</line>
+    </frame>
+    <frame>
+      <class>negocio.FachadaRegrasNegocio</class>
+      <method>buscaUsuarioPorNomeExato</method>
+      <line>86</line>
     </frame>
     <frame>
       <class>visualizacao.TelaLogin</class>
       <method>realizarLogin</method>
-      <line>127</line>
+      <line>108</line>
     </frame>
     <frame>
       <class>visualizacao.TelaLogin</class>
@@ -48,97 +114,109 @@
       <line>102</line>
     </frame>
     <frame>
-      <class>visualizacao.TelaLogin$2</class>
-      <method>actionPerformed</method>
-      <line>79</line>
-    </frame>
-    <frame>
-      <class>javax.swing.AbstractButton</class>
-      <method>fireActionPerformed</method>
-    </frame>
-    <frame>
-      <class>javax.swing.AbstractButton$Handler</class>
-      <method>actionPerformed</method>
-    </frame>
-    <frame>
-      <class>javax.swing.DefaultButtonModel</class>
-      <method>fireActionPerformed</method>
-    </frame>
-    <frame>
-      <class>javax.swing.DefaultButtonModel</class>
-      <method>setPressed</method>
-    </frame>
-    <frame>
-      <class>javax.swing.plaf.basic.BasicButtonListener</class>
-      <method>mouseReleased</method>
+      <class>visualizacao.TelaLogin$1</class>
+      <method>keyReleased</method>
+      <line>62</line>
     </frame>
     <frame>
       <class>java.awt.Component</class>
-      <method>processMouseEvent</method>
+      <method>processKeyEvent</method>
+      <line>6550</line>
     </frame>
     <frame>
       <class>javax.swing.JComponent</class>
-      <method>processMouseEvent</method>
+      <method>processKeyEvent</method>
+      <line>2849</line>
     </frame>
     <frame>
       <class>java.awt.Component</class>
       <method>processEvent</method>
+      <line>6366</line>
     </frame>
     <frame>
       <class>java.awt.Container</class>
       <method>processEvent</method>
+      <line>2261</line>
     </frame>
     <frame>
       <class>java.awt.Component</class>
       <method>dispatchEventImpl</method>
+      <line>4966</line>
     </frame>
     <frame>
       <class>java.awt.Container</class>
       <method>dispatchEventImpl</method>
+      <line>2319</line>
     </frame>
     <frame>
       <class>java.awt.Component</class>
       <method>dispatchEvent</method>
+      <line>4798</line>
     </frame>
     <frame>
-      <class>java.awt.LightweightDispatcher</class>
-      <method>retargetMouseEvent</method>
+      <class>java.awt.KeyboardFocusManager</class>
+      <method>redispatchEvent</method>
+      <line>1950</line>
     </frame>
     <frame>
-      <class>java.awt.LightweightDispatcher</class>
-      <method>processMouseEvent</method>
+      <class>java.awt.DefaultKeyboardFocusManager</class>
+      <method>dispatchKeyEvent</method>
+      <line>871</line>
     </frame>
     <frame>
-      <class>java.awt.LightweightDispatcher</class>
+      <class>java.awt.DefaultKeyboardFocusManager</class>
+      <method>preDispatchKeyEvent</method>
+      <line>1140</line>
+    </frame>
+    <frame>
+      <class>java.awt.DefaultKeyboardFocusManager</class>
+      <method>typeAheadAssertions</method>
+      <line>1010</line>
+    </frame>
+    <frame>
+      <class>java.awt.DefaultKeyboardFocusManager</class>
       <method>dispatchEvent</method>
+      <line>836</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEventImpl</method>
+      <line>4847</line>
     </frame>
     <frame>
       <class>java.awt.Container</class>
       <method>dispatchEventImpl</method>
+      <line>2319</line>
     </frame>
     <frame>
       <class>java.awt.Window</class>
       <method>dispatchEventImpl</method>
+      <line>2772</line>
     </frame>
     <frame>
       <class>java.awt.Component</class>
       <method>dispatchEvent</method>
+      <line>4798</line>
     </frame>
     <frame>
       <class>java.awt.EventQueue</class>
       <method>dispatchEventImpl</method>
+      <line>772</line>
     </frame>
     <frame>
       <class>java.awt.EventQueue</class>
-      <method>access$500</method>
+      <method>access$600</method>
+      <line>97</line>
     </frame>
     <frame>
-      <class>java.awt.EventQueue$3</class>
+      <class>java.awt.EventQueue$4</class>
       <method>run</method>
+      <line>721</line>
     </frame>
     <frame>
-      <class>java.awt.EventQueue$3</class>
+      <class>java.awt.EventQueue$4</class>
       <method>run</method>
+      <line>715</line>
     </frame>
     <frame>
       <class>java.security.AccessController</class>
@@ -147,18 +225,22 @@
     <frame>
       <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
       <method>doIntersectionPrivilege</method>
+      <line>87</line>
     </frame>
     <frame>
       <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
       <method>doIntersectionPrivilege</method>
+      <line>97</line>
     </frame>
     <frame>
-      <class>java.awt.EventQueue$4</class>
+      <class>java.awt.EventQueue$5</class>
       <method>run</method>
+      <line>745</line>
     </frame>
     <frame>
-      <class>java.awt.EventQueue$4</class>
+      <class>java.awt.EventQueue$5</class>
       <method>run</method>
+      <line>743</line>
     </frame>
     <frame>
       <class>java.security.AccessController</class>
@@ -167,34 +249,469 @@
     <frame>
       <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
       <method>doIntersectionPrivilege</method>
+      <line>87</line>
     </frame>
     <frame>
       <class>java.awt.EventQueue</class>
       <method>dispatchEvent</method>
+      <line>742</line>
     </frame>
     <frame>
       <class>java.awt.EventDispatchThread</class>
       <method>pumpOneEventForFilters</method>
+      <line>203</line>
     </frame>
     <frame>
       <class>java.awt.EventDispatchThread</class>
       <method>pumpEventsForFilter</method>
+      <line>124</line>
     </frame>
     <frame>
       <class>java.awt.EventDispatchThread</class>
       <method>pumpEventsForHierarchy</method>
+      <line>113</line>
     </frame>
     <frame>
       <class>java.awt.EventDispatchThread</class>
       <method>pumpEvents</method>
+      <line>109</line>
     </frame>
     <frame>
       <class>java.awt.EventDispatchThread</class>
       <method>pumpEvents</method>
+      <line>101</line>
     </frame>
     <frame>
       <class>java.awt.EventDispatchThread</class>
       <method>run</method>
+      <line>90</line>
     </frame>
   </exception>
 </record>
+<record>
+  <date>2018-06-08T23:28:05.268945200Z</date>
+  <millis>1528500485268</millis>
+  <nanos>945200</nanos>
+  <sequence>1</sequence>
+  <logger>java.util.logging.Logger</logger>
+  <level>SEVERE</level>
+  <class>utilidades.Log</class>
+  <method>gravaLog</method>
+  <thread>17</thread>
+  <message>basedados.BaseDadosException: Problemas ao ler o resultado da consulta.</message>
+  <exception>
+    <message>basedados.BaseDadosException: Problemas ao ler o resultado da consulta.</message>
+    <frame>
+      <class>basedados.dao.jdbc.UsuarioDaoJdbc</class>
+      <method>buscaPorNomeExato</method>
+      <line>197</line>
+    </frame>
+    <frame>
+      <class>basedados.FachadaBaseDadosDao</class>
+      <method>buscaUsuarioPorNomeExato</method>
+      <line>128</line>
+    </frame>
+    <frame>
+      <class>negocio.RegrasNegocioUsuario</class>
+      <method>buscaUsuarioPorNomeExato</method>
+      <line>45</line>
+    </frame>
+    <frame>
+      <class>negocio.FachadaRegrasNegocio</class>
+      <method>buscaUsuarioPorNomeExato</method>
+      <line>86</line>
+    </frame>
+    <frame>
+      <class>visualizacao.TelaLogin</class>
+      <method>realizarLogin</method>
+      <line>108</line>
+    </frame>
+    <frame>
+      <class>visualizacao.TelaLogin</class>
+      <method>access$0</method>
+      <line>102</line>
+    </frame>
+    <frame>
+      <class>visualizacao.TelaLogin$1</class>
+      <method>keyReleased</method>
+      <line>62</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>processKeyEvent</method>
+      <line>6550</line>
+    </frame>
+    <frame>
+      <class>javax.swing.JComponent</class>
+      <method>processKeyEvent</method>
+      <line>2849</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>processEvent</method>
+      <line>6366</line>
+    </frame>
+    <frame>
+      <class>java.awt.Container</class>
+      <method>processEvent</method>
+      <line>2261</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEventImpl</method>
+      <line>4966</line>
+    </frame>
+    <frame>
+      <class>java.awt.Container</class>
+      <method>dispatchEventImpl</method>
+      <line>2319</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEvent</method>
+      <line>4798</line>
+    </frame>
+    <frame>
+      <class>java.awt.KeyboardFocusManager</class>
+      <method>redispatchEvent</method>
+      <line>1950</line>
+    </frame>
+    <frame>
+      <class>java.awt.DefaultKeyboardFocusManager</class>
+      <method>dispatchKeyEvent</method>
+      <line>871</line>
+    </frame>
+    <frame>
+      <class>java.awt.DefaultKeyboardFocusManager</class>
+      <method>preDispatchKeyEvent</method>
+      <line>1140</line>
+    </frame>
+    <frame>
+      <class>java.awt.DefaultKeyboardFocusManager</class>
+      <method>typeAheadAssertions</method>
+      <line>1010</line>
+    </frame>
+    <frame>
+      <class>java.awt.DefaultKeyboardFocusManager</class>
+      <method>dispatchEvent</method>
+      <line>836</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEventImpl</method>
+      <line>4847</line>
+    </frame>
+    <frame>
+      <class>java.awt.Container</class>
+      <method>dispatchEventImpl</method>
+      <line>2319</line>
+    </frame>
+    <frame>
+      <class>java.awt.Window</class>
+      <method>dispatchEventImpl</method>
+      <line>2772</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEvent</method>
+      <line>4798</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue</class>
+      <method>dispatchEventImpl</method>
+      <line>772</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue</class>
+      <method>access$600</method>
+      <line>97</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$4</class>
+      <method>run</method>
+      <line>721</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$4</class>
+      <method>run</method>
+      <line>715</line>
+    </frame>
+    <frame>
+      <class>java.security.AccessController</class>
+      <method>doPrivileged</method>
+    </frame>
+    <frame>
+      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
+      <method>doIntersectionPrivilege</method>
+      <line>87</line>
+    </frame>
+    <frame>
+      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
+      <method>doIntersectionPrivilege</method>
+      <line>97</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$5</class>
+      <method>run</method>
+      <line>745</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$5</class>
+      <method>run</method>
+      <line>743</line>
+    </frame>
+    <frame>
+      <class>java.security.AccessController</class>
+      <method>doPrivileged</method>
+    </frame>
+    <frame>
+      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
+      <method>doIntersectionPrivilege</method>
+      <line>87</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue</class>
+      <method>dispatchEvent</method>
+      <line>742</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpOneEventForFilters</method>
+      <line>203</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEventsForFilter</method>
+      <line>124</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEventsForHierarchy</method>
+      <line>113</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEvents</method>
+      <line>109</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEvents</method>
+      <line>101</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>run</method>
+      <line>90</line>
+    </frame>
+  </exception>
+</record>
+<record>
+  <date>2018-06-08T23:28:05.271945Z</date>
+  <millis>1528500485271</millis>
+  <nanos>945000</nanos>
+  <sequence>2</sequence>
+  <logger>java.util.logging.Logger</logger>
+  <level>SEVERE</level>
+  <class>utilidades.Log</class>
+  <method>gravaLog</method>
+  <thread>17</thread>
+  <message>negocio.NegocioException: Problemas no acesso ao banco de dados.</message>
+  <exception>
+    <message>negocio.NegocioException: Problemas no acesso ao banco de dados.</message>
+    <frame>
+      <class>negocio.RegrasNegocioUsuario</class>
+      <method>buscaUsuarioPorNomeExato</method>
+      <line>48</line>
+    </frame>
+    <frame>
+      <class>negocio.FachadaRegrasNegocio</class>
+      <method>buscaUsuarioPorNomeExato</method>
+      <line>86</line>
+    </frame>
+    <frame>
+      <class>visualizacao.TelaLogin</class>
+      <method>realizarLogin</method>
+      <line>108</line>
+    </frame>
+    <frame>
+      <class>visualizacao.TelaLogin</class>
+      <method>access$0</method>
+      <line>102</line>
+    </frame>
+    <frame>
+      <class>visualizacao.TelaLogin$1</class>
+      <method>keyReleased</method>
+      <line>62</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>processKeyEvent</method>
+      <line>6550</line>
+    </frame>
+    <frame>
+      <class>javax.swing.JComponent</class>
+      <method>processKeyEvent</method>
+      <line>2849</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>processEvent</method>
+      <line>6366</line>
+    </frame>
+    <frame>
+      <class>java.awt.Container</class>
+      <method>processEvent</method>
+      <line>2261</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEventImpl</method>
+      <line>4966</line>
+    </frame>
+    <frame>
+      <class>java.awt.Container</class>
+      <method>dispatchEventImpl</method>
+      <line>2319</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEvent</method>
+      <line>4798</line>
+    </frame>
+    <frame>
+      <class>java.awt.KeyboardFocusManager</class>
+      <method>redispatchEvent</method>
+      <line>1950</line>
+    </frame>
+    <frame>
+      <class>java.awt.DefaultKeyboardFocusManager</class>
+      <method>dispatchKeyEvent</method>
+      <line>871</line>
+    </frame>
+    <frame>
+      <class>java.awt.DefaultKeyboardFocusManager</class>
+      <method>preDispatchKeyEvent</method>
+      <line>1140</line>
+    </frame>
+    <frame>
+      <class>java.awt.DefaultKeyboardFocusManager</class>
+      <method>typeAheadAssertions</method>
+      <line>1010</line>
+    </frame>
+    <frame>
+      <class>java.awt.DefaultKeyboardFocusManager</class>
+      <method>dispatchEvent</method>
+      <line>836</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEventImpl</method>
+      <line>4847</line>
+    </frame>
+    <frame>
+      <class>java.awt.Container</class>
+      <method>dispatchEventImpl</method>
+      <line>2319</line>
+    </frame>
+    <frame>
+      <class>java.awt.Window</class>
+      <method>dispatchEventImpl</method>
+      <line>2772</line>
+    </frame>
+    <frame>
+      <class>java.awt.Component</class>
+      <method>dispatchEvent</method>
+      <line>4798</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue</class>
+      <method>dispatchEventImpl</method>
+      <line>772</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue</class>
+      <method>access$600</method>
+      <line>97</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$4</class>
+      <method>run</method>
+      <line>721</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$4</class>
+      <method>run</method>
+      <line>715</line>
+    </frame>
+    <frame>
+      <class>java.security.AccessController</class>
+      <method>doPrivileged</method>
+    </frame>
+    <frame>
+      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
+      <method>doIntersectionPrivilege</method>
+      <line>87</line>
+    </frame>
+    <frame>
+      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
+      <method>doIntersectionPrivilege</method>
+      <line>97</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$5</class>
+      <method>run</method>
+      <line>745</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue$5</class>
+      <method>run</method>
+      <line>743</line>
+    </frame>
+    <frame>
+      <class>java.security.AccessController</class>
+      <method>doPrivileged</method>
+    </frame>
+    <frame>
+      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
+      <method>doIntersectionPrivilege</method>
+      <line>87</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventQueue</class>
+      <method>dispatchEvent</method>
+      <line>742</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpOneEventForFilters</method>
+      <line>203</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEventsForFilter</method>
+      <line>124</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEventsForHierarchy</method>
+      <line>113</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEvents</method>
+      <line>109</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>pumpEvents</method>
+      <line>101</line>
+    </frame>
+    <frame>
+      <class>java.awt.EventDispatchThread</class>
+      <method>run</method>
+      <line>90</line>
+    </frame>
+  </exception>
+</record>
+</log>

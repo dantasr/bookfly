@@ -1,17 +1,13 @@
 package visualizacao.admin;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.FrontController;
 import controller.IAcceptRequests;
+import dto.Usuario;
 import controller.FrontController.Request;
-import negocio.NegocioException;
-
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -22,6 +18,7 @@ public class TelaAdmin extends JFrame implements IAcceptRequests {
 
 	private JPanel contentPane;
 	private FrontController frontController;
+	private Usuario usuario;
 	private JLabel lblNomeusuario;
 
 	/**
@@ -81,7 +78,7 @@ public class TelaAdmin extends JFrame implements IAcceptRequests {
 	}
 
 	private void atualizarCampos() {
-		this.lblNomeusuario.setText(contexto.getUsuarioAtual().getNome());
+		this.lblNomeusuario.setText(usuario.getNome());
 	}
 	
 	private void fecharTela() {
@@ -90,6 +87,8 @@ public class TelaAdmin extends JFrame implements IAcceptRequests {
 
 	@Override
 	public void show(HashMap<String, Object> params) {
+		usuario = (Usuario) params.get("usuario");
 		
+		atualizarCampos();
 	}
 }

@@ -1,16 +1,11 @@
 package visualizacao.principal;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.FrontController;
 import controller.FrontController.Request;
-import dto.Usuario;
-import negocio.NegocioException;
 import utilidades.Log;
 import utilidades.ValidacaoException;
 import utilidades.Validador;

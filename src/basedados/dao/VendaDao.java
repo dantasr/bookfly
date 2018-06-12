@@ -3,7 +3,6 @@ package basedados.dao;
 import java.util.List;
 
 import basedados.BaseDadosException;
-import dto.Usuario;
 import dto.Venda;
 
 public interface VendaDao {

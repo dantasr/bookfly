@@ -1,6 +1,5 @@
 package basedados;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import dto.Aluguel;
@@ -8,7 +7,6 @@ import dto.Livro;
 import dto.Promocao;
 import dto.Usuario;
 import dto.Venda;
-import negocio.NegocioException;
 
 public interface FachadaBaseDados {
 	// INSERÇÕES

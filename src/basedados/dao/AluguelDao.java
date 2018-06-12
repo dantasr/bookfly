@@ -3,8 +3,7 @@ package basedados.dao;
 import java.util.List;
 
 import basedados.BaseDadosException;
-import dto.Aluguel;
-import dto.Usuario;;
+import dto.Aluguel;;
 
 public interface AluguelDao {
 	public void insere(Aluguel aluguel) throws BaseDadosException;

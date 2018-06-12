@@ -1,26 +1,17 @@
 package visualizacao.principal;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.FrontController;
 import controller.FrontController.Request;
-import dto.Usuario;
-import negocio.NegocioException;
-import utilidades.Log;
-
 import javax.swing.JTextField;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JRadioButton;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;

@@ -5,20 +5,14 @@ import java.util.HashMap;
 import controller.FrontController.Request;
 import negocio.FachadaRegrasNegocio;
 
-public class LivroController implements IController {
-	private FrontController frontController;
-	private Dispatcher dispatcher;
-	private FachadaRegrasNegocio fachadaRegrasNegocio;
-
+public class LivroController extends AbstractController {
 	public LivroController(FrontController frontController, Dispatcher dispatcher,
 			FachadaRegrasNegocio fachadaRegrasNegocio) {
-		super();
-		this.frontController = frontController;
-		this.dispatcher = dispatcher;
-		this.fachadaRegrasNegocio = fachadaRegrasNegocio;
-	}	
-	
-	public void registerHandlers(HashMap<Request, IController> microControladores) {
+		super(frontController, dispatcher, fachadaRegrasNegocio);
+		// TODO Auto-generated constructor stub
+	}
+
+	public void registerHandlers(HashMap<Request, AbstractController> microControladores) {
 		Request[] requests = new Request[] { Request.LOGIN_CADASTRA_USUARIO, Request.LOGIN_REALIZA_LOGIN };
 		for (Request r : requests)
 			microControladores.put(r, this);
@@ -26,8 +20,23 @@ public class LivroController implements IController {
 	
 	@Override
 	public void dispatchRequest(Request request, HashMap<String, Object> hashMap) {
-		// TODO Auto-generated method stub
-
+		switch (request) {
+		case LOGIN_CADASTRA_USUARIO:
+			cadastraUsuario();
+			break;
+		case LOGIN_REALIZA_LOGIN:
+			realizaLogin();
+			break;
+		}
 	}
 
+	public void realizaLogin() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void cadastraUsuario() {
+		// TODO Auto-generated method stub
+		
+	}
 }

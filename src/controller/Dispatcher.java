@@ -3,6 +3,9 @@ package controller;
 import java.util.HashMap;
 
 import visualizacao.admin.TelaAdmin;
+import visualizacao.admin.TelaAdminPesquisaRemoveClienteProduto;
+import visualizacao.admin.TelaAdminPromocao;
+import visualizacao.admin.TelaAdminRegistro;
 
 public class Dispatcher {
 	private FrontController frontController;
@@ -16,7 +19,10 @@ public class Dispatcher {
 		USUARIO_INSERE_CREDITO,
 		USUARIO_LIVRO,
 		USUARIO_HISTORICO, USUARIO_MEUS_LIVROS, USUARIO_PROMOCAO,
-		USUARIO_RESULTADO_PESQUISA
+		USUARIO_RESULTADO_PESQUISA,
+		
+		// Respostas meio que genericas?
+		MENSAGEM_SUCESSO, MENSAGEM_FALHA
 	}
 	
 	private HashMap<DispatchResponse, IAcceptRequests> dispatchMap = new HashMap<DispatchResponse, IAcceptRequests>();
@@ -24,13 +30,16 @@ public class Dispatcher {
 	public Dispatcher(FrontController frontController) {
 		this.frontController = frontController;
 		dispatchMap.put(DispatchResponse.ADMIN_INICIO, new TelaAdmin(frontController));
+		dispatchMap.put(DispatchResponse.ADMIN_PESQUISA, new TelaAdminPesquisaRemoveClienteProduto(frontController));
+		dispatchMap.put(DispatchResponse.ADMIN_PROMOCAO, new TelaAdminPromocao(frontController));
+		dispatchMap.put(DispatchResponse.ADMIN_REGISTRO, new TelaAdminRegistro(frontController));
 	}
 	
 	public void dispatch(DispatchResponse request) {
 		dispatch(request, new HashMap<String, Object>());
 	}
 	
-	public void dispatch(DispatchResponse request, HashMap<String, Object> params) {
-		
+	public void dispatch(DispatchResponse response, HashMap<String, Object> params) {
+		dispatchMap.get(response).show(params);
 	}
 }

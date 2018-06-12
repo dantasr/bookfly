@@ -1,18 +1,7 @@
 package controller;
 
-import java.util.Date;
 import java.util.HashMap;
 
-import basedados.BaseDadosException;
-import basedados.FachadaBaseDados;
-import basedados.FachadaBaseDadosDao;
-import cartoes.GerenciadorElo;
-import cartoes.GerenciadorMastercard;
-import cartoes.GerenciadorVisa;
-import controller.Dispatcher.DispatchResponse;
-import dto.Livro;
-import dto.Usuario;
-import negocio.GerenciadorPreco;
 import negocio.FachadaRegrasNegocio;
 import negocio.NegocioException;
 
@@ -74,9 +63,7 @@ import negocio.NegocioException;
 	
 }*/
 
-import negocio.FachadaRegrasNegocio;
-
-public class FrontController implements IController {
+public class FrontController {
 	private FachadaRegrasNegocio fachadaRegrasNegocio;
 	public enum Request {
 		ADMIN_ABRIR_PESQUISA, ADMIN_ABRIR_TELA_REGISTRAR, ADMIN_SAIR, ADMIN_DESATIVA_USUARIO,
@@ -88,13 +75,17 @@ public class FrontController implements IController {
 		USUARIO_EXIBE_TELA_COMPRA, USUARIO_LER_LIVRO, USUARIO_DESCREVE_LIVRO,
 	}
 	
-	private HashMap<Request, IController> microControladores = new HashMap<Request, IController>();
+	private HashMap<Request, AbstractController> microControladores = new HashMap<Request, AbstractController>();
 	
 	public void dispatchRequest(Request request) {
 		dispatchRequest(request, new HashMap<String, Object>());
 	}
 
 	public void dispatchRequest(Request request, HashMap<String, Object> hashMap) {
-		microControladores.get(request).dispatchRequest(request, hashMap);
+		try {
+			microControladores.get(request).dispatchRequest(request, hashMap);
+		} catch (NegocioException e) {
+			e.printStackTrace();
+		}
 	}
 }

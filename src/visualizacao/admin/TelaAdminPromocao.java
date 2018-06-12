@@ -1,31 +1,28 @@
 package visualizacao.admin;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.FrontController;
+import controller.IAcceptRequests;
 import controller.FrontController.Request;
-import dto.Livro;
-import negocio.NegocioException;
-
+import dto.Usuario;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.awt.event.ActionEvent;
 
-public class TelaAdminPromocao extends JFrame {
+public class TelaAdminPromocao extends JFrame implements IAcceptRequests {
 
 	private JPanel contentPane;
 	private JTextField textField;
+	Usuario usuario;
+	int codigoLivro;
 	
-	public TelaAdminPromocao(FrontController frontController, int codigo) {
+	public TelaAdminPromocao(FrontController frontController) {
 		setTitle("ADMIN");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 275, 172);
@@ -48,11 +45,11 @@ public class TelaAdminPromocao extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				String promo = textField.getText();
 				int valorF = Integer.parseInt(promo);
-					
-					HashMap<String, Object> hashMap = new HashMap<String, Object>();
-					hashMap.put("codigoLivro", codigo);
-					hashMap.put("valorPromo", valorF);
-					frontController.dispatchRequest(Request.ADMIN_CADASTRA_PROMO, hashMap);
+
+				HashMap<String, Object> hashMap = new HashMap<String, Object>();
+				hashMap.put("codigoLivro", codigoLivro);
+				hashMap.put("valorPromo", valorF);
+				frontController.dispatchRequest(Request.ADMIN_CADASTRA_PROMO, hashMap);
 			}
 		});
 		btnNewButton.setBounds(136, 79, 113, 43);
@@ -69,5 +66,10 @@ public class TelaAdminPromocao extends JFrame {
 	}
 	public void fecharPromocao() {
 		super.dispose();
+	}
+	
+	@Override
+	public void show(HashMap<String, Object> params) {
+		usuario = (Usuario) params.get("usuario");
 	}
 }

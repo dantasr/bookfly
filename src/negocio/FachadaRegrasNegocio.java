@@ -1,15 +1,11 @@
 package negocio;
 
 import java.sql.Date;
-import java.util.LinkedList;
 import java.util.List;
-
-import javax.swing.JOptionPane;
 
 import utilidades.Log;
 import basedados.BaseDadosException;
 import basedados.FachadaBaseDados;
-import basedados.FachadaBaseDadosDao;
 import cartoes.Cartao;
 import cartoes.CartaoSemSaldoException;
 import cartoes.GerenciadorCartoes;
