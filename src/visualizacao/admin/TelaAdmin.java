@@ -6,19 +6,19 @@ import javax.swing.border.EmptyBorder;
 
 import controller.FrontController;
 import controller.IAcceptRequests;
+import controller.Pedido;
 import dto.Usuario;
+import visualizacao.principal.TelaBase;
 import controller.FrontController.Request;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
 import java.awt.event.ActionEvent;
 
-public class TelaAdmin extends JFrame implements IAcceptRequests {
+public class TelaAdmin extends TelaBase {
 
 	private JPanel contentPane;
 	private FrontController frontController;
-	private Usuario usuario;
 	private JLabel lblNomeusuario;
 
 	/**
@@ -46,7 +46,7 @@ public class TelaAdmin extends JFrame implements IAcceptRequests {
 		JButton btnPesquisar = new JButton("Pesquisar/Remover");
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				frontController.dispatchRequest(Request.ADMIN_ABRIR_PESQUISA);
+				frontController.dispatchRequest(Request.ADMIN_ABRIR_PESQUISA, Pedido.criarNovoPedido(sessao));
 			}
 		});
 		btnPesquisar.setBounds(36, 149, 188, 66);
@@ -55,7 +55,7 @@ public class TelaAdmin extends JFrame implements IAcceptRequests {
 		JButton btnRegistrar = new JButton("Registrar");
 		btnRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				frontController.dispatchRequest(Request.ADMIN_ABRIR_TELA_REGISTRAR);
+				frontController.dispatchRequest(Request.ADMIN_ABRIR_TELA_REGISTRAR, Pedido.criarNovoPedido(sessao));
 			}
 		});
 		btnRegistrar.setBounds(36, 80, 89, 66);
@@ -64,7 +64,7 @@ public class TelaAdmin extends JFrame implements IAcceptRequests {
 		JButton btnNewButton_7 = new JButton("Sair");
 		btnNewButton_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frontController.dispatchRequest(Request.ADMIN_SAIR);
+				frontController.dispatchRequest(Request.ADMIN_SAIR, Pedido.criarNovoPedido(sessao));
 				//fecharTela();
 			}
 		});
@@ -78,6 +78,7 @@ public class TelaAdmin extends JFrame implements IAcceptRequests {
 	}
 
 	private void atualizarCampos() {
+		Usuario usuario = sessao.getUsuarioLogado();
 		this.lblNomeusuario.setText(usuario.getNome());
 	}
 	
@@ -86,9 +87,7 @@ public class TelaAdmin extends JFrame implements IAcceptRequests {
 	}
 
 	@Override
-	public void show(HashMap<String, Object> params) {
-		usuario = (Usuario) params.get("usuario");
-		
+	public void show(Pedido params) {
 		atualizarCampos();
 	}
 }

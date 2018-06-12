@@ -23,13 +23,14 @@ import controller.FrontController.Request;
 import dto.Livro;
 import negocio.NegocioException;
 import utilidades.Log;
+import visualizacao.principal.TelaBase;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class TelaUsuarioResultadoPesquisa extends JFrame {
+public class TelaUsuarioResultadoPesquisa extends TelaBase {
 
 	private JPanel contentPane;
 	private JTable table;

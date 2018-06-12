@@ -6,8 +6,11 @@ import javax.swing.border.EmptyBorder;
 
 import controller.FrontController;
 import controller.IAcceptRequests;
+import controller.Pedido;
 import controller.FrontController.Request;
 import dto.Usuario;
+import visualizacao.principal.TelaBase;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -15,11 +18,10 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.awt.event.ActionEvent;
 
-public class TelaAdminPromocao extends JFrame implements IAcceptRequests {
+public class TelaAdminPromocao extends TelaBase {
 
 	private JPanel contentPane;
 	private JTextField textField;
-	Usuario usuario;
 	int codigoLivro;
 	
 	public TelaAdminPromocao(FrontController frontController) {
@@ -46,10 +48,10 @@ public class TelaAdminPromocao extends JFrame implements IAcceptRequests {
 				String promo = textField.getText();
 				int valorF = Integer.parseInt(promo);
 
-				HashMap<String, Object> hashMap = new HashMap<String, Object>();
-				hashMap.put("codigoLivro", codigoLivro);
-				hashMap.put("valorPromo", valorF);
-				frontController.dispatchRequest(Request.ADMIN_CADASTRA_PROMO, hashMap);
+				Pedido pedido = Pedido.criarNovoPedido(sessao);
+				pedido.put("codigoLivro", codigoLivro);
+				pedido.put("valorPromo", valorF);
+				frontController.dispatchRequest(Request.ADMIN_CADASTRA_PROMO, pedido);
 			}
 		});
 		btnNewButton.setBounds(136, 79, 113, 43);
@@ -69,7 +71,8 @@ public class TelaAdminPromocao extends JFrame implements IAcceptRequests {
 	}
 	
 	@Override
-	public void show(HashMap<String, Object> params) {
-		usuario = (Usuario) params.get("usuario");
+	public void show(Pedido params) {
+		codigoLivro = (int) params.get("codigoLivro");
+		this.setVisible(true);
 	}
 }

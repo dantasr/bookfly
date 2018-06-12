@@ -25,7 +25,7 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.awt.event.ActionEvent;
 
-public class TelaUsuarioCompraPagamentoCartaoClubeAluguel extends JFrame {
+public class TelaUsuarioCompraPagamentoCartaoClubeAluguel extends TelaBase {
 
 	private JPanel contentPane;
 	private JLabel lblAvisoSemSaldo;

@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import controller.FrontController.Request;
 import negocio.FachadaRegrasNegocio;
+import negocio.NegocioException;
 
 public class LivroController extends AbstractController {
 	public LivroController(FrontController frontController, Dispatcher dispatcher,
@@ -13,30 +14,39 @@ public class LivroController extends AbstractController {
 	}
 
 	public void registerHandlers(HashMap<Request, AbstractController> microControladores) {
-		Request[] requests = new Request[] { Request.LOGIN_CADASTRA_USUARIO, Request.LOGIN_REALIZA_LOGIN };
+		Request[] requests = new Request[] { Request.USUARIO_LER_LIVRO, Request.USUARIO_DESCREVE_LIVRO,Request.USUARIO_REALIZA_PESQUISA };
 		for (Request r : requests)
 			microControladores.put(r, this);
-	}
+	} 
 	
 	@Override
-	public void dispatchRequest(Request request, HashMap<String, Object> hashMap) {
+	public void dispatchRequest(Request request, Pedido pedido) {
 		switch (request) {
-		case LOGIN_CADASTRA_USUARIO:
-			cadastraUsuario();
+		case USUARIO_LER_LIVRO:
+			lerLivro(pedido);
 			break;
-		case LOGIN_REALIZA_LOGIN:
-			realizaLogin();
+		case USUARIO_DESCREVE_LIVRO:
+			descreveLivro(pedido);
 			break;
-		}
+		case USUARIO_REALIZA_PESQUISA:
+			realizaPesquisa(pedido);
+			break;
+		} 
 	}
 
-	public void realizaLogin() {
+	private void realizaPesquisa(Pedido pedido) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void cadastraUsuario() {
+	private void descreveLivro(Pedido pedido) {
 		// TODO Auto-generated method stub
 		
 	}
+
+	private void lerLivro(Pedido pedido) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

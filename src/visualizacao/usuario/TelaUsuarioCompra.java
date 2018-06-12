@@ -22,7 +22,7 @@ import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import java.awt.Canvas;
 
-public class TelaUsuarioCompra extends JFrame {
+public class TelaUsuarioCompra extends TelaBase {
 
 	private JPanel contentPane;
 	private final ButtonGroup buttonGroupFormaPagamento = new ButtonGroup();

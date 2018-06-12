@@ -1,7 +1,6 @@
 package controller;
 
-import java.util.HashMap;
-
+import controller.Dispatcher.DispatchResponse;
 import controller.FrontController.Request;
 import negocio.FachadaRegrasNegocio;
 import negocio.NegocioException;
@@ -18,5 +17,17 @@ public abstract class AbstractController {
 		this.fachadaRegrasNegocio = fachadaRegrasNegocio;
 	}
 	
-	public abstract void dispatchRequest(Request request, HashMap<String, Object> hashMap) throws NegocioException;
+	protected void exibirErro(Pedido hashMap, String mensagem) {
+		Pedido resposta = Pedido.criarNovoPedido(hashMap);
+		resposta.put("mensagem", "Usuário não está ativado!");
+		dispatcher.dispatch(DispatchResponse.MENSAGEM_FALHA, resposta);
+	}
+	
+	protected void exibirSucesso(Pedido hashMap, String mensagem) {
+		Pedido resposta = Pedido.criarNovoPedido(hashMap);
+		resposta.put("mensagem", "Usuário não está ativado!");
+		dispatcher.dispatch(DispatchResponse.MENSAGEM_FALHA, resposta);
+	}
+	
+	public abstract void dispatchRequest(Request request, Pedido hashMap) throws NegocioException;
 }

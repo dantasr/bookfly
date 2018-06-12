@@ -53,8 +53,8 @@ public class FachadaRegrasNegocio {
 		regrasNegocioLivro.cadastraLivro(codigo, nome, autor, editora, preco, dia, mes, ano);
 	}
 
-	public void cadastraPromocao(int codigo,FrontController frontController, int novoPreco) throws NegocioException {
-		regrasNegocioPromocao.cadastraPromocao(codigo, frontController, novoPreco);
+	public void cadastraPromocao(int codigo, int novoPreco) throws NegocioException {
+		regrasNegocioPromocao.cadastraPromocao(codigo, novoPreco);
 	}
 
 	///////////////////////////////LISTA USUARIOS///////////////////////////////////////////////////////////////////////////

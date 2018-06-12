@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.function.Function;
 import java.awt.event.ActionEvent;
 
-public class TelaUsuarioInsereCredito extends JFrame {
+public class TelaUsuarioInsereCredito extends TelaBase {
 
 	private JPanel contentPane;
 	private JTextField txtNmeroDoCarto;

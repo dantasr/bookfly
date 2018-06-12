@@ -14,10 +14,12 @@ import javax.swing.table.DefaultTableModel;
 import controller.FrontController;
 import controller.FrontController.Request;
 import controller.IAcceptRequests;
+import controller.Pedido;
 import dto.Livro;
 import dto.Usuario;
 import negocio.NegocioException;
 import utilidades.Log;
+import visualizacao.principal.TelaBase;
 
 import javax.swing.JComboBox;
 
@@ -34,7 +36,7 @@ import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class TelaAdminPesquisaRemoveClienteProduto extends JFrame implements IAcceptRequests {
+public class TelaAdminPesquisaRemoveClienteProduto extends TelaBase {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField campoPesquisaProduto;
@@ -189,7 +191,9 @@ public class TelaAdminPesquisaRemoveClienteProduto extends JFrame implements IAc
 			btnPromoo.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					if(codigo != -1) {
-						new TelaAdminPromocao(contexto,codigo).setVisible(true);
+						Pedido pedido = Pedido.criarNovoPedido(sessao);
+						pedido.put("codigoLivro", codigo);
+						frontController.dispatchRequest(Request.ADMIN_EXIBE_TELA_CADASTRA_PROMOCAO, pedido);
 					}
 					else {
 						JOptionPane.showMessageDialog(null, "Você não selecionou um livro!");
@@ -203,13 +207,10 @@ public class TelaAdminPesquisaRemoveClienteProduto extends JFrame implements IAc
 			btnRemoverPromoo.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if(codigo != -1) {
-						try {
-							contexto.getGerenciadorRegrasNegocio().removePromocao(codigo);
-							JOptionPane.showMessageDialog(null, "Deletado com sucesso!");
-						} catch (NegocioException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+						Pedido pedido = Pedido.criarNovoPedido(sessao);
+						pedido.put("codigoLivro", codigo);
+						frontController.dispatchRequest(Request.ADMIN_REMOVE_PROMO, pedido);
+
 					}
 					else {
 						JOptionPane.showMessageDialog(null, "Você não selecionou um livro!");
@@ -236,10 +237,9 @@ public class TelaAdminPesquisaRemoveClienteProduto extends JFrame implements IAc
 		DefaultTableModel model = (DefaultTableModel) tableResultadosUsuario.getModel();
 		int codigo = (int) model.getValueAt(row, 0);
 
-		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-		hashMap.put("codigoUsuario", codigo);
-		frontController.dispatchRequest(Request.ADMIN_DESATIVA_USUARIO, hashMap);
-		//realizaPesquisaUsuario();
+		Pedido pedido = Pedido.criarNovoPedido(sessao);
+		pedido.put("codigoUsuario", codigo);
+		frontController.dispatchRequest(Request.ADMIN_DESATIVA_USUARIO, pedido);
 		JOptionPane.showMessageDialog(null, "Usuario desativado com sucesso!");
 
 	}
@@ -253,9 +253,9 @@ public class TelaAdminPesquisaRemoveClienteProduto extends JFrame implements IAc
 		DefaultTableModel model = (DefaultTableModel) tableResultadosUsuario.getModel();
 		int codigo = (int) model.getValueAt(row, 0);
 
-		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-		hashMap.put("codigoUsuario", codigo);
-		frontController.dispatchRequest(Request.ADMIN_ATIVA_USUARIO, hashMap);			
+		Pedido pedido = Pedido.criarNovoPedido(sessao);
+		pedido.put("codigoUsuario", codigo);
+		frontController.dispatchRequest(Request.ADMIN_ATIVA_USUARIO, pedido);			
 
 		//realizaPesquisaUsuario();
 		JOptionPane.showMessageDialog(null, "Usuario Ativado com sucesso!");
@@ -267,10 +267,9 @@ public class TelaAdminPesquisaRemoveClienteProduto extends JFrame implements IAc
 
 		DefaultTableModel model = (DefaultTableModel) tableResultadosProduto.getModel();
 		int codigo = (int) model.getValueAt(row, 0);
-
-		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-		hashMap.put("codigoProduto", codigo);
-		frontController.dispatchRequest(Request.ADMIN_REMOVE_PRODUTO, hashMap);
+		Pedido pedido = Pedido.criarNovoPedido(sessao);
+		pedido.put("codigoProduto", codigo);
+		frontController.dispatchRequest(Request.ADMIN_REMOVE_PRODUTO, pedido);
 		//realizaPesquisaProduto();
 		JOptionPane.showMessageDialog(null, "Produto removido com sucesso!");
 	}
@@ -302,23 +301,22 @@ public class TelaAdminPesquisaRemoveClienteProduto extends JFrame implements IAc
 
 	private void realizaPesquisaProduto() {
 		String termo = campoPesquisaProduto.getText();
-		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-		hashMap.put("termoPesquisa", termo);
-		frontController.dispatchRequest(Request.ADMIN_PESQUISA_PRODUTO, hashMap);
+		Pedido pedido = Pedido.criarNovoPedido(sessao);
+		pedido.put("termoPesquisa", termo);
+		frontController.dispatchRequest(Request.ADMIN_PESQUISA_PRODUTO, pedido);
 		//montaTabelaLivros(resultados);
 	}
 
 	private void realizaPesquisaUsuario() {
 		String termo = campoPesquisaProduto.getText();
-
-		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-		hashMap.put("termoPesquisa", termo);
-		frontController.dispatchRequest(Request.ADMIN_PESQUISA_USUARIO, hashMap);
+		Pedido pedido = Pedido.criarNovoPedido(sessao);
+		pedido.put("termoPesquisa", termo);
+		frontController.dispatchRequest(Request.ADMIN_PESQUISA_USUARIO, pedido);
 		//montaTabelaUsuarios(resultados);
 	}
 
 	@Override
-	public void show(HashMap<String, Object> params) {
+	public void show(Pedido params) {
 		List<Livro> livros = (List<Livro>) params.getOrDefault("livros", null);
 		List<Usuario> usuarios = (List<Usuario>) params.getOrDefault("usuarios", null);
 

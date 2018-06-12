@@ -18,15 +18,17 @@ import arquivos.GerenciadorArquivos;
 import controller.FrontController;
 import controller.FrontController.Request;
 import controller.IAcceptRequests;
+import controller.Pedido;
 import utilidades.IconeLabel;
 import utilidades.Log;
 import utilidades.SeletorDeArquivos;
 import utilidades.ValidacaoException;
 import utilidades.Validador;
+import visualizacao.principal.TelaBase;
 
 import javax.swing.JTextField;
 
-public class TelaAdminRegistro extends JFrame implements IAcceptRequests {
+public class TelaAdminRegistro extends TelaBase {
 
 	private JPanel contentPane;
 	private JTextField campoCodProduto;
@@ -181,25 +183,26 @@ public class TelaAdminRegistro extends JFrame implements IAcceptRequests {
 			validador.validaArquivo(campoPdf, "pdf");
 			validador.validaArquivo(campoImagem, "imagem");
 			
-			HashMap<String, Object> hashMap = new HashMap<String, Object>();
+			Pedido pedido = Pedido.criarNovoPedido(sessao);
 			
-			hashMap.put("codigo", codigo);
-			hashMap.put("titulo", titulo);
-			hashMap.put("autor", autor);
-			hashMap.put("preco", preco);
-			hashMap.put("editora", editora);
-			hashMap.put("data", data);
-			hashMap.put("campoPdf", campoPdf);
-			hashMap.put("campoImagem", campoImagem);
-			frontController.dispatchRequest(Request.ADMIN_CADASTRA_LIVRO, hashMap);
-		//	Livro livro = new Livro(codigo, titulo, autor, editora, preco, data);
-		//	gerenciadorArquivos.salvarImagemDoLivro(livro, campoImagem);
-		//	gerenciadorArquivos.salvarArquivoPdf(livro, campoPdf);
-		//	JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
+			pedido.put("codigo", codigo);
+			pedido.put("titulo", titulo);
+			pedido.put("autor", autor);
+			pedido.put("preco", preco);
+			pedido.put("editora", editora);
+			pedido.put("data", data);
+			pedido.put("campoPdf", campoPdf);
+			pedido.put("campoImagem", campoImagem);
+			frontController.dispatchRequest(Request.ADMIN_CADASTRA_LIVRO,pedido);
 		}
 		catch (ValidacaoException e) {
 			Log.gravaLog(e);
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
+	}
+
+	@Override
+	public void show(Pedido params) {
+		this.setVisible(true);
 	}
 }

@@ -19,7 +19,7 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.awt.event.ActionEvent;
 
-public class TelaUsuarioAluga extends JFrame {
+public class TelaUsuarioAluga extends TelaBase {
 
 	private JPanel contentPane;
 	private Livro livro;

@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.FrontController;
+import controller.Pedido;
 import controller.FrontController.Request;
 import utilidades.Log;
 import utilidades.ValidacaoException;
@@ -20,7 +21,7 @@ import java.util.HashMap;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 
-public class TelaCadastro extends JFrame {
+public class TelaCadastro extends TelaBase {
 
 	private JPanel contentPane;
 	private JTextField campoNome;
@@ -123,19 +124,14 @@ public class TelaCadastro extends JFrame {
 			String cpf = validador.validaNaoVazio(campoCpf.getText(), 15, "CPF");
 			String telefone = validador.validaNaoVazio(campoTelefone.getText(), 50, "Telefone");
 			
-			HashMap<String, Object> hashMap = new HashMap<String, Object>();
+			Pedido pedido = Pedido.criarNovoPedido(sessao);
 			
-			hashMap.put("nome", nome);
-			hashMap.put("senha", senha);
-			hashMap.put("dataNascimento", dataNascimento);
-			hashMap.put("cpf", cpf);
-			hashMap.put("telefone", telefone);
-			frontController.dispatchRequest(Request.LOGIN_CADASTRA_USUARIO, hashMap);
-			
-			
-		//	frontController.getGerenciadorRegrasNegocio().cadastraUsuario(0, nome, dataNascimento, telefone, cpf, senha);
-		//	JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
-		//	this.setVisible(false);
+			pedido.put("nome", nome);
+			pedido.put("senha", senha);
+			pedido.put("dataNascimento", dataNascimento);
+			pedido.put("cpf", cpf);
+			pedido.put("telefone", telefone);
+			frontController.dispatchRequest(Request.LOGIN_CADASTRA_USUARIO, pedido);
 		} catch (ValidacaoException e) {
 			Log.gravaLog(e);
 			JOptionPane.showMessageDialog(null, e.getMessage());

@@ -26,7 +26,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.awt.event.ActionEvent;
 
-public class TelaUsuarioLivro extends JFrame {
+public class TelaUsuarioLivro extends TelaBase {
 
 	private JPanel contentPane;
 	private FrontController frontController;

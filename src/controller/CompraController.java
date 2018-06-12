@@ -22,7 +22,7 @@ public class CompraController extends AbstractController {
 	}
 	
 	@Override
-	public void dispatchRequest(Request request, HashMap<String, Object> hashMap) {
+	public void dispatchRequest(Request request, Pedido hashMap) {
 		switch (request) {
 		case USUARIO_EXIBE_TELA_PAGAMENTO_ALUGUEL:
 			exibeTelaPagamentoAluguel(hashMap);
@@ -54,47 +54,47 @@ public class CompraController extends AbstractController {
 		}
 	}
 
-	private void exibeTelaPagamentoAluguel(HashMap<String, Object> hashMap) {
+	private void exibeTelaPagamentoAluguel(Pedido hashMap) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	private void exibeTelaCompraCartaoClube(HashMap<String, Object> hashMap) {
+	private void exibeTelaCompraCartaoClube(Pedido hashMap) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	private void exibeTelaAdicionaSaldo(HashMap<String, Object> hashMap) {
+	private void exibeTelaAdicionaSaldo(Pedido hashMap) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	private void realizaCompraCartaoClube(HashMap<String, Object> hashMap) {
+	private void realizaCompraCartaoClube(Pedido hashMap) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	private void realizaAluguelCartaoClube(HashMap<String, Object> hashMap) {
+	private void realizaAluguelCartaoClube(Pedido hashMap) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	private void realizaCompraCartaoNormal(HashMap<String, Object> hashMap) {
+	private void realizaCompraCartaoNormal(Pedido hashMap) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	private void insereCredito(HashMap<String, Object> hashMap) {
+	private void insereCredito(Pedido hashMap) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	private void exibeTelaAluguel(HashMap<String, Object> hashMap) {
+	private void exibeTelaAluguel(Pedido hashMap) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	private void exibeTelaCompra(HashMap<String, Object> hashMap) {
+	private void exibeTelaCompra(Pedido hashMap) {
 		// TODO Auto-generated method stub
 		
 	}

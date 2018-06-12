@@ -25,7 +25,7 @@ import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.List;
 
-public class TelaUsuarioPromocao extends JFrame {
+public class TelaUsuarioPromocao extends TelaBase {
 
 	private JPanel contentPane;
 	private JTable table;

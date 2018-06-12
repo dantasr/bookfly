@@ -10,10 +10,12 @@ import javax.swing.border.EmptyBorder;
 import arquivos.GerenciadorArquivos;
 import controller.FrontController;
 import controller.FrontController.Request;
+import controller.Pedido;
 import dto.Livro;
 import negocio.NegocioException;
 import utilidades.IconeLabel;
 import utilidades.Log;
+import visualizacao.principal.TelaBase;
 import visualizacao.principal.TelaLogin;
 
 import javax.swing.JTextField;
@@ -28,7 +30,7 @@ import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.List;
 
-public class TelaUsuario extends JFrame {
+public class TelaUsuario extends TelaBase {
 
 	/**
 	 * 
@@ -143,7 +145,7 @@ public class TelaUsuario extends JFrame {
 	}
 
 	private void atualizarCampos() {
-		this.lblNomeusuario.setText(frontController.getUsuarioAtual().getNome());
+		this.lblNomeusuario.setText(sessao.getUsuarioLogado().getNome());
 		try {
 			List<Livro> recentes = frontController.getGerenciadorRegrasNegocio().listaLivrosRecentes(3);
 			for (int i = 0; i < recentes.size(); i++) {
@@ -165,11 +167,18 @@ public class TelaUsuario extends JFrame {
 	
 	private void geraResultado() {
 		String pesquisa = textField.getText();
-		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-		hashMap.put("pesquisa", pesquisa);
-		frontController.dispatchRequest(Request.USUARIO_REALIZA_PESQUISA, hashMap);
+		
+		
+		Pedido pedido = Pedido.criarNovoPedido(sessao);
+		pedido.put("pesquisa", pesquisa);
+		frontController.dispatchRequest(Request.USUARIO_REALIZA_PESQUISA, pedido);
 	}
 	private void fecharTela() {
 		super.dispose();
+	}
+
+	@Override
+	public void show(Pedido params) {
+		this.setVisible(true);
 	}
 }

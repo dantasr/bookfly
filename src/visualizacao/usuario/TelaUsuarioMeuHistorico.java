@@ -22,7 +22,7 @@ import dto.Usuario;
 import dto.Venda;
 import negocio.NegocioException;
 
-public class TelaUsuarioMeuHistorico extends JFrame {
+public class TelaUsuarioMeuHistorico extends TelaBase {
 
 	private JPanel contentPane;
 	private JTable tableListaHistorico;

@@ -6,6 +6,8 @@ import javax.swing.border.EmptyBorder;
 
 import controller.FrontController;
 import controller.FrontController.Request;
+import controller.Pedido;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -18,7 +20,7 @@ import java.util.HashMap;
 
 import javax.swing.JPasswordField;
 
-public class TelaLogin extends JFrame {
+public class TelaLogin extends TelaBase {
 	/**
 	 * 
 	 */
@@ -84,7 +86,7 @@ public class TelaLogin extends JFrame {
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new TelaCadastro(frontController).setVisible(true);
+				frontController.dispatchRequest(Request.LOGIN_EXIBE_CADASTRO);
 			}
 		});
 		btnCadastrar.setBounds(151, 121, 89, 23);
@@ -98,9 +100,15 @@ public class TelaLogin extends JFrame {
 			return;
 		}
 		
-		HashMap<String, Object> hashMap = new HashMap<String, Object>();		
-		hashMap.put("usuario", login.getText());
-		hashMap.put("senha", senha.getText());
-		frontController.dispatchRequest(Request.LOGIN_REALIZA_LOGIN, hashMap);
+		Pedido pedido = Pedido.criarNovoPedido(sessao);		
+		pedido.put("usuario", login.getText());
+		pedido.put("senha", senha.getText());
+		
+		frontController.dispatchRequest(Request.LOGIN_REALIZA_LOGIN, pedido);
+	}
+
+	@Override
+	public void show(Pedido params) {
+		this.setVisible(true);		
 	}
 }

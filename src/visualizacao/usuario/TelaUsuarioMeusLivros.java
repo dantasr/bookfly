@@ -31,7 +31,7 @@ import dto.Livro;
 import dto.Usuario;
 import dto.Venda;
 
-public class TelaUsuarioMeusLivros extends JFrame {
+public class TelaUsuarioMeusLivros extends TelaBase {
 
 	private JPanel contentPane;
 	private JTable tableListaLivros;

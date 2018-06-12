@@ -1,8 +1,18 @@
 package visualizacao.principal;
-ackage visualizacao;
 
 import java.util.HashMap;
 
-public abstract class TelaBase {
-	public abstract void show(HashMap<String, Object> params);
+import javax.swing.JFrame;
+
+import controller.IAcceptRequests;
+import controller.Pedido;
+
+public abstract class TelaBase extends JFrame implements IAcceptRequests {
+	protected Pedido sessao;
+	public abstract void show(Pedido params);
+	
+	public void acceptRequest(Pedido params) {
+		sessao = params;
+		show(sessao);
+	}
 }
