@@ -83,7 +83,7 @@ public class TelaUsuarioResultadoPesquisa extends TelaBase {
 					hashMap.put("usuario", usuario);
 					hashMap.put("codigoLivro", codigo);
 					
-					frontController.dispatchRequest(Request.USUARIO_DESCREVE_LIVRO, hashMap);
+					frontController.dispatchRequest(Request.DESCREVE_LIVRO, hashMap);
 				} catch (NegocioException e) {
 					e.printStackTrace();
 				}

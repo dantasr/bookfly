@@ -9,19 +9,23 @@ import javax.swing.border.EmptyBorder;
 
 import controller.FrontController;
 import controller.FrontController.Request;
+import controller.Pedido;
 import dto.Livro;
 import dto.Promocao;
 import dto.Usuario;
 import dto.Venda;
 import negocio.NegocioException;
 import utilidades.Log;
+import visualizacao.principal.TelaBase;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.Color;
+
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.awt.event.ActionEvent;
@@ -200,5 +204,12 @@ public class TelaUsuarioCompraPagamentoCartaoClube extends TelaBase {
 
 	private void fecharTela() {
 		super.dispose();
+	}
+
+
+	@Override
+	public void show(Pedido params) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -5,6 +5,7 @@ import javax.swing.UIManager;
 
 import basedados.BaseDadosException;
 import controller.FrontController;
+import controller.FrontController.Request;
 import utilidades.Log;
 import visualizacao.principal.TelaLogin;
 
@@ -19,15 +20,10 @@ public class Main {
 		FrontController frontController;
 		try {
 			frontController = new FrontController();
-		} catch (BaseDadosException ex) {
-			Log.gravaLog(ex);
-
-			JOptionPane.showMessageDialog(null, "Erro na inicialização.");
-			return;
+			frontController.dispatchRequest(Request.LOGIN_EXIBE_LOGIN);
+		} catch (BaseDadosException e) {
+			JOptionPane.showMessageDialog(null, "Erro ao inicializar o sistema.\n" + e.getMessage());
 		}
-
-		TelaLogin telaLogin = new TelaLogin(frontController);
-		telaLogin.setVisible(true);
 	}
 
 }

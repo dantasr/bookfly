@@ -9,17 +9,23 @@ import javax.swing.border.EmptyBorder;
 
 import controller.FrontController;
 import controller.FrontController.Request;
+import controller.Pedido;
 import dto.Livro;
 
 import javax.swing.JLayeredPane;
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.awt.event.ActionEvent;
+
 import javax.swing.JTextPane;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
+
+import visualizacao.principal.TelaBase;
+
 import java.awt.Canvas;
 
 public class TelaUsuarioCompra extends TelaBase {
@@ -29,9 +35,8 @@ public class TelaUsuarioCompra extends TelaBase {
 	private FrontController frontController;
 	private Livro livro;
 
-	public TelaUsuarioCompra(FrontController frontController, Livro livro) {
+	public TelaUsuarioCompra(FrontController frontController) {
 		this.frontController = frontController;
-		this.livro = livro;
 		
 		setTitle("BOOKFLY");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -64,10 +69,10 @@ public class TelaUsuarioCompra extends TelaBase {
 		JButton btnCartoClube = new JButton("Cart\u00E3o Clube");
 		btnCartoClube.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				HashMap<String, Object> hashMap = new HashMap<String, Object>();
-				hashMap.put("livro", livro);
-/*TODO usuario*/hashMap.put("usuario",usuario);
-				frontController.dispatchRequest(Request.USUARIO_EXIBE_TELA_COMPRA_CARTAO_CLUBE, hashMap);	
+				Pedido pedido = Pedido.criarNovoPedido(sessao);
+				pedido.put("livro", livro);
+				
+				frontController.dispatchRequest(Request.USUARIO_EXIBE_TELA_COMPRA_CARTAO_CLUBE, pedido);	
 			}
 		});
 		btnCartoClube.setBounds(32, 76, 109, 79);
@@ -76,9 +81,9 @@ public class TelaUsuarioCompra extends TelaBase {
 		JButton btnCartoComum = new JButton("Cart\u00E3o comum");
 		btnCartoComum.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				HashMap<String, Object> hashMap = new HashMap<String, Object>();
+				Pedido hashMap = Pedido.criarNovoPedido(sessao);
 				hashMap.put("livro", livro);
-/*TODO usuario*/hashMap.put("usuario",usuario);
+
 				frontController.dispatchRequest(Request.USUARIO_EXIBE_TELA_COMPRA_CARTAO_COMUM, hashMap);
 			}
 		});
@@ -97,5 +102,11 @@ public class TelaUsuarioCompra extends TelaBase {
 
 	private void fecharTela() {
 		super.dispose();
+	}
+
+	@Override
+	public void show(Pedido params) {
+		this.livro = (Livro) params.get("livro");
+		this.setVisible(true);
 	}
 }

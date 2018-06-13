@@ -66,9 +66,7 @@ public class TelaUsuario extends TelaBase {
 		});
 		textField.setBounds(96, 23, 179, 20);
 		contentPane.add(textField);
-		textField.setColumns(10);
-		
-		
+		textField.setColumns(10);		
 		
 		JLabel lblPesquisar = new JLabel("Pesquisar:");
 		lblPesquisar.setBounds(39, 26, 68, 14);
@@ -85,7 +83,7 @@ public class TelaUsuario extends TelaBase {
 		JButton btnLivros = new JButton("Livros");
 		btnLivros.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new TelaUsuarioMeusLivros(frontController).setVisible(true);
+				frontController.dispatchRequest(Request.USUARIO_EXIBE_TELA_MEUS_LIVROS, Pedido.criarNovoPedido(sessao));
 			}
 		});
 		btnLivros.setBounds(96, 44, 89, 23);
@@ -94,7 +92,7 @@ public class TelaUsuario extends TelaBase {
 		JButton btnHistorico = new JButton("Hist\u00F3rico");
 		btnHistorico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new TelaUsuarioMeuHistorico(frontController).setVisible(true);
+				frontController.dispatchRequest(Request.USUARIO_EXIBE_TELA_MEU_HISTORICO, Pedido.criarNovoPedido(sessao));
 			}
 		});
 		btnHistorico.setBounds(186, 44, 89, 23);
@@ -108,7 +106,8 @@ public class TelaUsuario extends TelaBase {
 		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				fecharTela();
-				new TelaLogin(frontController).setVisible(true);
+				
+				frontController.dispatchRequest(Request.EXIBE_LOGIN);
 			}
 		});
 		btnSair.setBounds(335, 227, 89, 23);
@@ -141,13 +140,11 @@ public class TelaUsuario extends TelaBase {
 		capasRecentes = new JLabel[] { lblCapa1, lblCapa2, lblCapa3 };
 		titulosRecentes = new JLabel[] { lblTitulo1, lblTitulo2, lblTitulo3 };
 		
-		atualizarCampos();
 	}
 
-	private void atualizarCampos() {
+	private void atualizarCampos(List<Livro> recentes) {
 		this.lblNomeusuario.setText(sessao.getUsuarioLogado().getNome());
 		try {
-			List<Livro> recentes = frontController.getGerenciadorRegrasNegocio().listaLivrosRecentes(3);
 			for (int i = 0; i < recentes.size(); i++) {
 				Livro livro = recentes.get(i);
 				
@@ -159,7 +156,7 @@ public class TelaUsuario extends TelaBase {
 			for (int i = recentes.size(); i < 3; i++) {
 				titulosRecentes[i].setText("");
 			}
-		} catch (NegocioException | MalformedURLException e) {
+		} catch (MalformedURLException e) {
 			Log.gravaLog(e);
 			JOptionPane.showMessageDialog(null, "Erro ao carregar livros recentes");
 		}
@@ -167,7 +164,6 @@ public class TelaUsuario extends TelaBase {
 	
 	private void geraResultado() {
 		String pesquisa = textField.getText();
-		
 		
 		Pedido pedido = Pedido.criarNovoPedido(sessao);
 		pedido.put("pesquisa", pesquisa);
@@ -179,6 +175,9 @@ public class TelaUsuario extends TelaBase {
 
 	@Override
 	public void show(Pedido params) {
+		List<Livro> recentes = (List<Livro>) params.get("livrosRecentes");
+		atualizarCampos(recentes);
+		
 		this.setVisible(true);
 	}
 }

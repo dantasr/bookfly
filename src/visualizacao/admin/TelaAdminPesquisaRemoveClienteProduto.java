@@ -49,7 +49,7 @@ public class TelaAdminPesquisaRemoveClienteProduto extends TelaBase {
 	 * Create the frame.
 	 * @throws NegocioException 
 	 */
-	public TelaAdminPesquisaRemoveClienteProduto(FrontController frontController) throws NegocioException {
+	public TelaAdminPesquisaRemoveClienteProduto(FrontController frontController) {
 		setTitle("ADMIN");
 		this.frontController = frontController;
 

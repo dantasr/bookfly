@@ -9,11 +9,17 @@ import javax.swing.border.EmptyBorder;
 
 import controller.FrontController;
 import controller.FrontController.Request;
+import controller.Pedido;
 import dto.Livro;
 
 import javax.swing.JLabel;
+
 import java.awt.Color;
+
 import javax.swing.JButton;
+
+import visualizacao.principal.TelaBase;
+
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -24,9 +30,9 @@ public class TelaUsuarioAluga extends TelaBase {
 	private JPanel contentPane;
 	private Livro livro;
 	private FrontController frontController;
-	public TelaUsuarioAluga(FrontController frontController, Livro livro) {
+	
+	public TelaUsuarioAluga(FrontController frontController) {
 		this.frontController = frontController;
-		this.livro = livro;
 		
 		setTitle("BOOKFLY");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -65,7 +71,7 @@ public class TelaUsuarioAluga extends TelaBase {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				HashMap<String, Object> hashMap = new HashMap<String, Object>();
+				Pedido hashMap = Pedido.criarNovoPedido(sessao);
 				hashMap.put("livro",livro);
 				frontController.dispatchRequest(Request.USUARIO_EXIBE_TELA_PAGAMENTO_ALUGUEL, hashMap);				
 			}
@@ -90,5 +96,14 @@ public class TelaUsuarioAluga extends TelaBase {
 	private void fecharAluguel() {
 		super.dispose();
 	}
-
+	
+	private void atualizaTela() {
+		
+	}
+	
+	@Override
+	public void show(Pedido params) {
+		this.livro = (Livro) params.get("livro");
+		this.setVisible(true);
+	}
 }

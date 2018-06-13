@@ -16,6 +16,7 @@ import javax.swing.border.EmptyBorder;
 import negocio.NegocioException;
 import utilidades.LeitorPDF;
 import utilidades.Log;
+import visualizacao.principal.TelaBase;
 
 import javax.swing.JTable;
 import javax.swing.JLabel;
@@ -26,6 +27,7 @@ import javax.swing.table.DefaultTableModel;
 import arquivos.GerenciadorArquivos;
 import controller.FrontController;
 import controller.FrontController.Request;
+import controller.Pedido;
 import dto.Aluguel;
 import dto.Livro;
 import dto.Usuario;
@@ -103,11 +105,10 @@ public class TelaUsuarioMeusLivros extends TelaBase {
 			livro = ((Aluguel) vendaOuAluguel).getLivro();
 		}
 		
-		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-		hashMap.put("usuario", usuario);
+		Pedido hashMap = Pedido.criarNovoPedido(sessao);
 		hashMap.put("livro", livro);
 		
-		frontController.dispatchRequest(Request.USUARIO_LER_LIVRO, hashMap);
+		frontController.dispatchRequest(Request.LER_LIVRO, hashMap);
 		
 		// TODO Tirar daqui
 		File arquivo = gerenciadorArquivos.obterArquivoPdf(livro);
@@ -152,18 +153,19 @@ public class TelaUsuarioMeusLivros extends TelaBase {
 		}
 	}
 
-	private void preencherTabela() {
+	private void preencherTabela(List<Venda> vendas, List<Aluguel> alugueis) {
 		limpaTabela();
+
+		adicionaVendas(vendas);
+		adicionaAlugueis(alugueis);
+	}
+
+	@Override
+	public void show(Pedido params) {
+		List<Venda> vendas = (List<Venda>) params.get("vendas");
+		List<Aluguel> alugueis = (List<Aluguel>) params.get("alugueis");
+		preencherTabela(vendas, alugueis);
 		
-		Usuario atual = frontController.getUsuarioAtual();
-		try {
-			List<Venda> vendas = frontController.getGerenciadorRegrasNegocio().buscaVendasDoUsuario(atual.getCodigo());
-			adicionaVendas(vendas);
-			List<Aluguel> alugueis = frontController.getGerenciadorRegrasNegocio().buscaAlugueisDoUsuario(atual.getCodigo());
-			adicionaAlugueis(alugueis);
-		} catch (NegocioException e) {
-			Log.gravaLog(e);
-			JOptionPane.showMessageDialog(null, e.getMessage());
-		}
+		this.setVisible(true);
 	}
 }

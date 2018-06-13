@@ -1,9 +1,13 @@
 package controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import controller.FrontController.Request;
+import dto.Aluguel;
+import dto.Venda;
 import negocio.FachadaRegrasNegocio;
+import negocio.NegocioException;
 
 public class CompraController extends AbstractController {
 	public CompraController(FrontController frontController, Dispatcher dispatcher,
@@ -16,7 +20,7 @@ public class CompraController extends AbstractController {
 		Request[] requests = new Request[] { Request.USUARIO_EXIBE_TELA_PAGAMENTO_ALUGUEL, Request.USUARIO_EXIBE_TELA_COMPRA_CARTAO_CLUBE, Request.USUARIO_EXIBE_TELA_COMPRA_CARTAO_COMUM,
 				Request.USUARIO_EXIBE_TELA_ADICIONA_SALDO, Request.USUARIO_REALIZA_COMPRA_CARTAO_CLUBE, Request.USUARIO_REALIZA_ALUGUEL_CARTAO_CLUBE,
 				Request.USUARIO_REALIZA_COMPRA_CARTAO_NORMAL, Request.USUARIO_INSERE_CREDITO, Request.USUARIO_EXIBE_TELA_ALUGUEL,
-				Request.USUARIO_EXIBE_TELA_COMPRA};
+				Request.USUARIO_EXIBE_TELA_COMPRA, Request.USUARIO_EXIBE_TELA_MEU_HISTORICO};
 		for (Request r : requests)
 			microControladores.put(r, this);
 	}
@@ -51,7 +55,21 @@ public class CompraController extends AbstractController {
 		case USUARIO_EXIBE_TELA_COMPRA:
 			exibeTelaCompra(hashMap);
 			break;
+		case USUARIO_EXIBE_TELA_MEU_HISTORICO:
+			exibeTelaMeuHistorico(hashMap);
+			break;
 		}
+	}
+
+	public void exibeTelaMeuHistorico(Pedido hashMap) throws NegocioException {
+		Pedido resposta = Pedido.criarNovoPedido(hashMap);
+		
+		List<Venda> vendas = fachadaRegrasNegocio.buscaVendasDoUsuario(hashMap.getUsuarioLogado().getCodigo());
+		List<Aluguel> alugueis = fachadaRegrasNegocio.buscaAlugueisDoUsuario(hashMap.getUsuarioLogado().getCodigo());
+		resposta.put("vendas", vendas);
+		resposta.put("alugueis", alugueis);
+		
+		dispatcher.dispatch(DispatchResponse.USUARIO_MEU_HISTORICO, resposta);
 	}
 
 	private void exibeTelaPagamentoAluguel(Pedido hashMap) {

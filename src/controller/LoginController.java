@@ -2,9 +2,11 @@ package controller;
 
 import java.sql.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import controller.Dispatcher.DispatchResponse;
 import controller.FrontController.Request;
+import dto.Livro;
 import dto.Usuario;
 import negocio.FachadaRegrasNegocio;
 import negocio.NegocioException;
@@ -33,6 +35,9 @@ public class LoginController extends AbstractController {
 			break;
 		case LOGIN_REALIZA_LOGIN:
 			realizaLogin(hashMap);
+			break;
+		case LOGIN_EXIBE_LOGIN:
+			exibeLogin(hashMap);
 			break;
 		}
 	}
@@ -80,6 +85,13 @@ public class LoginController extends AbstractController {
 		String telefone = (String) hashMap.get("telefone");
 		
 		fachadaRegrasNegocio.cadastraUsuario(0, nome, dataNascimento, telefone, cpf, senha);
-		dispatcher.dispatch(DispatchResponse.LOGIN, Pedido.criarNovoPedido(hashMap));
+		Pedido resposta = Pedido.criarNovoPedido(hashMap);
+		List<Livro> recentes = fachadaRegrasNegocio.listaLivrosRecentes(3);
+		resposta.put("livrosRecentes", recentes);
+		dispatcher.dispatch(DispatchResponse.LOGIN, resposta);
+	}
+	
+	public void exibeLogin(Pedido hashMap) {
+		dispatcher.dispatch(DispatchResponse.LOGIN);
 	}
 }

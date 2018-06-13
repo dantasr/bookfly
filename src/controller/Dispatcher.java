@@ -36,10 +36,10 @@ public class Dispatcher {
 	}
 	
 	public void dispatch(DispatchResponse request) {
-		dispatch(request, new HashMap<String, Object>());
+		dispatch(request, new Pedido());
 	}
 	
-	public void dispatch(DispatchResponse response, HashMap<String, Object> params) {
-		dispatchMap.get(response).show(params);
+	public void dispatch(DispatchResponse response, Pedido params) {
+		dispatchMap.get(response).acceptRequest(params);
 	}
 }
