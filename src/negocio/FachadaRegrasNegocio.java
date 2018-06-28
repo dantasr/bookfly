@@ -19,6 +19,7 @@ import dto.Promocao;
 import dto.Usuario;
 import dto.Venda;
 import main.Contexto;
+import negocio.RegrasNegocioPromocao.PromocaoCalculada;
 
 public class FachadaRegrasNegocio {
 	private FachadaBaseDados fachadaBaseDados;
@@ -184,7 +185,7 @@ public class FachadaRegrasNegocio {
 		return regrasNegocioLivro.listaLivrosRecentes(limite);
 	}
 	
-	public int calcularValorEmPromocao(Livro livro, Usuario usuario) throws NegocioException {
+	public PromocaoCalculada calcularValorEmPromocao(Livro livro, Usuario usuario) throws NegocioException {
 		return regrasNegocioPromocao.calcularValorEmPromocao(livro, usuario);
 	}
 }

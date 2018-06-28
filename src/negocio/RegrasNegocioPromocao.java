@@ -14,6 +14,11 @@ import basedados.BaseDadosException;
 import basedados.FachadaBaseDados;
 
 public class RegrasNegocioPromocao {
+	public class PromocaoCalculada {
+		public String tipoDePromocao;
+		public int valor;
+	}
+	
 	private FachadaBaseDados fachadaBaseDados;
 	
 	public RegrasNegocioPromocao(FachadaBaseDados fachadaBaseDados) {
@@ -52,13 +57,15 @@ public class RegrasNegocioPromocao {
 		}
 	}
 	
-	public int calcularValorEmPromocao(Livro livro, Usuario usuario) throws NegocioException {
+	public PromocaoCalculada calcularValorEmPromocao(Livro livro, Usuario usuario) throws NegocioException {
+		String tipoDePromocao = "normal";
 		int precoLivro = livro.getPreco();
 		int preco = livro.getPreco();
 		Promocao promocao = buscaPromocao(livro.getCodigo());
 		
 		if (promocao != null) {
 			preco = promocao.getPreco();
+			tipoDePromocao = "promocao";
 		}
 		
 		java.util.Date dataDeHoje = Date.from(Instant.now());
@@ -67,8 +74,13 @@ public class RegrasNegocioPromocao {
 		if (preco > (precoLivro / 2) && (dataDeHoje.getDate() == dataNascimento.getDate()
 				|| dataDeHoje.getMonth() == dataNascimento.getMonth())) {
 			preco = precoLivro / 2;
+			tipoDePromocao = "aniversario";
 		}
 		
-		return preco;
+		PromocaoCalculada ret = new PromocaoCalculada();
+		ret.valor = preco;
+		ret.tipoDePromocao = tipoDePromocao;
+		
+		return ret;
 	}
 }

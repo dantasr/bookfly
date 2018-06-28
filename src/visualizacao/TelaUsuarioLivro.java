@@ -13,6 +13,7 @@ import dto.Livro;
 import dto.Promocao;
 import main.Contexto;
 import negocio.NegocioException;
+import negocio.RegrasNegocioPromocao.PromocaoCalculada;
 import utilidades.IconeLabel;
 import utilidades.Log;
 
@@ -98,11 +99,15 @@ public class TelaUsuarioLivro extends JFrame {
 		lblPromoo.setBounds(10, 176, 74, 14);
 		contentPane.add(lblPromoo);
 		
+		PromocaoCalculada calculada = contexto.getGerenciadorRegrasNegocio().calcularValorEmPromocao(livro, contexto.getUsuarioAtual());
 		JLabel labelPreco = new JLabel(livro.getPreco() + " R$");
-		int precoPromocao = contexto.getGerenciadorRegrasNegocio().calcularValorEmPromocao(livro, contexto.getUsuarioAtual());
-		if (precoPromocao != livro.getPreco()) {
-			labelPreco.setText(precoPromocao + " R$");
+		if (calculada.tipoDePromocao.equals("promocao")) {
 			labelPreco.setForeground(new Color(100, 100, 255));
+			lblPromoo.setVisible(true);
+		} else if (calculada.tipoDePromocao.equals("aniversario")) {
+			labelPreco.setForeground(new Color(200, 200, 0));
+			lblPromoo.setForeground(new Color(200, 200, 0));
+			lblPromoo.setText("Promoção de Aniversário!");
 			lblPromoo.setVisible(true);
 		} else {
 			lblPromoo.setVisible(false);
