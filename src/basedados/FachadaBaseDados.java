@@ -43,7 +43,6 @@ public interface FachadaBaseDados {
 	// OUTRAS
 	public Usuario buscaUsuarioPorNomeExato(String nome) throws BaseDadosException;
 	public List<Livro> buscaLivrosPorNome(String livro) throws BaseDadosException;
-	public List<Promocao> buscaPromocaoLista(int codigoPromocao) throws BaseDadosException;
 	public Livro buscaLivroPorNomeExato(String nome) throws BaseDadosException;
 	public List<Usuario> buscaUsuariosPorNome(String termo) throws BaseDadosException;
 	public List<Venda> buscaVendasDoUsuario(int codigoUsuario) throws BaseDadosException;

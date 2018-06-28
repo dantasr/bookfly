@@ -1,6 +1,7 @@
 package visualizacao;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -9,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 
 import arquivos.GerenciadorArquivos;
 import dto.Livro;
+import dto.Promocao;
 import main.Contexto;
 import negocio.NegocioException;
 import utilidades.IconeLabel;
@@ -91,7 +93,21 @@ public class TelaUsuarioLivro extends JFrame {
 		labelSinopse.setBounds(177, 167, 234, 94);
 		contentPane.add(labelSinopse);
 		
+		JLabel lblPromoo = new JLabel("Promo\u00E7\u00E3o!");
+		lblPromoo.setForeground(Color.BLUE);
+		lblPromoo.setBounds(10, 176, 74, 14);
+		contentPane.add(lblPromoo);
+		
 		JLabel labelPreco = new JLabel(livro.getPreco() + " R$");
+		int precoPromocao = contexto.getGerenciadorRegrasNegocio().calcularValorEmPromocao(livro, contexto.getUsuarioAtual());
+		if (precoPromocao != livro.getPreco()) {
+			labelPreco.setText(precoPromocao + " R$");
+			labelPreco.setForeground(new Color(100, 100, 255));
+			lblPromoo.setVisible(true);
+		} else {
+			lblPromoo.setVisible(false);
+		}
+		
 		labelPreco.setFont(new Font("Tahoma", Font.BOLD, 38));
 		labelPreco.setBounds(8, 167, 186, 94);
 		contentPane.add(labelPreco);
@@ -128,15 +144,6 @@ public class TelaUsuarioLivro extends JFrame {
 		contentPane.add(lblCapa);
 		try {
 			IconeLabel.colocarImagemNoLabel(lblCapa, gerenciadorArquivos.carregarImagemDoLivro(livro));
-			
-			JButton btnNewButton = new JButton("Promo\u00E7\u00F5es");
-			btnNewButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					new TelaUsuarioPromocao(contexto, livro).setVisible(true);
-				}
-			});
-			btnNewButton.setBounds(335, 112, 89, 23);
-			contentPane.add(btnNewButton);
 		} catch (MalformedURLException e) {
 			Log.gravaLog(e);
 			JOptionPane.showMessageDialog(null, "Erro ao carregar capa do livro");

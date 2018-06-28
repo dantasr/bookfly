@@ -24,6 +24,8 @@ import dto.Livro;
 import dto.Promocao;
 import dto.Usuario;
 import dto.Venda;
+import factory.DaoAbstractFactory;
+import factory.DaoJdbcFactory;
 import utilidades.Log;
 import main.Contexto;
 
@@ -34,13 +36,14 @@ public class FachadaBaseDadosDao implements FachadaBaseDados {
 	private PromocaoDao promocaoDao;
 	private UsuarioDao usuarioDao;
 	private VendaDao vendaDao;
+	private DaoAbstractFactory daoAbstractFactory = new DaoJdbcFactory();
 
 	public FachadaBaseDadosDao() throws BaseDadosException {
-		livroDao = new LivroDaoJdbc();
-		usuarioDao = new UsuarioDaoJdbc();
-		aluguelDao = new AluguelDaoJdbc(livroDao, usuarioDao);
-		promocaoDao = new PromocaoDaoJdbc(livroDao);
-		vendaDao = new VendaDaoJdbc(livroDao, usuarioDao);
+		livroDao = daoAbstractFactory.criaLivroDao();
+		usuarioDao = daoAbstractFactory.criaUsuarioDao();
+		aluguelDao = daoAbstractFactory.criaAluguelDao(livroDao, usuarioDao);
+		promocaoDao = daoAbstractFactory.criaPromocaoDao(livroDao);
+		vendaDao = daoAbstractFactory.criaVendaDao(livroDao, usuarioDao);
 	}
 
 	/////////////////////////////INSERE USUARIO NO BD///////////////////////////////////////////////////////////////////////////
@@ -171,10 +174,5 @@ public class FachadaBaseDadosDao implements FachadaBaseDados {
 	
 	public List<Livro> listaLivrosRecentes(int limite) throws BaseDadosException {
 		return livroDao.listaLivrosRecentes(limite);
-	}
-
-	@Override
-	public List<Promocao> buscaPromocaoLista(int codigoPromocao) throws BaseDadosException {
-		return promocaoDao.buscaLista(codigoPromocao);
 	}
 }

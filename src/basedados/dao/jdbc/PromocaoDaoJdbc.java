@@ -22,10 +22,10 @@ public class PromocaoDaoJdbc extends ConectorDaoJdbc implements PromocaoDao {
 	@Override
 	public void insere(Promocao promocao) throws BaseDadosException {
 		abreConexao();
-		preparaComandoSQL("INSERT INTO Promocao (codigoLivro,preco)" + "VALUES (?, ?)");
+		preparaComandoSQL("INSERT INTO Promocao (codigo, preco)" + "VALUES (?, ?)");
 
 		try {
-			pstmt.setInt(1, promocao.getLivro().getCodigo());
+			pstmt.setInt(1, promocao.getCodigo());
 			pstmt.setInt(2, promocao.getPreco());
 			pstmt.execute();
 		} catch (SQLException e) {
@@ -37,9 +37,9 @@ public class PromocaoDaoJdbc extends ConectorDaoJdbc implements PromocaoDao {
 	}
 
 	@Override
-	public Promocao busca(int codigoPromocao) throws BaseDadosException {
+	public Promocao busca(int codigoLivro) throws BaseDadosException {
 		abreConexao();
-		preparaComandoSQL("select preco from Promocao where codigo =" + codigoPromocao);
+		preparaComandoSQL("select preco from Promocao where codigo =" + codigoLivro);
 		Livro livro = null;
 		Promocao promo = null;
 		try {
@@ -47,8 +47,7 @@ public class PromocaoDaoJdbc extends ConectorDaoJdbc implements PromocaoDao {
 
 			if (rs.next()) {
 				int preco = rs.getInt(1);
-				livro = livroDao.busca(codigoPromocao);
-				promo = new Promocao(codigoPromocao, livro, preco);
+				promo = new Promocao(codigoLivro, preco);
 			}
 		} catch (SQLException e) {
 			Log.gravaLog(e);
@@ -62,22 +61,18 @@ public class PromocaoDaoJdbc extends ConectorDaoJdbc implements PromocaoDao {
 	@Override
 	public List<Promocao> listaTodos() throws BaseDadosException {
 		LinkedList<Promocao> promocoes = new LinkedList<Promocao>();
-		// Usar essa lista pra evitar o erro do código do Freire.
-		LinkedList<Integer> codigoLivroDasPromocoes = new LinkedList<Integer>();
 		abreConexao();
-		preparaComandoSQL("select codigo, codigoLivro, preco from Promocao");
+		preparaComandoSQL("select codigo, preco from Promocao");
 
 		try {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				int codigo = rs.getInt(1);
-				int codigoLivro = rs.getInt(2);
-				int preco = rs.getInt(3);
-				Promocao promocao = new Promocao(codigo, null, preco);
+				int preco = rs.getInt(2);
+				Promocao promocao = new Promocao(codigo, preco);
 
 				promocoes.add(promocao);
-				codigoLivroDasPromocoes.add(codigoLivro);
 			}
 		} catch (SQLException e) {
 			Log.gravaLog(e);
@@ -85,21 +80,13 @@ public class PromocaoDaoJdbc extends ConectorDaoJdbc implements PromocaoDao {
 		}
 		fechaConexao();
 
-		// Buscar os livros pra colocar em cada Promoção
-		for (int i = 0; i < codigoLivroDasPromocoes.size(); i++) {
-			Promocao promocao = promocoes.get(i);
-			int codigoLivro = codigoLivroDasPromocoes.get(i);
-
-			promocao.setLivro(livroDao.busca(codigoLivro));
-		}
-
 		return promocoes;
 	}
 
 	@Override
 	public void remove(int codigoPromocao) throws BaseDadosException {
 		abreConexao();
-		preparaComandoSQL("delete from Promocao where codigoLivro = ?");
+		preparaComandoSQL("delete from Promocao where codigo = ?");
 		try {
 			pstmt.setInt(1, codigoPromocao);
 			pstmt.execute();
@@ -108,33 +95,5 @@ public class PromocaoDaoJdbc extends ConectorDaoJdbc implements PromocaoDao {
 			Log.gravaLog(e);
 			throw new BaseDadosException("Problema na conexão com o banco de dados.");
 		}
-	}
-
-	@Override
-	public List<Promocao> buscaLista(int codigoPromocao) throws BaseDadosException {
-		LinkedList<Promocao> promo = new LinkedList<Promocao>();
-		abreConexao();
-		// Recentes por inclusão ou recentes por lancamento?
-		preparaComandoSQL("select codigo from Promocao where codigoLivro =" + codigoPromocao);
-
-		List<Integer> codigoPromocoes = new LinkedList<Integer>();
-
-		try {
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {				
-				int codigo = rs.getInt(1);
-				codigoPromocoes.add(codigo);
-			}
-		} catch (SQLException e) {
-			throw new BaseDadosException("Erro no acesso ao banco de dados!");
-		}
-
-		for (Integer codigo : codigoPromocoes) {
-			promo.add(busca(codigo));
-		}
-
-		fechaConexao();
-		return promo;
 	}
 }

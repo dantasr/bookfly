@@ -57,8 +57,8 @@ public class FachadaRegrasNegocio {
 		regrasNegocioLivro.cadastraLivro(codigo, nome, autor, editora, preco, dia, mes, ano);
 	}
 
-	public void cadastraPromocao(int codigo,Contexto contexto, int novoPreco) throws NegocioException {
-		regrasNegocioPromocao.cadastraPromocao(codigo, contexto, novoPreco);
+	public void cadastraPromocao(int codigo, int novoPreco) throws NegocioException {
+		regrasNegocioPromocao.cadastraPromocao(codigo, novoPreco);
 	}
 
 	///////////////////////////////LISTA USUARIOS///////////////////////////////////////////////////////////////////////////
@@ -156,10 +156,6 @@ public class FachadaRegrasNegocio {
 		}
 	}
 
-	public List<Promocao> buscaPromocaoLista(int codigoPromocao) throws NegocioException {
-		return regrasNegocioPromocao.buscaPromocaoLista(codigoPromocao);
-	}
-
 	public List<Venda> buscaVendasDoUsuario(int codigoUsuario) throws NegocioException {
 		return regrasNegocioVenda.buscaVendasDoUsuario(codigoUsuario);
 	}
@@ -171,7 +167,6 @@ public class FachadaRegrasNegocio {
 	public void desativaUsuario(int codigoUsuario) throws NegocioException {
 		regrasNegocioUsuario.desativaUsuario(codigoUsuario);
 	}
-
 
 	public void ativaUsuario(int codigoUsuario) throws NegocioException {
 		regrasNegocioUsuario.ativaUsuario(codigoUsuario);
@@ -187,5 +182,9 @@ public class FachadaRegrasNegocio {
 
 	public List<Livro> listaLivrosRecentes(int limite) throws NegocioException {
 		return regrasNegocioLivro.listaLivrosRecentes(limite);
+	}
+	
+	public int calcularValorEmPromocao(Livro livro, Usuario usuario) throws NegocioException {
+		return regrasNegocioPromocao.calcularValorEmPromocao(livro, usuario);
 	}
 }

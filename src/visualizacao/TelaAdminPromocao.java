@@ -47,10 +47,10 @@ public class TelaAdminPromocao extends JFrame {
 				String promo = textField.getText();
 				int valorF = Integer.parseInt(promo);
 				try {
-					contexto.getGerenciadorRegrasNegocio().cadastraPromocao(codigo,contexto, valorF);
+					contexto.getGerenciadorRegrasNegocio().cadastraPromocao(codigo, valorF);
 					JOptionPane.showMessageDialog(null, "Promoção cadastrada com sucesso!");
 				} catch (NegocioException e) {
-					JOptionPane.showMessageDialog(null, "Erro na entrada de valor!");
+					JOptionPane.showMessageDialog(null, "Erro no cadastro!\n" + e.getMessage());
 				}
 			}
 		});

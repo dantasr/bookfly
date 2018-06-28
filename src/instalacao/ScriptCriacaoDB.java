@@ -88,10 +88,9 @@ public class ScriptCriacaoDB extends ConectorDaoJdbc {
 		abreConexao();
 		preparaComandoSQL(
 				"create table if not exists Promocao (" 
-						+ "codigo int unsigned not null auto_increment primary key,"
-						+ "codigoLivro int unsigned not null," 
+						+ "codigo int unsigned not null primary key,"
 						+ "preco int unsigned not null,"
-						+ "constraint fk_Promocao_Livro FOREIGN KEY (codigoLivro) REFERENCES Livro (codigo))"
+						+ "constraint uniq_codigo UNIQUE (codigo))"
 						);
 		pstmt.execute();
 		fechaConexao();

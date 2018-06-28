@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TelaUsuarioPromocao extends JFrame {
@@ -102,20 +103,16 @@ public class TelaUsuarioPromocao extends JFrame {
 	}
 
 	private void realizaPesquisaPromocao() {
-		try {
-			List<Promocao> resultados = contexto.getGerenciadorRegrasNegocio().buscaPromocaoLista(livro.getCodigo());
-			
-			if(resultados.size() != 0) {
-				montaTabelaPromocoes(resultados);
-				this.setVisible(true);
-			}
-			else JOptionPane.showMessageDialog(null, "Não há livros com esse nome");
+		//List<Promocao> resultados = contexto.getGerenciadorRegrasNegocio().buscaPromocaoLista(livro.getCodigo());
+		List<Promocao> resultados = new ArrayList<Promocao>();
+		
+		if(resultados.size() != 0) {
+			montaTabelaPromocoes(resultados);
+			this.setVisible(true);
 		}
-		catch (NegocioException e) {
-			Log.gravaLog(e);
-			JOptionPane.showMessageDialog(null, e.getMessage());
-		}
+		else JOptionPane.showMessageDialog(null, "Não há livros com esse nome");
 	}
+	
 	private void fecharPesquisa() {
 		super.dispose();
 	}
