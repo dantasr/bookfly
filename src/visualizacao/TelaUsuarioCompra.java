@@ -62,7 +62,7 @@ public class TelaUsuarioCompra extends JFrame {
 		JButton btnCartoClube = new JButton("Cart\u00E3o Clube");
 		btnCartoClube.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new TelaUsuarioCompraPagamentoCartaoClube(contexto, livro, null).setVisible(true);
+				new TelaUsuarioCompraPagamentoCartaoClube(contexto, livro).setVisible(true);
 				setVisible(false);
 			}
 		});

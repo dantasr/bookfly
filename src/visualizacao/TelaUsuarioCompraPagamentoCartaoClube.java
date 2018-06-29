@@ -13,6 +13,7 @@ import dto.Usuario;
 import dto.Venda;
 import main.Contexto;
 import negocio.NegocioException;
+import negocio.RegrasNegocioPromocao.PromocaoCalculada;
 import utilidades.Log;
 
 import javax.swing.JLabel;
@@ -40,7 +41,7 @@ public class TelaUsuarioCompraPagamentoCartaoClube extends JFrame {
 	/**
 	 * Create the frame.
 	 */	
-	public TelaUsuarioCompraPagamentoCartaoClube(Contexto contexto, Livro livro, Promocao promocao) {
+	public TelaUsuarioCompraPagamentoCartaoClube(Contexto contexto, Livro livro) {
 		this.contexto = contexto;
 		this.livro = livro;
 		this.promocao = promocao;
@@ -89,14 +90,15 @@ public class TelaUsuarioCompraPagamentoCartaoClube extends JFrame {
 		contentPane.add(lblValorsaldo);
 
 		Usuario atual = contexto.getUsuarioAtual();
-		int preco = 0;
+		PromocaoCalculada oromocaoCalculada = null;
 		try {
-			preco = contexto.getGerenciadorPreco().calcularPrecoParaLivro(livro, promocao, atual, true);
+			oromocaoCalculada = contexto.getGerenciadorRegrasNegocio().calcularValorEmPromocao(livro, contexto.getUsuarioAtual());
 		} catch (NegocioException e1) {
 			JOptionPane.showMessageDialog(null, "Erro ao calcular preco");
+			return;
 		}
 		
-		lblValorproduto = new JLabel(preco + " R$");
+		lblValorproduto = new JLabel(oromocaoCalculada.valor + " R$");
 		lblValorproduto.setBounds(130, 99, 95, 14);
 		contentPane.add(lblValorproduto);
 
@@ -105,7 +107,7 @@ public class TelaUsuarioCompraPagamentoCartaoClube extends JFrame {
 		lblValorfinal.setBounds(124, 134, 101, 14);
 		contentPane.add(lblValorfinal);
 
-		int valorFinalC = contexto.getUsuarioAtual().getSaldoCartaoClube() - preco;
+		int valorFinalC = contexto.getUsuarioAtual().getSaldoCartaoClube() - oromocaoCalculada.valor;
 		btnAdicionaSaldo = new JButton("Adicionar saldo...");
 		btnAdicionaSaldo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -138,22 +140,22 @@ public class TelaUsuarioCompraPagamentoCartaoClube extends JFrame {
 
 	private void realizaCompra() {
 		Usuario atual = contexto.getUsuarioAtual();
-		int precoLivro = 0;
+		PromocaoCalculada promocaoCalculada;
 		try {
-			precoLivro = contexto.getGerenciadorPreco().calcularPrecoParaLivro(livro, promocao, atual, true);
+			promocaoCalculada = contexto.getGerenciadorRegrasNegocio().calcularValorEmPromocao(livro, atual);
 		} catch (NegocioException e) {
 			Log.gravaLog(e);
 			JOptionPane.showMessageDialog(null, e.getMessage());
 			return;
 		}
 
-		if (precoLivro > atual.getSaldoCartaoClube()) {
+		if (promocaoCalculada.valor > atual.getSaldoCartaoClube()) {
 			JOptionPane.showMessageDialog(null, "Você não possui saldo!");
 			return;
 		}
 
 		try {
-			contexto.getGerenciadorRegrasNegocio().vendeLivroCartaoClube(atual, livro, precoLivro);
+			contexto.getGerenciadorRegrasNegocio().vendeLivroCartaoClube(atual, livro, promocaoCalculada.valor);
 			JOptionPane.showMessageDialog(null, "Comprado com sucesso!");
 			setVisible(false);
 		} catch (NegocioException e) {
@@ -163,9 +165,9 @@ public class TelaUsuarioCompraPagamentoCartaoClube extends JFrame {
 
 	private void atualizarCampos() {
 		Usuario atual = contexto.getUsuarioAtual();
-		int precoLivro = 0;
+		PromocaoCalculada promocaoCalculada;
 		try {
-			precoLivro = contexto.getGerenciadorPreco().calcularPrecoParaLivro(livro, promocao, atual, true);
+			promocaoCalculada = contexto.getGerenciadorRegrasNegocio().calcularValorEmPromocao(livro, atual);
 		} catch (NegocioException e) {
 			Log.gravaLog(e);
 			JOptionPane.showMessageDialog(null, e.getMessage());
@@ -174,10 +176,10 @@ public class TelaUsuarioCompraPagamentoCartaoClube extends JFrame {
 		
 		String saldoAtual = "" + contexto.getUsuarioAtual().getSaldoCartaoClube();
 		lblValorsaldo.setText(saldoAtual + " R$");
-		int valorF = contexto.getUsuarioAtual().getSaldoCartaoClube() - precoLivro;
+		int valorF = contexto.getUsuarioAtual().getSaldoCartaoClube() - promocaoCalculada.valor;
 		lblValorfinal.setText(valorF + " R$");
 		
-		if (atual.getSaldoCartaoClube() - precoLivro < 0) {
+		if (atual.getSaldoCartaoClube() - promocaoCalculada.valor < 0) {
 			lblAvisoSemSaldo.setVisible(true);
 			btnRealizaCompra.setEnabled(false);
 		} else {

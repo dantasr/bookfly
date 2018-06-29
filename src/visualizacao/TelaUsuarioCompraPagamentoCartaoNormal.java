@@ -14,6 +14,7 @@ import dto.Livro;
 import dto.Usuario;
 import main.Contexto;
 import negocio.NegocioException;
+import negocio.RegrasNegocioPromocao.PromocaoCalculada;
 import utilidades.Log;
 import utilidades.ValidacaoException;
 import utilidades.Validador;
@@ -170,13 +171,12 @@ public class TelaUsuarioCompraPagamentoCartaoNormal extends JFrame {
 		}
 		
 		Usuario atual = contexto.getUsuarioAtual();
-		int precoLivro;
+		PromocaoCalculada promocaoCalculada;
 		try {
-			precoLivro = contexto.getGerenciadorPreco().calcularPrecoParaLivro(livro, null, atual, false);
+			promocaoCalculada = contexto.getGerenciadorRegrasNegocio().calcularValorEmPromocao(livro, atual);
 		} catch (NegocioException e) {
 			Log.gravaLog(e);
 			JOptionPane.showMessageDialog(null, e.getMessage());
-			
 			return;
 		}
 		
@@ -186,7 +186,7 @@ public class TelaUsuarioCompraPagamentoCartaoNormal extends JFrame {
 		}
 		
 		try {
-			contexto.getGerenciadorRegrasNegocio().vendeLivroCartaoNormal(gerenciadorCartoes, cartao, atual, livro, precoLivro);
+			contexto.getGerenciadorRegrasNegocio().vendeLivroCartaoNormal(gerenciadorCartoes, cartao, atual, livro, promocaoCalculada.valor);
 			JOptionPane.showMessageDialog(null, "Livro comprado com sucesso!");
 			setVisible(false);
 		} catch (NegocioException e) {
