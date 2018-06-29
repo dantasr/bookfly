@@ -47,6 +47,10 @@ public class TelaUsuarioInsereCredito extends JFrame {
 	private Validador validador = new Validador();
 	private Runnable callbackCompra;
 	private JLabel lblValorsaldo;
+	private JLabel lblValoresMaioresQue;
+	private JLabel lblValoresMaioresQue_1;
+	private JLabel lblValoresMaioresQue_2;
+	private JLabel lblValoresMaioresQue_3;
 
 	/**
 	 * Create the frame.
@@ -111,23 +115,23 @@ public class TelaUsuarioInsereCredito extends JFrame {
 		txtQuantidade.setColumns(10);
 		
 		JLabel lblFormaDePagamento = new JLabel("Forma de pagamento:");
-		lblFormaDePagamento.setBounds(250, 60, 158, 14);
+		lblFormaDePagamento.setBounds(251, 31, 158, 14);
 		contentPane.add(lblFormaDePagamento);
 		
 		rdbtnVisa = new JRadioButton("VISA");
 		rdbtnVisa.setSelected(true);
 		buttonGroupFormaPagamento.add(rdbtnVisa);
-		rdbtnVisa.setBounds(260, 80, 109, 23);
+		rdbtnVisa.setBounds(261, 60, 109, 23);
 		contentPane.add(rdbtnVisa);
 		
 		rdbtnMasterCard = new JRadioButton("MASTER CARD");
 		buttonGroupFormaPagamento.add(rdbtnMasterCard);
-		rdbtnMasterCard.setBounds(260, 110, 109, 23);
+		rdbtnMasterCard.setBounds(261, 90, 109, 23);
 		contentPane.add(rdbtnMasterCard);
 		
 		rdbtnElo = new JRadioButton("ELO");
 		buttonGroupFormaPagamento.add(rdbtnElo);
-		rdbtnElo.setBounds(260, 143, 109, 23);
+		rdbtnElo.setBounds(261, 116, 109, 23);
 		contentPane.add(rdbtnElo);
 		
 		JButton btnConfirmar = new JButton("Confirmar");
@@ -138,6 +142,22 @@ public class TelaUsuarioInsereCredito extends JFrame {
 		});
 		btnConfirmar.setBounds(31, 199, 89, 23);
 		contentPane.add(btnConfirmar);
+		
+		lblValoresMaioresQue = new JLabel("Valores maiores que 1000: bonus de 50%");
+		lblValoresMaioresQue.setBounds(211, 146, 213, 20);
+		contentPane.add(lblValoresMaioresQue);
+		
+		lblValoresMaioresQue_1 = new JLabel("Valores maiores que 300: bonus de 30%");
+		lblValoresMaioresQue_1.setBounds(211, 171, 213, 20);
+		contentPane.add(lblValoresMaioresQue_1);
+		
+		lblValoresMaioresQue_2 = new JLabel("Valores maiores que 100: bonus de 20%");
+		lblValoresMaioresQue_2.setBounds(211, 199, 213, 20);
+		contentPane.add(lblValoresMaioresQue_2);
+		
+		lblValoresMaioresQue_3 = new JLabel("Valores maiores que 50: bonus de 10%");
+		lblValoresMaioresQue_3.setBounds(211, 230, 213, 20);
+		contentPane.add(lblValoresMaioresQue_3);
 		atualizaCampos();
 	}
 
@@ -185,7 +205,7 @@ public class TelaUsuarioInsereCredito extends JFrame {
 		
 		Usuario atual = contexto.getUsuarioAtual();
 		try {
-			contexto.getGerenciadorRegrasNegocio().insereCreditoCartaoClube(gerenciadorCartoes, cartao, atual, valor);
+			contexto.getFachadaRegrasNegocio().insereCreditoCartaoClube(gerenciadorCartoes, cartao, atual, valor);
 			JOptionPane.showMessageDialog(null, "Crédito inserido com sucesso!");
 			this.setVisible(false);
 			this.callbackCompra.run();

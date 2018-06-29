@@ -96,7 +96,6 @@ public class LivroDaoJdbc extends ConectorDaoJdbc implements LivroDao {
 
 	@Override
 	public void remove(int codigoLivro) throws BaseDadosException {
-		// TODO Auto-generated method stub
 		
 	}
 

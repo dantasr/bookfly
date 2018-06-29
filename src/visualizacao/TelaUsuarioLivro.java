@@ -43,7 +43,7 @@ public class TelaUsuarioLivro extends JFrame {
 	 * @throws NegocioException 
 	 */
 	public TelaUsuarioLivro(Contexto contexto, Livro livro) throws NegocioException {
-		contexto.getGerenciadorRegrasNegocio();
+		contexto.getFachadaRegrasNegocio();
 		setTitle("BOOKFLY");
 		this.livro = livro;
 		this.contexto=contexto;
@@ -74,10 +74,6 @@ public class TelaUsuarioLivro extends JFrame {
 		lblData.setBounds(148, 116, 46, 24);
 		contentPane.add(lblData);
 		
-		JLabel lblSinopse = new JLabel("Sinopse:");
-		lblSinopse.setBounds(148, 151, 46, 24);
-		contentPane.add(lblSinopse);
-		
 		JLabel labelAutor = new JLabel(livro.getAutor());
 		labelAutor.setBounds(190, 51, 102, 14);
 		contentPane.add(labelAutor);
@@ -90,16 +86,12 @@ public class TelaUsuarioLivro extends JFrame {
 		labelData.setBounds(190, 121, 102, 14);
 		contentPane.add(labelData);
 		
-		JLabel labelSinopse = new JLabel("Sinopse");
-		labelSinopse.setBounds(177, 167, 234, 94);
-		contentPane.add(labelSinopse);
-		
 		JLabel lblPromoo = new JLabel("Promo\u00E7\u00E3o!");
 		lblPromoo.setForeground(Color.BLUE);
 		lblPromoo.setBounds(10, 176, 74, 14);
 		contentPane.add(lblPromoo);
 		
-		PromocaoCalculada calculada = contexto.getGerenciadorRegrasNegocio().calcularValorEmPromocao(livro, contexto.getUsuarioAtual());
+		PromocaoCalculada calculada = contexto.getFachadaRegrasNegocio().calcularValorEmPromocao(livro, contexto.getUsuarioAtual());
 		JLabel labelPreco = new JLabel(livro.getPreco() + " R$");
 		if (calculada.tipoDePromocao.equals("promocao")) {
 			labelPreco.setForeground(new Color(100, 100, 255));

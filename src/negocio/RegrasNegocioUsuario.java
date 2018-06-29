@@ -17,6 +17,10 @@ public class RegrasNegocioUsuario {
 	
 	public void cadastraUsuario(int codigo, String nome, Date dataNascimento, String telefone, String cpf,
 			String senha) throws NegocioException {
+		if (buscaUsuarioPorNomeExato(nome) != null) {
+			throw new NegocioException("Usuario com este nome ja existe!");
+		}
+		
 		Usuario usuario = new Usuario(codigo, nome, dataNascimento, telefone, cpf, senha, 0, false, true);
 		try {
 			fachadaBaseDados.insereUsuario(usuario);

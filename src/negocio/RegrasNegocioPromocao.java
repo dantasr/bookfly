@@ -40,7 +40,7 @@ public class RegrasNegocioPromocao {
 	}
 	
 	public Promocao buscaPromocao(int codigoLivro) throws NegocioException {
-		try {
+		try {			
 			return fachadaBaseDados.buscaPromocao(codigoLivro);
 		} catch (BaseDadosException e) {
 			Log.gravaLog(e);
@@ -50,6 +50,10 @@ public class RegrasNegocioPromocao {
 	
 	public void removePromocao(int codigoLivro) throws NegocioException {
 		try {
+			if (buscaPromocao(codigoLivro) == null) {
+				throw new NegocioException("Livro não possui uma promoção!");
+			}
+			
 			fachadaBaseDados.removePromocao(codigoLivro);
 		} catch (BaseDadosException e) {
 			Log.gravaLog(e);

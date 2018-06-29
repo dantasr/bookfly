@@ -92,7 +92,7 @@ public class TelaUsuarioCompraPagamentoCartaoClube extends JFrame {
 		Usuario atual = contexto.getUsuarioAtual();
 		PromocaoCalculada oromocaoCalculada = null;
 		try {
-			oromocaoCalculada = contexto.getGerenciadorRegrasNegocio().calcularValorEmPromocao(livro, contexto.getUsuarioAtual());
+			oromocaoCalculada = contexto.getFachadaRegrasNegocio().calcularValorEmPromocao(livro, contexto.getUsuarioAtual());
 		} catch (NegocioException e1) {
 			JOptionPane.showMessageDialog(null, "Erro ao calcular preco");
 			return;
@@ -142,7 +142,7 @@ public class TelaUsuarioCompraPagamentoCartaoClube extends JFrame {
 		Usuario atual = contexto.getUsuarioAtual();
 		PromocaoCalculada promocaoCalculada;
 		try {
-			promocaoCalculada = contexto.getGerenciadorRegrasNegocio().calcularValorEmPromocao(livro, atual);
+			promocaoCalculada = contexto.getFachadaRegrasNegocio().calcularValorEmPromocao(livro, atual);
 		} catch (NegocioException e) {
 			Log.gravaLog(e);
 			JOptionPane.showMessageDialog(null, e.getMessage());
@@ -155,7 +155,7 @@ public class TelaUsuarioCompraPagamentoCartaoClube extends JFrame {
 		}
 
 		try {
-			contexto.getGerenciadorRegrasNegocio().vendeLivroCartaoClube(atual, livro, promocaoCalculada.valor);
+			contexto.getFachadaRegrasNegocio().vendeLivroCartaoClube(atual, livro, promocaoCalculada.valor);
 			JOptionPane.showMessageDialog(null, "Comprado com sucesso!");
 			setVisible(false);
 		} catch (NegocioException e) {
@@ -167,7 +167,7 @@ public class TelaUsuarioCompraPagamentoCartaoClube extends JFrame {
 		Usuario atual = contexto.getUsuarioAtual();
 		PromocaoCalculada promocaoCalculada;
 		try {
-			promocaoCalculada = contexto.getGerenciadorRegrasNegocio().calcularValorEmPromocao(livro, atual);
+			promocaoCalculada = contexto.getFachadaRegrasNegocio().calcularValorEmPromocao(livro, atual);
 		} catch (NegocioException e) {
 			Log.gravaLog(e);
 			JOptionPane.showMessageDialog(null, e.getMessage());

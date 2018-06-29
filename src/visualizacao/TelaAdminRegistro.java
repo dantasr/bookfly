@@ -117,21 +117,13 @@ public class TelaAdminRegistro extends JFrame {
 		campoData.setBounds(88, 136, 208, 20);
 		contentPane.add(campoData);
 
-		JButton btnAddSinopse = new JButton("Add Sinopse");
-		btnAddSinopse.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnAddSinopse.setBounds(10, 197, 127, 23);
-		contentPane.add(btnAddSinopse);
-
 		JButton btnAddPdf = new JButton("Add PDF");
 		btnAddPdf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				adicionarPdf();
 			}
 		});
-		btnAddPdf.setBounds(10, 227, 127, 23);
+		btnAddPdf.setBounds(10, 201, 127, 49);
 		contentPane.add(btnAddPdf);
 
 		JButton btnConfirmar = new JButton("Confirmar");
@@ -143,7 +135,7 @@ public class TelaAdminRegistro extends JFrame {
 		btnConfirmar.setBounds(297, 167, 127, 83);
 		contentPane.add(btnConfirmar);
 
-		JButton btnAddImagem = new JButton("add Imagem");
+		JButton btnAddImagem = new JButton("Add Imagem");
 		btnAddImagem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				adicionarImagem();
@@ -186,11 +178,12 @@ public class TelaAdminRegistro extends JFrame {
 			Date data = validador.validaData(campoData.getText(), "Data");
 			validador.validaArquivo(campoPdf, "pdf");
 			validador.validaArquivo(campoImagem, "imagem");
-			contexto.getGerenciadorRegrasNegocio().cadastraLivro(codigo, titulo, autor, editora, preco, data);
+			contexto.getFachadaRegrasNegocio().cadastraLivro(codigo, titulo, autor, editora, preco, data);
 			Livro livro = new Livro(codigo, titulo, autor, editora, preco, data);
 			gerenciadorArquivos.salvarImagemDoLivro(livro, campoImagem);
 			gerenciadorArquivos.salvarArquivoPdf(livro, campoPdf);
 			JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
+			this.setVisible(false);
 		}catch(NegocioException r) {
 			Log.gravaLog(r);
 			JOptionPane.showMessageDialog(null, r.getMessage());

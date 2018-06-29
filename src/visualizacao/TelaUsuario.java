@@ -24,6 +24,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.net.MalformedURLException;
 import java.util.List;
+import javax.swing.ImageIcon;
 
 public class TelaUsuario extends JFrame {
 
@@ -33,6 +34,7 @@ public class TelaUsuario extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JLabel lblNomeusuario;
+	private JLabel lblValorsaldo;
 	private Contexto contexto;
 	private JLabel[] capasRecentes;
 	private JLabel[] titulosRecentes;
@@ -133,6 +135,24 @@ public class TelaUsuario extends JFrame {
 		lblTitulo3.setBounds(217, 231, 89, 14);
 		contentPane.add(lblTitulo3);
 		
+		JLabel lblSaldoDoCartoclube = new JLabel("Saldo do Cart\u00E3o-clube:");
+		lblSaldoDoCartoclube.setBounds(304, 51, 112, 14);
+		contentPane.add(lblSaldoDoCartoclube);
+		
+		lblValorsaldo = new JLabel("valorSaldo");
+		lblValorsaldo.setBounds(304, 68, 81, 14);
+		contentPane.add(lblValorsaldo);
+		
+		JButton btnNewButton = new JButton("\u21BA");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				lblValorsaldo.setText("" + contexto.getUsuarioAtual().getSaldoCartaoClube());
+			}
+		});
+		btnNewButton.setIcon(null);
+		btnNewButton.setBounds(373, 64, 43, 23);
+		contentPane.add(btnNewButton);
+		
 		capasRecentes = new JLabel[] { lblCapa1, lblCapa2, lblCapa3 };
 		titulosRecentes = new JLabel[] { lblTitulo1, lblTitulo2, lblTitulo3 };
 		
@@ -141,9 +161,10 @@ public class TelaUsuario extends JFrame {
 
 	private void atualizarCampos() {
 		this.lblNomeusuario.setText(contexto.getUsuarioAtual().getNome());
+		this.lblValorsaldo.setText("" + contexto.getUsuarioAtual().getSaldoCartaoClube());
 		
 		try {
-			List<Livro> recentes = contexto.getGerenciadorRegrasNegocio().listaLivrosRecentes(3);
+			List<Livro> recentes = contexto.getFachadaRegrasNegocio().listaLivrosRecentes(3);
 			for (int i = 0; i < recentes.size(); i++) {
 				Livro livro = recentes.get(i);
 				

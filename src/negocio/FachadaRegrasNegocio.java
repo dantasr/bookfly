@@ -29,6 +29,7 @@ public class FachadaRegrasNegocio {
 	private RegrasNegocioPromocao regrasNegocioPromocao;
 	private RegrasNegocioVenda regrasNegocioVenda;
 	private RegrasNegocioAluguel regrasNegocioAluguel;
+	private RegrasNegocioCartaoClube regrasNegocioCartaoClube;
 
 	public FachadaRegrasNegocio(FachadaBaseDados db) {
 		this.fachadaBaseDados = db;
@@ -38,6 +39,7 @@ public class FachadaRegrasNegocio {
 		regrasNegocioPromocao = new RegrasNegocioPromocao(fachadaBaseDados);
 		regrasNegocioVenda = new RegrasNegocioVenda(fachadaBaseDados);
 		regrasNegocioAluguel = new RegrasNegocioAluguel(fachadaBaseDados);
+		regrasNegocioCartaoClube = new RegrasNegocioCartaoClube(fachadaBaseDados);
 	}
 
 	public void cadastraUsuario(int codigo, String nome, Date dataNascimento, String telefone, String cpf,
@@ -135,26 +137,7 @@ public class FachadaRegrasNegocio {
 	}
 
 	public void insereCreditoCartaoClube(GerenciadorCartoes gerenciadorCartoes, Cartao cartao, Usuario usuario, int valor) throws NegocioException {
-		if (valor < 0)
-			throw new NegocioException("Valor inválido!");
-
-		try {
-			gerenciadorCartoes.realizarDebito(cartao, valor);
-		} catch (CartaoSemSaldoException e) {
-			Log.gravaLog(e);
-			throw new NegocioException("Cartão não possui saldo!");
-		} catch (BaseDadosException e) {
-			Log.gravaLog(e);
-			throw new NegocioException("Problemas na conexão com o banco de dados.");
-		}
-
-		usuario.setSaldoCartaoClube(usuario.getSaldoCartaoClube() + valor);
-		try {
-			fachadaBaseDados.alteraUsuario(usuario);
-		} catch (BaseDadosException e) {
-			Log.gravaLog(e);
-			throw new NegocioException("Problemas no acesso ao banco de dados!");
-		}
+		regrasNegocioCartaoClube.insereCreditoCartaoClube(gerenciadorCartoes, cartao, usuario, valor);
 	}
 
 	public List<Venda> buscaVendasDoUsuario(int codigoUsuario) throws NegocioException {
@@ -187,5 +170,13 @@ public class FachadaRegrasNegocio {
 	
 	public PromocaoCalculada calcularValorEmPromocao(Livro livro, Usuario usuario) throws NegocioException {
 		return regrasNegocioPromocao.calcularValorEmPromocao(livro, usuario);
+	}
+	
+	public int calculaPrecoDoAluguel(Livro livro) {
+		return regrasNegocioAluguel.calculaPrecoDoAluguel(livro);
+	}
+	
+	public void realizaAluguel(Livro livro, Usuario usuario) throws NegocioException {
+		regrasNegocioAluguel.realizaAluguel(livro, usuario);
 	}
 }

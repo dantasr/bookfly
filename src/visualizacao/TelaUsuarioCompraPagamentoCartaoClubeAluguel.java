@@ -33,7 +33,7 @@ public class TelaUsuarioCompraPagamentoCartaoClubeAluguel extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaUsuarioCompraPagamentoCartaoClubeAluguel(Contexto contexto, Livro livro, int saldo, int valorParcela, int valorFinal) {
+	public TelaUsuarioCompraPagamentoCartaoClubeAluguel(Contexto contexto, Livro livro) {
 		this.contexto = contexto;
 		this.livro = livro;
 		
@@ -62,7 +62,17 @@ public class TelaUsuarioCompraPagamentoCartaoClubeAluguel extends JFrame {
 		lblSeuSaldoFinal.setBounds(31, 134, 83, 14);
 		contentPane.add(lblSeuSaldoFinal);
 		
-		if(valorFinal < 0) {
+		int saldo = contexto.getUsuarioAtual().getSaldoCartaoClube();
+		JLabel lblValorsaldo = new JLabel(saldo + " R$");
+		lblValorsaldo.setBounds(90, 67, 140, 14);
+		contentPane.add(lblValorsaldo);
+		
+		int valor = contexto.getFachadaRegrasNegocio().calculaPrecoDoAluguel(livro);
+		JLabel lblValorparcela = new JLabel(valor + " R$/ por 3 dias");
+		lblValorparcela.setBounds(128, 99, 119, 14);
+		contentPane.add(lblValorparcela);
+		
+		if(saldo - valor < 0) {
 			lblAvisoSemSaldo = new JLabel("Saldo insuficiente!");
 			lblAvisoSemSaldo.setForeground(Color.RED);
 			lblAvisoSemSaldo.setBounds(31, 159, 119, 14);
@@ -97,15 +107,7 @@ public class TelaUsuarioCompraPagamentoCartaoClubeAluguel extends JFrame {
 		btnNewButton_1.setBounds(335, 227, 89, 23);
 		contentPane.add(btnNewButton_1);
 		
-		JLabel lblValorsaldo = new JLabel(saldo + " R$");
-		lblValorsaldo.setBounds(90, 67, 140, 14);
-		contentPane.add(lblValorsaldo);
-		
-		JLabel lblValorparcela = new JLabel(valorParcela + " R$/por dia");
-		lblValorparcela.setBounds(128, 99, 119, 14);
-		contentPane.add(lblValorparcela);
-		
-		JLabel lblValorfinal = new JLabel(valorFinal + " R$");
+		JLabel lblValorfinal = new JLabel((saldo - valor) + " R$");
 		lblValorfinal.setBounds(113, 134, 100, 14);
 		contentPane.add(lblValorfinal);
 		
@@ -113,27 +115,12 @@ public class TelaUsuarioCompraPagamentoCartaoClubeAluguel extends JFrame {
 	}
 	
 	private void adicionaSaldo() {
-		new TelaUsuarioInsereCredito(contexto, () -> this.atualizarCampos()).setVisible(true);;
+		new TelaUsuarioInsereCredito(contexto, () -> this.atualizarCampos()).setVisible(true);
 	}
 
-	private void realizaCompra() {
-		Usuario atual = contexto.getUsuarioAtual();
-		int precoLivro = 0;
+	private void realizaCompra() {		
 		try {
-			precoLivro = contexto.getGerenciadorPreco().calcularPrecoParaLivro(livro, null, atual, true);
-		} catch (NegocioException e) {
-			Log.gravaLog(e);
-			JOptionPane.showMessageDialog(null, e.getMessage());
-			return;
-		}
-		
-		if (precoLivro > atual.getSaldoCartaoClube()) {
-			JOptionPane.showMessageDialog(null, "Você não possui saldo!");
-			return;
-		}
-		
-		try {
-			contexto.getGerenciadorRegrasNegocio().vendeLivroCartaoClube(atual, livro, precoLivro);
+			contexto.getFachadaRegrasNegocio().realizaAluguel(livro, contexto.getUsuarioAtual());
 			JOptionPane.showMessageDialog(null, "Comprado com sucesso!");
 			setVisible(false);
 		} catch (NegocioException e) {
@@ -143,14 +130,8 @@ public class TelaUsuarioCompraPagamentoCartaoClubeAluguel extends JFrame {
 
 	private void atualizarCampos() {
 		Usuario atual = contexto.getUsuarioAtual();
-		int precoLivro = 0;
-		try {
-			precoLivro = contexto.getGerenciadorPreco().calcularPrecoParaLivro(livro, null, atual, true);
-		} catch (NegocioException e) {
-			Log.gravaLog(e);
-			JOptionPane.showMessageDialog(null, e.getMessage());
-			return;
-		}
+		int precoLivro = contexto.getFachadaRegrasNegocio().calculaPrecoDoAluguel(livro);
+
 		if (atual.getSaldoCartaoClube() - precoLivro < 0) {
 			lblAvisoSemSaldo.setVisible(true);
 		}

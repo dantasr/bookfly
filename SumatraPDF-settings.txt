@@ -67,12 +67,32 @@ UseTabs = true
 
 FileStates [
 	[
-		FilePath = C:\Users\Joon\eclipse-workspace\bookflyprojectFinalTry\pdfs\1.pdf
+		FilePath = C:\Users\Joon\eclipse-workspace\bookflyprojectFinalTry\pdfs\2.pdf
 		Favorites [
 		]
 		IsPinned = false
 		IsMissing = false
 		OpenCount = 1
+		UseDefaultState = false
+		DisplayMode = continuous
+		ScrollPos = -1 832
+		PageNo = 5
+		Zoom = fit page
+		Rotation = 0
+		WindowState = 1
+		WindowPos = 399 0 562 728
+		ShowToc = false
+		SidebarDx = 0
+		DisplayR2L = false
+		ReparseIdx = 0
+	]
+	[
+		FilePath = C:\Users\Joon\eclipse-workspace\bookflyprojectFinalTry\pdfs\1.pdf
+		Favorites [
+		]
+		IsPinned = false
+		IsMissing = false
+		OpenCount = 0
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -110,6 +130,6 @@ FileStates [
 SessionData [
 ]
 TimeOfLastUpdateCheck = 0 0
-OpenCountWeek = 386
+OpenCountWeek = 391
 
 # Settings after this line have not been recognized by the current version

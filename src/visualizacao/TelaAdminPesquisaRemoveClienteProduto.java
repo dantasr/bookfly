@@ -81,7 +81,7 @@ public class TelaAdminPesquisaRemoveClienteProduto extends JFrame {
 		painelUsuario.add(textField);
 		textField.setColumns(10);
 		
-		JButton btnDesativaUsuario = new JButton("Desativa");
+		JButton btnDesativaUsuario = new JButton("Desativar");
 		btnDesativaUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				desativaUsuario();
@@ -186,12 +186,7 @@ public class TelaAdminPesquisaRemoveClienteProduto extends JFrame {
 		JButton btnPromoo = new JButton("Promo\u00E7\u00E3o");
 		btnPromoo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(codigo != -1) {
-					new TelaAdminPromocao(contexto,codigo).setVisible(true);
-				}
-				else {
-					JOptionPane.showMessageDialog(null, "Você não selecionou um livro!");
-				}
+				cadastrarPromocao();
 			}
 		});
 		btnPromoo.setBounds(208, 176, 89, 23);
@@ -200,18 +195,7 @@ public class TelaAdminPesquisaRemoveClienteProduto extends JFrame {
 		JButton btnRemoverPromoo = new JButton("Remover promo\u00E7\u00E3o");
 		btnRemoverPromoo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(codigo != -1) {
-					try {
-						contexto.getGerenciadorRegrasNegocio().removePromocao(codigo);
-						JOptionPane.showMessageDialog(null, "Deletado com sucesso!");
-					} catch (NegocioException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}
-				else {
-					JOptionPane.showMessageDialog(null, "Você não selecionou um livro!");
-				}
+				removerPromocao();
 			}	
 		});
 		btnRemoverPromoo.setBounds(10, 176, 188, 23);
@@ -235,7 +219,7 @@ public class TelaAdminPesquisaRemoveClienteProduto extends JFrame {
 		int codigo = (int) model.getValueAt(row, 0);
 		
 		try {
-			contexto.getGerenciadorRegrasNegocio().desativaUsuario(codigo);
+			contexto.getFachadaRegrasNegocio().desativaUsuario(codigo);
 			realizaPesquisaUsuario();
 			JOptionPane.showMessageDialog(null, "Usuario desativado com sucesso!");
 		} catch (NegocioException e) {
@@ -254,7 +238,7 @@ public class TelaAdminPesquisaRemoveClienteProduto extends JFrame {
 		int codigo = (int) model.getValueAt(row, 0);
 		
 		try {
-			contexto.getGerenciadorRegrasNegocio().ativaUsuario(codigo);
+			contexto.getFachadaRegrasNegocio().ativaUsuario(codigo);
 			realizaPesquisaUsuario();
 			JOptionPane.showMessageDialog(null, "Usuario Ativado com sucesso!");
 		} catch (NegocioException e) {
@@ -271,12 +255,37 @@ public class TelaAdminPesquisaRemoveClienteProduto extends JFrame {
 		int codigo = (int) model.getValueAt(row, 0);
 		
 		try {
-			contexto.getGerenciadorRegrasNegocio().removeLivro(codigo);
+			contexto.getFachadaRegrasNegocio().removeLivro(codigo);
 			realizaPesquisaProduto();
 			JOptionPane.showMessageDialog(null, "Produto removido com sucesso!");
 		} catch (NegocioException e) {
 			Log.gravaLog(e);
 			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+	}
+	
+	private void cadastrarPromocao() {
+		int row = tableResultadosProduto.getSelectedRow();
+		if (row == -1) return;
+		
+		DefaultTableModel model = (DefaultTableModel) tableResultadosProduto.getModel();
+		int codigo = (int) model.getValueAt(row, 0);
+		
+		new TelaAdminPromocao(contexto, codigo).setVisible(true);
+	}
+	
+	private void removerPromocao() {
+		int row = tableResultadosProduto.getSelectedRow();
+		if (row == -1) return;
+		
+		DefaultTableModel model = (DefaultTableModel) tableResultadosProduto.getModel();
+		int codigo = (int) model.getValueAt(row, 0);
+		
+		try {
+			contexto.getFachadaRegrasNegocio().removePromocao(codigo);
+			JOptionPane.showMessageDialog(null, "Deletado com sucesso!");
+		} catch (NegocioException e) {
+			JOptionPane.showMessageDialog(null, "Erro ao remover promoção:\n" + e.getMessage());
 		}
 	}
 
@@ -308,7 +317,7 @@ public class TelaAdminPesquisaRemoveClienteProduto extends JFrame {
 	private void realizaPesquisaProduto() {
 		String termo = campoPesquisaProduto.getText();
 		try {
-			List<Livro> resultados = contexto.getGerenciadorRegrasNegocio().buscaLivrosPorNome(termo);
+			List<Livro> resultados = contexto.getFachadaRegrasNegocio().buscaLivrosPorNome(termo);
 			montaTabelaLivros(resultados);
 		} catch (NegocioException e) {
 			Log.gravaLog(e);
@@ -319,7 +328,7 @@ public class TelaAdminPesquisaRemoveClienteProduto extends JFrame {
 	private void realizaPesquisaUsuario() {
 		String termo = campoPesquisaProduto.getText();
 		try {
-			List<Usuario> resultados = contexto.getGerenciadorRegrasNegocio().buscaUsuariosPorNome(termo);
+			List<Usuario> resultados = contexto.getFachadaRegrasNegocio().buscaUsuariosPorNome(termo);
 			montaTabelaUsuarios(resultados);
 		} catch (NegocioException e) {
 			Log.gravaLog(e);

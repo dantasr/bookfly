@@ -36,9 +36,6 @@ public class TelaUsuarioAluga extends JFrame {
 		JLabel lblAoAlugarUm_1 = new JLabel("Ao alugar um dos nossos produtos, \r\nvoc\u00EA ter\u00E1 direito de us\u00E1-lo livremente ");
 		lblAoAlugarUm_1.setBounds(10, 35, 437, 14);
 		contentPane.add(lblAoAlugarUm_1);
-		int saldo = contexto.getUsuarioAtual().getSaldoCartaoClube();
-		int precoParcela = 2*(livro.getPreco()/15);
-		int valorFinalC = saldo - 3*(precoParcela);
 		
 		JLabel lblNewLabel = new JLabel("durante um per\u00EDodo de 3 dias. \r\n Ap\u00F3s esse prazo,\r\n o produto ser\u00E1 automaticamente");
 		lblNewLabel.setBounds(10, 49, 414, 14);
@@ -56,14 +53,15 @@ public class TelaUsuarioAluga extends JFrame {
 		lblPreoDoAluguel.setBounds(10, 116, 106, 14);
 		contentPane.add(lblPreoDoAluguel);
 		
-		JLabel lblValoraluguel = new JLabel(precoParcela + " R$/por dia");
+		int preco = contexto.getFachadaRegrasNegocio().calculaPrecoDoAluguel(livro);
+		JLabel lblValoraluguel = new JLabel(preco + " R$");
 		lblValoraluguel.setBounds(111, 116, 111, 14);
 		contentPane.add(lblValoraluguel);
 		
 		JButton button = new JButton("Comprar");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new TelaUsuarioCompraPagamentoCartaoClubeAluguel(contexto, livro,saldo,precoParcela,valorFinalC).setVisible(true);
+				new TelaUsuarioCompraPagamentoCartaoClubeAluguel(contexto, livro).setVisible(true);
 				
 				setVisible(false);
 			}

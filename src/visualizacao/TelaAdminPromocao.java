@@ -10,6 +10,8 @@ import javax.swing.border.EmptyBorder;
 import dto.Livro;
 import main.Contexto;
 import negocio.NegocioException;
+import utilidades.ValidacaoException;
+import utilidades.Validador;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -22,6 +24,7 @@ public class TelaAdminPromocao extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
+	private Validador validador = new Validador();
 	
 	public TelaAdminPromocao(Contexto contexto, int codigo) {
 		setTitle("ADMIN");
@@ -45,10 +48,13 @@ public class TelaAdminPromocao extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String promo = textField.getText();
-				int valorF = Integer.parseInt(promo);
 				try {
-					contexto.getGerenciadorRegrasNegocio().cadastraPromocao(codigo, valorF);
+					int valorF = validador.validaFormataInteiroPositivo(promo, "Valor");
+					contexto.getFachadaRegrasNegocio().cadastraPromocao(codigo, valorF);
 					JOptionPane.showMessageDialog(null, "Promoção cadastrada com sucesso!");
+				} catch (ValidacaoException e) {
+					JOptionPane.showMessageDialog(null, "Erro de validação\n" + e.getMessage());
+					return;
 				} catch (NegocioException e) {
 					JOptionPane.showMessageDialog(null, "Erro no cadastro!\n" + e.getMessage());
 				}

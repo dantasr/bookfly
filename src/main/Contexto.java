@@ -10,14 +10,12 @@ import cartoes.GerenciadorMastercard;
 import cartoes.GerenciadorVisa;
 import dto.Livro;
 import dto.Usuario;
-import negocio.GerenciadorPreco;
 import negocio.FachadaRegrasNegocio;
 import negocio.NegocioException;
 
 public class Contexto {
 	private FachadaBaseDados db;
 	private FachadaRegrasNegocio gerenciadorRegrasNegocio;
-	private GerenciadorPreco gerenciadorPreco;
 	private GerenciadorMastercard gerenciadorMastercard;
 	private GerenciadorVisa gerenciadorVisa;
 	private GerenciadorElo gerenciadorElo;
@@ -27,7 +25,6 @@ public class Contexto {
 	public Contexto() throws BaseDadosException {
 		db = new FachadaBaseDadosDao();
 		gerenciadorRegrasNegocio = new FachadaRegrasNegocio(db);
-		gerenciadorPreco = new GerenciadorPreco(db);
 		gerenciadorMastercard = new GerenciadorMastercard();
 		gerenciadorVisa = new GerenciadorVisa();
 		gerenciadorElo = new GerenciadorElo();
@@ -46,12 +43,8 @@ public class Contexto {
 		return gerenciadorElo;
 	}
 
-	public FachadaRegrasNegocio getGerenciadorRegrasNegocio() {
+	public FachadaRegrasNegocio getFachadaRegrasNegocio() {
 		return gerenciadorRegrasNegocio;
-	}
-	
-	public GerenciadorPreco getGerenciadorPreco() {
-		return gerenciadorPreco;
 	}
 	
 	public String getLivroNome() {

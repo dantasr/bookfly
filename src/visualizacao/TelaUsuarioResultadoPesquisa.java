@@ -75,7 +75,7 @@ public class TelaUsuarioResultadoPesquisa extends JFrame {
 				int codigo = Integer.parseInt(table.getModel().getValueAt(row, 0).toString());
 				
 				try {
-					Livro livro = contexto.getGerenciadorRegrasNegocio().buscaLivro(codigo);
+					Livro livro = contexto.getFachadaRegrasNegocio().buscaLivro(codigo);
 					new TelaUsuarioLivro(contexto, livro).setVisible(true);
 					setVisible(false);
 				} catch (NegocioException e) {
@@ -120,7 +120,7 @@ public class TelaUsuarioResultadoPesquisa extends JFrame {
 	
 	private void realizaPesquisaProduto(String termo) {
 		try {
-			List<Livro> resultados = contexto.getGerenciadorRegrasNegocio().buscaLivrosPorNome(termo);
+			List<Livro> resultados = contexto.getFachadaRegrasNegocio().buscaLivrosPorNome(termo);
 			if(resultados.size() != 0) {
 				montaTabelaLivros(resultados);
 				this.setVisible(true);

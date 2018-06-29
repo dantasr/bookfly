@@ -68,7 +68,7 @@ public class TelaCadastro extends JFrame {
 		contentPane.add(campoCpf);
 		campoCpf.setColumns(10);
 		
-		JLabel lblNome = new JLabel("Nome:");
+		JLabel lblNome = new JLabel("Login:");
 		lblNome.setBounds(75, 39, 46, 14);
 		contentPane.add(lblNome);
 		
@@ -125,7 +125,7 @@ public class TelaCadastro extends JFrame {
 			Date dataNascimento = validador.validaData(campoDataNascimento.getText(), "Data de Nascimento");
 			String cpf = validador.validaNaoVazio(campoCpf.getText(), 15, "CPF");
 			String telefone = validador.validaNaoVazio(campoTelefone.getText(), 50, "Telefone");
-			contexto.getGerenciadorRegrasNegocio().cadastraUsuario(0, nome, dataNascimento, telefone, cpf, senha);
+			contexto.getFachadaRegrasNegocio().cadastraUsuario(0, nome, dataNascimento, telefone, cpf, senha);
 			JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
 			this.setVisible(false);
 		} catch (ValidacaoException e) {

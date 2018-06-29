@@ -101,18 +101,19 @@ public class TelaLogin extends JFrame {
 
 	private void realizarLogin() {
 		if (login.getText().isEmpty() || senha.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Preencha os campos!");
 			return;
 		}
 		
 		try {
-			Usuario usuario = contexto.getGerenciadorRegrasNegocio().buscaUsuarioPorNomeExato(login.getText());
+			Usuario usuario = contexto.getFachadaRegrasNegocio().buscaUsuarioPorNomeExato(login.getText());
 			if (usuario == null) {
 				JOptionPane.showMessageDialog(null, "Usuario não existe!");
 				return;
 			}
 			
 			if (!usuario.isAtivado()) {
-				JOptionPane.showMessageDialog(null, "Usuario não está ativado!");
+				JOptionPane.showMessageDialog(null, "Usuario estava desativado! 20% do seu saldo foi removido!");
 				return;
 			}
 			

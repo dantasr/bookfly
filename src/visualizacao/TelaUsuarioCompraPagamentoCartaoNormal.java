@@ -173,7 +173,7 @@ public class TelaUsuarioCompraPagamentoCartaoNormal extends JFrame {
 		Usuario atual = contexto.getUsuarioAtual();
 		PromocaoCalculada promocaoCalculada;
 		try {
-			promocaoCalculada = contexto.getGerenciadorRegrasNegocio().calcularValorEmPromocao(livro, atual);
+			promocaoCalculada = contexto.getFachadaRegrasNegocio().calcularValorEmPromocao(livro, atual);
 		} catch (NegocioException e) {
 			Log.gravaLog(e);
 			JOptionPane.showMessageDialog(null, e.getMessage());
@@ -186,7 +186,7 @@ public class TelaUsuarioCompraPagamentoCartaoNormal extends JFrame {
 		}
 		
 		try {
-			contexto.getGerenciadorRegrasNegocio().vendeLivroCartaoNormal(gerenciadorCartoes, cartao, atual, livro, promocaoCalculada.valor);
+			contexto.getFachadaRegrasNegocio().vendeLivroCartaoNormal(gerenciadorCartoes, cartao, atual, livro, promocaoCalculada.valor);
 			JOptionPane.showMessageDialog(null, "Livro comprado com sucesso!");
 			setVisible(false);
 		} catch (NegocioException e) {

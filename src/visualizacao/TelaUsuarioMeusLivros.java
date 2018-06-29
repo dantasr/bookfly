@@ -148,9 +148,9 @@ public class TelaUsuarioMeusLivros extends JFrame {
 		
 		Usuario atual = contexto.getUsuarioAtual();
 		try {
-			List<Venda> vendas = contexto.getGerenciadorRegrasNegocio().buscaVendasDoUsuario(atual.getCodigo());
+			List<Venda> vendas = contexto.getFachadaRegrasNegocio().buscaVendasDoUsuario(atual.getCodigo());
 			adicionaVendas(vendas);
-			List<Aluguel> alugueis = contexto.getGerenciadorRegrasNegocio().buscaAlugueisDoUsuario(atual.getCodigo());
+			List<Aluguel> alugueis = contexto.getFachadaRegrasNegocio().buscaAlugueisDoUsuario(atual.getCodigo());
 			adicionaAlugueis(alugueis);
 		} catch (NegocioException e) {
 			Log.gravaLog(e);

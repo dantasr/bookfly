@@ -59,6 +59,16 @@ public class Validador {
 		return i;
 	}
 	
+	public int validaFormataInteiroPositivo(String txt, String rotuloCampo) throws ValidacaoException {
+		int valor = validaFormataInteiro(txt, rotuloCampo);
+		
+		if (valor <= 0) {
+			throw new ValidacaoException("O campo " + rotuloCampo + " deve ser maior que 0!");
+		}
+		
+		return valor;
+	}
+	
 	public Date validaData(String txt, String rotuloCampo) throws ValidacaoException {
 		try {
 			DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");

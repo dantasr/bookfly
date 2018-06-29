@@ -66,8 +66,8 @@ public class TelaUsuarioMeuHistorico extends JFrame {
 		Usuario atual = contexto.getUsuarioAtual();
 		
 		try {
-			List<Venda> vendas = contexto.getGerenciadorRegrasNegocio().buscaVendasDoUsuario(atual.getCodigo());
-			List<Aluguel> alugueis = contexto.getGerenciadorRegrasNegocio().buscaAlugueisDoUsuario(atual.getCodigo());
+			List<Venda> vendas = contexto.getFachadaRegrasNegocio().buscaVendasDoUsuario(atual.getCodigo());
+			List<Aluguel> alugueis = contexto.getFachadaRegrasNegocio().buscaAlugueisDoUsuario(atual.getCodigo());
 			
 			clearTable((DefaultTableModel) tableListaHistorico.getModel());
 			adicionaVendas(vendas);
