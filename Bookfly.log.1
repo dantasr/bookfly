@@ -2,199 +2,137 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2018-05-25T14:55:12</date>
-  <millis>1527270912310</millis>
+  <date>2018-07-05T13:54:23.952076100Z</date>
+  <millis>1530798863952</millis>
+  <nanos>76100</nanos>
   <sequence>0</sequence>
   <logger>java.util.logging.Logger</logger>
   <level>SEVERE</level>
   <class>utilidades.Log</class>
   <method>gravaLog</method>
-  <thread>17</thread>
-  <message>javax.imageio.IIOException: Can't read input file!</message>
+  <thread>1</thread>
+  <message>java.sql.SQLException: Access denied for user 'root'@'localhost' (using password: YES)</message>
   <exception>
-    <message>javax.imageio.IIOException: Can't read input file!</message>
+    <message>java.sql.SQLException: Access denied for user 'root'@'localhost' (using password: YES)</message>
     <frame>
-      <class>javax.imageio.ImageIO</class>
-      <method>read</method>
+      <class>com.mysql.jdbc.SQLError</class>
+      <method>createSQLException</method>
+      <line>965</line>
     </frame>
     <frame>
-      <class>arquivos.GerenciadorArquivos</class>
-      <method>carregarImagem</method>
-      <line>46</line>
+      <class>com.mysql.jdbc.MysqlIO</class>
+      <method>checkErrorPacket</method>
+      <line>3976</line>
     </frame>
     <frame>
-      <class>arquivos.GerenciadorArquivos</class>
-      <method>carregarImagemDoLivro</method>
-      <line>67</line>
+      <class>com.mysql.jdbc.MysqlIO</class>
+      <method>checkErrorPacket</method>
+      <line>3912</line>
     </frame>
     <frame>
-      <class>visualizacao.TelaUsuario</class>
-      <method>atualizarCampos</method>
-      <line>151</line>
+      <class>com.mysql.jdbc.MysqlIO</class>
+      <method>checkErrorPacket</method>
+      <line>871</line>
     </frame>
     <frame>
-      <class>visualizacao.TelaUsuario</class>
+      <class>com.mysql.jdbc.MysqlIO</class>
+      <method>proceedHandshakeWithPluggableAuthentication</method>
+      <line>1714</line>
+    </frame>
+    <frame>
+      <class>com.mysql.jdbc.MysqlIO</class>
+      <method>doHandshake</method>
+      <line>1224</line>
+    </frame>
+    <frame>
+      <class>com.mysql.jdbc.ConnectionImpl</class>
+      <method>coreConnect</method>
+      <line>2190</line>
+    </frame>
+    <frame>
+      <class>com.mysql.jdbc.ConnectionImpl</class>
+      <method>connectOneTryOnly</method>
+      <line>2221</line>
+    </frame>
+    <frame>
+      <class>com.mysql.jdbc.ConnectionImpl</class>
+      <method>createNewIO</method>
+      <line>2016</line>
+    </frame>
+    <frame>
+      <class>com.mysql.jdbc.ConnectionImpl</class>
       <method>&lt;init&gt;</method>
-      <line>139</line>
+      <line>776</line>
     </frame>
     <frame>
-      <class>visualizacao.TelaLogin</class>
-      <method>realizarLogin</method>
-      <line>127</line>
+      <class>com.mysql.jdbc.JDBC4Connection</class>
+      <method>&lt;init&gt;</method>
+      <line>47</line>
     </frame>
     <frame>
-      <class>visualizacao.TelaLogin</class>
-      <method>access$0</method>
-      <line>102</line>
+      <class>jdk.internal.reflect.NativeConstructorAccessorImpl</class>
+      <method>newInstance0</method>
     </frame>
     <frame>
-      <class>visualizacao.TelaLogin$2</class>
-      <method>actionPerformed</method>
-      <line>79</line>
+      <class>jdk.internal.reflect.NativeConstructorAccessorImpl</class>
+      <method>newInstance</method>
+      <line>62</line>
     </frame>
     <frame>
-      <class>javax.swing.AbstractButton</class>
-      <method>fireActionPerformed</method>
+      <class>jdk.internal.reflect.DelegatingConstructorAccessorImpl</class>
+      <method>newInstance</method>
+      <line>45</line>
     </frame>
     <frame>
-      <class>javax.swing.AbstractButton$Handler</class>
-      <method>actionPerformed</method>
+      <class>java.lang.reflect.Constructor</class>
+      <method>newInstance</method>
+      <line>488</line>
     </frame>
     <frame>
-      <class>javax.swing.DefaultButtonModel</class>
-      <method>fireActionPerformed</method>
+      <class>com.mysql.jdbc.Util</class>
+      <method>handleNewInstance</method>
+      <line>425</line>
     </frame>
     <frame>
-      <class>javax.swing.DefaultButtonModel</class>
-      <method>setPressed</method>
+      <class>com.mysql.jdbc.ConnectionImpl</class>
+      <method>getInstance</method>
+      <line>386</line>
     </frame>
     <frame>
-      <class>javax.swing.plaf.basic.BasicButtonListener</class>
-      <method>mouseReleased</method>
+      <class>com.mysql.jdbc.NonRegisteringDriver</class>
+      <method>connect</method>
+      <line>330</line>
     </frame>
     <frame>
-      <class>java.awt.Component</class>
-      <method>processMouseEvent</method>
+      <class>java.sql.DriverManager</class>
+      <method>getConnection</method>
+      <line>677</line>
     </frame>
     <frame>
-      <class>javax.swing.JComponent</class>
-      <method>processMouseEvent</method>
+      <class>java.sql.DriverManager</class>
+      <method>getConnection</method>
+      <line>228</line>
     </frame>
     <frame>
-      <class>java.awt.Component</class>
-      <method>processEvent</method>
+      <class>basedados.ConectorJDBC</class>
+      <method>abreConexao</method>
+      <line>57</line>
     </frame>
     <frame>
-      <class>java.awt.Container</class>
-      <method>processEvent</method>
+      <class>instalacao.ScriptCriacaoDB</class>
+      <method>criaBancoDeDados</method>
+      <line>133</line>
     </frame>
     <frame>
-      <class>java.awt.Component</class>
-      <method>dispatchEventImpl</method>
+      <class>instalacao.ScriptCriacaoDB</class>
+      <method>criaTabelasBD</method>
+      <line>42</line>
     </frame>
     <frame>
-      <class>java.awt.Container</class>
-      <method>dispatchEventImpl</method>
-    </frame>
-    <frame>
-      <class>java.awt.Component</class>
-      <method>dispatchEvent</method>
-    </frame>
-    <frame>
-      <class>java.awt.LightweightDispatcher</class>
-      <method>retargetMouseEvent</method>
-    </frame>
-    <frame>
-      <class>java.awt.LightweightDispatcher</class>
-      <method>processMouseEvent</method>
-    </frame>
-    <frame>
-      <class>java.awt.LightweightDispatcher</class>
-      <method>dispatchEvent</method>
-    </frame>
-    <frame>
-      <class>java.awt.Container</class>
-      <method>dispatchEventImpl</method>
-    </frame>
-    <frame>
-      <class>java.awt.Window</class>
-      <method>dispatchEventImpl</method>
-    </frame>
-    <frame>
-      <class>java.awt.Component</class>
-      <method>dispatchEvent</method>
-    </frame>
-    <frame>
-      <class>java.awt.EventQueue</class>
-      <method>dispatchEventImpl</method>
-    </frame>
-    <frame>
-      <class>java.awt.EventQueue</class>
-      <method>access$500</method>
-    </frame>
-    <frame>
-      <class>java.awt.EventQueue$3</class>
-      <method>run</method>
-    </frame>
-    <frame>
-      <class>java.awt.EventQueue$3</class>
-      <method>run</method>
-    </frame>
-    <frame>
-      <class>java.security.AccessController</class>
-      <method>doPrivileged</method>
-    </frame>
-    <frame>
-      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
-      <method>doIntersectionPrivilege</method>
-    </frame>
-    <frame>
-      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
-      <method>doIntersectionPrivilege</method>
-    </frame>
-    <frame>
-      <class>java.awt.EventQueue$4</class>
-      <method>run</method>
-    </frame>
-    <frame>
-      <class>java.awt.EventQueue$4</class>
-      <method>run</method>
-    </frame>
-    <frame>
-      <class>java.security.AccessController</class>
-      <method>doPrivileged</method>
-    </frame>
-    <frame>
-      <class>java.security.ProtectionDomain$JavaSecurityAccessImpl</class>
-      <method>doIntersectionPrivilege</method>
-    </frame>
-    <frame>
-      <class>java.awt.EventQueue</class>
-      <method>dispatchEvent</method>
-    </frame>
-    <frame>
-      <class>java.awt.EventDispatchThread</class>
-      <method>pumpOneEventForFilters</method>
-    </frame>
-    <frame>
-      <class>java.awt.EventDispatchThread</class>
-      <method>pumpEventsForFilter</method>
-    </frame>
-    <frame>
-      <class>java.awt.EventDispatchThread</class>
-      <method>pumpEventsForHierarchy</method>
-    </frame>
-    <frame>
-      <class>java.awt.EventDispatchThread</class>
-      <method>pumpEvents</method>
-    </frame>
-    <frame>
-      <class>java.awt.EventDispatchThread</class>
-      <method>pumpEvents</method>
-    </frame>
-    <frame>
-      <class>java.awt.EventDispatchThread</class>
-      <method>run</method>
+      <class>instalacao.Instalador</class>
+      <method>main</method>
+      <line>10</line>
     </frame>
   </exception>
 </record>
+</log>

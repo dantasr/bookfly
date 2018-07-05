@@ -11,8 +11,11 @@ public class Instalador {
 			new ScriptCriacaoElo().criaTabelasDB();
 			new ScriptCriacaoMastercard().criaTabelasDB();
 			new ScriptCriacaoVisa().criaTabelasDB();
-		} catch (BaseDadosException e) {
+		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro ao criar o banco de dados.\n" + e.getMessage());
+			return;
 		}
+		
+		JOptionPane.showMessageDialog(null, "Banco de dados criado com sucesso!");
 	}
 }

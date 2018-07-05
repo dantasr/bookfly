@@ -61,7 +61,7 @@ public class ScriptCriacaoDB extends ConectorDaoJdbc {
 						+ "codigoLivro int unsigned not null,"
 						+ "codigoUsuario int unsigned not null,"
 						+ "dataDaVenda datetime not null,"
-						+ "constraint fk_Venda_Livro FOREIGN KEY (codigoLivro) REFERENCES Livro (codigo),"
+						+ "constraint fk_Venda_Livro FOREIGN KEY (codigoLivro) REFERENCES Livro (codigo) ON DELETE CASCADE,"
 						+ "constraint fk_Venda_Usuario FOREIGN KEY (codigoUsuario) REFERENCES Usuario (codigo))");
 		pstmt.execute();
 		fechaConexao();
@@ -119,7 +119,7 @@ public class ScriptCriacaoDB extends ConectorDaoJdbc {
 				+ "codigoUsuario int unsigned not null,"
 				+ "dataDoAluguel datetime not null," 
 				+ "expiracao datetime not null,"
-				+ "constraint fk_Aluguel_Livro FOREIGN KEY (codigoLivro) REFERENCES Livro (codigo),"
+				+ "constraint fk_Aluguel_Livro FOREIGN KEY (codigoLivro) REFERENCES Livro (codigo) ON DELETE CASCADE,"
 				+ "constraint fk_Aluguel_Usuario FOREIGN KEY (codigoUsuario) REFERENCES Usuario (codigo))");
 		pstmt.execute();
 		fechaConexao();

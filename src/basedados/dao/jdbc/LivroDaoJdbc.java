@@ -96,7 +96,16 @@ public class LivroDaoJdbc extends ConectorDaoJdbc implements LivroDao {
 
 	@Override
 	public void remove(int codigoLivro) throws BaseDadosException {
-		
+		abreConexao();
+		preparaComandoSQL("delete from Livro where codigo = ?");
+		try {
+			pstmt.setInt(1, codigoLivro);
+			pstmt.execute();
+		} catch (SQLException e) {
+			Log.gravaLog(e);
+			throw new BaseDadosException("Erro ao executar remoção");
+		}
+		fechaConexao();
 	}
 
 	@Override
