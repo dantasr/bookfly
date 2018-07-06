@@ -87,7 +87,7 @@ public class TelaUsuarioLivro extends JFrame {
 		contentPane.add(lblPromoo);
 		
 		PromocaoCalculada calculada = contexto.getFachadaRegrasNegocio().calcularValorEmPromocao(livro, contexto.getUsuarioAtual());
-		JLabel labelPreco = new JLabel(livro.getPreco() + " R$");
+		JLabel labelPreco = new JLabel(calculada.valor + " R$");
 		if (calculada.tipoDePromocao.equals("promocao")) {
 			labelPreco.setForeground(new Color(100, 100, 255));
 			lblPromoo.setVisible(true);
