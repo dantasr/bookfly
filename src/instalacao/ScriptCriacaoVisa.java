@@ -18,6 +18,11 @@ public class ScriptCriacaoVisa extends GerenciadorVisa {
 		abreConexao();
 		jaCriouBD = true;
 		DB_NAME = copiaDbName;
+		try {
+			preparaComandoSQL("drop database " + getDbName());
+			pstmt.execute();
+		} catch (Exception e) {} // caso ela já não exista... 
+		preparaComandoSQL("create database if not exists " + getDbName());
 		preparaComandoSQL("create database if not exists " + getDbName());
 		pstmt.execute();
 		fechaConexao();
