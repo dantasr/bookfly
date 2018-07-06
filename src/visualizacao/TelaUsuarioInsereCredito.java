@@ -198,6 +198,11 @@ public class TelaUsuarioInsereCredito extends JFrame {
 			return;
 		}
 		
+		if (cartao == null) {
+			JOptionPane.showMessageDialog(null, "Cartão com estes campos não existe!");
+			return;
+		}
+		
 		Usuario atual = contexto.getUsuarioAtual();
 		try {
 			contexto.getFachadaRegrasNegocio().insereCreditoCartaoClube(gerenciadorCartoes, cartao, atual, valor);
