@@ -156,7 +156,7 @@ public class ScriptCriacaoDB extends ConectorDaoJdbc {
 		usuarioDao.insere(
 				u1 = new Usuario(1, "admin", new Date(1999 - 1900, 12, 23), "11 12345678", "123456789-10", "admin", 50000, true, true, Timestamp.from(Instant.now())));
 		usuarioDao.insere(
-				u2 = new Usuario(1, "freire", new Date(1999 - 1900, 12, 23), "11 12345678", "123456789-10", "freire", 50000, false, true, Timestamp.from(Instant.now().minus(Duration.ofDays(60)))));
+				u2 = new Usuario(1, "freire", new Date(1999 - 1900, 12, 23), "11 12345678", "123456789-10", "freire", 50000, false, true, Timestamp.from(Instant.now())));
 
 		livroDao.insere(
 				l1 = new Livro(1,"Jogador N1","Ernest Cline","Random House",95, new Date(2011 - 1900, 8, 16)));
