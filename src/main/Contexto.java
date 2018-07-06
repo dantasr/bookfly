@@ -1,7 +1,5 @@
 package main;
 
-import java.util.Date;
-
 import basedados.BaseDadosException;
 import basedados.FachadaBaseDados;
 import basedados.FachadaBaseDadosDao;
@@ -11,7 +9,6 @@ import cartoes.GerenciadorVisa;
 import dto.Livro;
 import dto.Usuario;
 import negocio.FachadaRegrasNegocio;
-import negocio.NegocioException;
 
 public class Contexto {
 	private FachadaBaseDados db;

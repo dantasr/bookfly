@@ -2,6 +2,7 @@ package basedados.dao.jdbc;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,8 +21,8 @@ public class UsuarioDaoJdbc extends ConectorDaoJdbc implements UsuarioDao {
 	@Override
 	public void insere(Usuario usuario) throws BaseDadosException {
 		abreConexao();
-		preparaComandoSQL("insert into Usuario (nome, dataNascimento, telefone, cpf, senha, saldoCartaoClube, administrador, ativado) "
-				+ "values (?, ?, ?, ?, ?, ?, ?, ?)");
+		preparaComandoSQL("insert into Usuario (nome, dataNascimento, telefone, cpf, senha, saldoCartaoClube, administrador, ativado, ultimoLogin) "
+				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 		try {
 			pstmt.setString(1, usuario.getNome());
@@ -32,6 +33,7 @@ public class UsuarioDaoJdbc extends ConectorDaoJdbc implements UsuarioDao {
 			pstmt.setInt(6, usuario.getSaldoCartaoClube());
 			pstmt.setBoolean(7, usuario.isAdministrador());
 			pstmt.setBoolean(8, usuario.isAtivado());
+			pstmt.setTimestamp(9, usuario.getUltimoLogin());
 			pstmt.execute();
 		} catch (SQLException e) {
 			Log.gravaLog(e);
@@ -45,7 +47,7 @@ public class UsuarioDaoJdbc extends ConectorDaoJdbc implements UsuarioDao {
 	public Usuario busca(int codigo) throws BaseDadosException {
 		abreConexao();
 		preparaComandoSQL(
-				"select nome, dataNascimento, telefone, cpf, senha, saldoCartaoClube, administrador, ativado from Usuario where codigo=" + codigo);
+				"select nome, dataNascimento, telefone, cpf, senha, saldoCartaoClube, administrador, ativado, ultimoLogin from Usuario where codigo=" + codigo);
 		Usuario usuario = null;
 
 		try {
@@ -60,8 +62,9 @@ public class UsuarioDaoJdbc extends ConectorDaoJdbc implements UsuarioDao {
 				int saldoCartaoClube = rs.getInt(6);
 				boolean administrador = rs.getBoolean(7);
 				boolean ativado = rs.getBoolean(8);
+				Timestamp ultimoLogin = rs.getTimestamp(9);
 				
-				usuario = new Usuario(codigo, nome, dataNascimento, telefone, cpf, senha, saldoCartaoClube, administrador, ativado);
+				usuario = new Usuario(codigo, nome, dataNascimento, telefone, cpf, senha, saldoCartaoClube, administrador, ativado, ultimoLogin);
 			}
 		} catch (SQLException e) {
 			Log.gravaLog(e);
@@ -76,7 +79,7 @@ public class UsuarioDaoJdbc extends ConectorDaoJdbc implements UsuarioDao {
 	public void altera(Usuario usuario) throws BaseDadosException {
 		abreConexao();
 		preparaComandoSQL("update Usuario set nome = ?, dataNascimento = ?, telefone = ?, cpf = ?, senha = ?,"
-				+ " saldoCartaoClube = ?, administrador = ?, ativado = ? where codigo = ?");
+				+ " saldoCartaoClube = ?, administrador = ?, ativado = ?, ultimoLogin = ? where codigo = ?");
 		try {
 			pstmt.setString(1, usuario.getNome());
 			pstmt.setDate(2, usuario.getDataNascimento());
@@ -86,7 +89,8 @@ public class UsuarioDaoJdbc extends ConectorDaoJdbc implements UsuarioDao {
 			pstmt.setInt(6, usuario.getSaldoCartaoClube());
 			pstmt.setBoolean(7, usuario.isAdministrador());
 			pstmt.setBoolean(8, usuario.isAtivado());
-			pstmt.setInt(9, usuario.getCodigo());
+			pstmt.setTimestamp(9, usuario.getUltimoLogin());
+			pstmt.setInt(10, usuario.getCodigo());
 			
 			pstmt.execute();
 		} catch (SQLException e) {
@@ -99,7 +103,7 @@ public class UsuarioDaoJdbc extends ConectorDaoJdbc implements UsuarioDao {
 	public List<Usuario> listaTodos() throws BaseDadosException {
 		LinkedList<Usuario> usuarios = new LinkedList<Usuario>();
 		abreConexao();
-		preparaComandoSQL("select codigo, nome, dataNascimento, telefone, cpf, senha, saldoCartaoClube, administrador, ativado from Usuario");
+		preparaComandoSQL("select codigo, nome, dataNascimento, telefone, cpf, senha, saldoCartaoClube, administrador, ativado, ultimoLogin from Usuario");
 
 		try {
 			rs = pstmt.executeQuery();
@@ -114,8 +118,9 @@ public class UsuarioDaoJdbc extends ConectorDaoJdbc implements UsuarioDao {
 				int saldoCartaoClube = rs.getInt(7);
 				boolean administrador = rs.getBoolean(8);
 				boolean ativado = rs.getBoolean(9);
+				Timestamp ultimoLogin = rs.getTimestamp(10);
 
-				Usuario usuario = new Usuario(codigo, nome, dataNascimento, telefone, cpf, senha, saldoCartaoClube, administrador, ativado);
+				Usuario usuario = new Usuario(codigo, nome, dataNascimento, telefone, cpf, senha, saldoCartaoClube, administrador, ativado, ultimoLogin);
 				usuarios.add(usuario);
 			}
 		} catch (SQLException e) {
@@ -147,7 +152,7 @@ public class UsuarioDaoJdbc extends ConectorDaoJdbc implements UsuarioDao {
 		List<Usuario> usuarios = new LinkedList<Usuario>();
 		abreConexao();
 		preparaComandoSQL(
-				"select codigo, nome, dataNascimento, telefone, cpf, senha, saldoCartaoClube, administrador, ativado from Usuario where LOWER(nome) like ?");
+				"select codigo, nome, dataNascimento, telefone, cpf, senha, saldoCartaoClube, administrador, ativado, ultimoLogin from Usuario where LOWER(nome) like ?");
 
 		try {
 			pstmt.setString(1, ("%" + termo + "%").toLowerCase());
@@ -163,9 +168,10 @@ public class UsuarioDaoJdbc extends ConectorDaoJdbc implements UsuarioDao {
 				int saldoCartaoClube = rs.getInt(7);
 				boolean administrador = rs.getBoolean(8);
 				boolean ativado = rs.getBoolean(9);
+				Timestamp ultimoLogin = rs.getTimestamp(10);
 
 				Usuario usuario = new Usuario(codigo, nome, dataNascimento, telefone, cpf, senha, saldoCartaoClube,
-						administrador, ativado);
+						administrador, ativado, ultimoLogin);
 				usuarios.add(usuario);
 			}
 		} catch (SQLException e) {

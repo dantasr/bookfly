@@ -1,19 +1,13 @@
 package visualizacao;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import dto.Livro;
 import dto.Usuario;
-import dto.Venda;
 import main.Contexto;
 import negocio.NegocioException;
-import utilidades.Log;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 

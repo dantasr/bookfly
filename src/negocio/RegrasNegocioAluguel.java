@@ -3,7 +3,6 @@ package negocio;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.Period;
-import java.time.temporal.TemporalAmount;
 import java.util.List;
 
 import basedados.BaseDadosException;

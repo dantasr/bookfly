@@ -1,8 +1,5 @@
 package visualizacao;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -19,9 +16,11 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JRadioButton;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.Timestamp;
+import java.time.Duration;
+import java.time.Instant;
 import javax.swing.JPasswordField;
 
 public class TelaLogin extends JFrame {
@@ -112,7 +111,11 @@ public class TelaLogin extends JFrame {
 				return;
 			}
 			
-			if (!usuario.isAtivado()) {
+			Timestamp umMesAtras = Timestamp.from(Instant.now().minus(Duration.ofDays(30)));
+			Timestamp ultimoLogin = usuario.getUltimoLogin();
+
+			// Se for < 0, o ultimo login foi antes de um mes atras.
+			if (!usuario.isAtivado() || ultimoLogin.compareTo(umMesAtras) < 0) {
 				JOptionPane.showMessageDialog(null, "Usuario estava desativado! 20% do seu saldo foi removido!");
 				
 				contexto.getFachadaRegrasNegocio().reativaUsuarioNoLogin(usuario);
@@ -125,6 +128,7 @@ public class TelaLogin extends JFrame {
 
 			// Login feito com sucesso, trocar para tela de administrador ou cliente, dependendo do
 			// tipo do usuário.
+			contexto.getFachadaRegrasNegocio().atualizaTempoDeUltimoLogin(usuario);
 			contexto.setUsuarioAtual(usuario);
 			this.setVisible(false);
 

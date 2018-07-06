@@ -1,8 +1,6 @@
 package visualizacao;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -14,11 +12,8 @@ import javax.swing.JLayeredPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextPane;
 import javax.swing.JLabel;
-import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
-import java.awt.Canvas;
 
 public class TelaUsuarioCompra extends JFrame {
 

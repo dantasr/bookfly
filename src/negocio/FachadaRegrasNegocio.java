@@ -1,24 +1,16 @@
 package negocio;
 
 import java.sql.Date;
-import java.util.LinkedList;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
-import utilidades.Log;
-import basedados.BaseDadosException;
 import basedados.FachadaBaseDados;
-import basedados.FachadaBaseDadosDao;
 import cartoes.Cartao;
-import cartoes.CartaoSemSaldoException;
 import cartoes.GerenciadorCartoes;
 import dto.Aluguel;
 import dto.Livro;
 import dto.Promocao;
 import dto.Usuario;
 import dto.Venda;
-import main.Contexto;
 import negocio.RegrasNegocioPromocao.PromocaoCalculada;
 
 public class FachadaRegrasNegocio {
@@ -182,5 +174,9 @@ public class FachadaRegrasNegocio {
 	
 	public void reativaUsuarioNoLogin(Usuario usuario) throws NegocioException {
 		regrasNegocioUsuario.reativaUsuarioNoLogin(usuario);
+	}
+	
+	public void atualizaTempoDeUltimoLogin(Usuario usuario) throws NegocioException {
+		regrasNegocioUsuario.atualizaTempoDeUltimoLogin(usuario);
 	}
 }

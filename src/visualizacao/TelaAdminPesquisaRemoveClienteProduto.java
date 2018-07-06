@@ -1,8 +1,5 @@
 package visualizacao;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -16,8 +13,6 @@ import dto.Usuario;
 import main.Contexto;
 import negocio.NegocioException;
 import utilidades.Log;
-
-import javax.swing.JComboBox;
 
 import javax.swing.JTextField;
 import javax.swing.JTable;

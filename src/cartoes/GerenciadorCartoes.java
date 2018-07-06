@@ -3,7 +3,6 @@ package cartoes;
 import java.sql.SQLException;
 
 import basedados.BaseDadosException;
-import basedados.ConectorJDBC;
 import basedados.dao.jdbc.ConectorDaoJdbc;
 import utilidades.Log;
 

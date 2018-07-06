@@ -1,6 +1,8 @@
 package negocio;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 
 import utilidades.Log;
@@ -21,7 +23,7 @@ public class RegrasNegocioUsuario {
 			throw new NegocioException("Usuario com este nome ja existe!");
 		}
 		
-		Usuario usuario = new Usuario(codigo, nome, dataNascimento, telefone, cpf, senha, 0, false, true);
+		Usuario usuario = new Usuario(codigo, nome, dataNascimento, telefone, cpf, senha, 0, false, true, Timestamp.from(Instant.now()));
 		try {
 			fachadaBaseDados.insereUsuario(usuario);
 		} catch (BaseDadosException e) {
@@ -103,6 +105,17 @@ public class RegrasNegocioUsuario {
 			else {
 				throw new NegocioException("Usuario ja esta Ativado.");
 			}
+		} catch (BaseDadosException e) {
+			Log.gravaLog(e);
+			throw new NegocioException("Problemas no acesso ao banco de dados.");
+		}
+	}
+	
+	public void atualizaTempoDeUltimoLogin(Usuario usuario) throws NegocioException {
+		try {
+			usuario.setUltimoLogin(Timestamp.from(Instant.now()));
+			
+			fachadaBaseDados.alteraUsuario(usuario);
 		} catch (BaseDadosException e) {
 			Log.gravaLog(e);
 			throw new NegocioException("Problemas no acesso ao banco de dados.");

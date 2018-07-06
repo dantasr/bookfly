@@ -1,16 +1,12 @@
 package visualizacao;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import arquivos.GerenciadorArquivos;
 import dto.Livro;
-import dto.Promocao;
 import main.Contexto;
 import negocio.NegocioException;
 import negocio.RegrasNegocioPromocao.PromocaoCalculada;
@@ -24,7 +20,6 @@ import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
-import java.util.Date;
 import java.awt.event.ActionEvent;
 
 public class TelaUsuarioLivro extends JFrame {

@@ -1,8 +1,5 @@
 package visualizacao;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -24,7 +21,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.net.MalformedURLException;
 import java.util.List;
-import javax.swing.ImageIcon;
 
 public class TelaUsuario extends JFrame {
 

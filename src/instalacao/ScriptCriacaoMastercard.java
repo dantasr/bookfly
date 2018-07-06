@@ -3,8 +3,6 @@ package instalacao;
 import java.sql.SQLException;
 
 import basedados.BaseDadosException;
-import basedados.dao.jdbc.ConectorDaoJdbc;
-import cartoes.GerenciadorElo;
 import cartoes.GerenciadorMastercard;
 
 public class ScriptCriacaoMastercard extends GerenciadorMastercard {

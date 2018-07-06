@@ -1,8 +1,5 @@
 package visualizacao;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -25,10 +22,8 @@ import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
-import javax.swing.JRadioButtonMenuItem;
 import javax.swing.ButtonGroup;
 import java.awt.event.ActionListener;
-import java.util.function.Function;
 import java.awt.event.ActionEvent;
 
 public class TelaUsuarioInsereCredito extends JFrame {

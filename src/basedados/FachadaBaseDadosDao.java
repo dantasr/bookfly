@@ -1,24 +1,12 @@
 package basedados;
 
-import java.sql.Date;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-
-import javax.swing.JOptionPane;
 
 import basedados.dao.AluguelDao;
 import basedados.dao.LivroDao;
 import basedados.dao.PromocaoDao;
 import basedados.dao.UsuarioDao;
 import basedados.dao.VendaDao;
-import basedados.dao.jdbc.AluguelDaoJdbc;
-import basedados.dao.jdbc.LivroDaoJdbc;
-import basedados.dao.jdbc.PromocaoDaoJdbc;
-import basedados.dao.jdbc.UsuarioDaoJdbc;
-import basedados.dao.jdbc.VendaDaoJdbc;
 import dto.Aluguel;
 import dto.Livro;
 import dto.Promocao;
@@ -26,8 +14,6 @@ import dto.Usuario;
 import dto.Venda;
 import factory.DaoAbstractFactory;
 import factory.DaoJdbcFactory;
-import utilidades.Log;
-import main.Contexto;
 
 public class FachadaBaseDadosDao implements FachadaBaseDados {
 

@@ -4,7 +4,6 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import basedados.BaseDadosException;
-import negocio.NegocioException;
 import utilidades.Log;
 import visualizacao.TelaLogin;
 

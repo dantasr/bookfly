@@ -1,6 +1,7 @@
 package dto;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Usuario {
 	private int codigo;
@@ -12,12 +13,13 @@ public class Usuario {
 	private int saldoCartaoClube;
 	private boolean administrador;
 	private boolean ativado;
+	private Timestamp ultimoLogin;
 
 	public Usuario() {
 	}
 
 	public Usuario(int codigo, String nome, Date dataNascimento, String telefone, String cpf, String senha,
-			int saldoCartaoClube, boolean administrador, boolean ativado) {
+			int saldoCartaoClube, boolean administrador, boolean ativado, Timestamp ultimoLogin) {
 		super();
 		this.codigo = codigo;
 		this.nome = nome;
@@ -28,6 +30,7 @@ public class Usuario {
 		this.saldoCartaoClube = saldoCartaoClube;
 		this.administrador = administrador;
 		this.ativado = ativado;
+		this.ultimoLogin = ultimoLogin;
 	}
 
 	public int getCodigo() {
@@ -100,5 +103,13 @@ public class Usuario {
 
 	public void setAtivado(boolean ativado) {
 		this.ativado = ativado;
+	}
+	
+	public Timestamp getUltimoLogin() {
+		return this.ultimoLogin;
+	}
+	
+	public void setUltimoLogin(Timestamp ultimoLogin) {
+		this.ultimoLogin = ultimoLogin;
 	}
 }

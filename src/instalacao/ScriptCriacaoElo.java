@@ -3,7 +3,6 @@ package instalacao;
 import java.sql.SQLException;
 
 import basedados.BaseDadosException;
-import basedados.dao.jdbc.ConectorDaoJdbc;
 import cartoes.GerenciadorElo;
 
 public class ScriptCriacaoElo extends GerenciadorElo {
