@@ -90,6 +90,4 @@ public abstract class GerenciadorCartoes extends ConectorDaoJdbc {
 		pstmt.execute();
 		fechaConexao();
 	}
-	
-	protected abstract void populaTabelas() throws BaseDadosException, SQLException;
 }

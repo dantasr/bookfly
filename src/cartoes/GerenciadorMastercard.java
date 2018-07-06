@@ -13,13 +13,4 @@ public class GerenciadorMastercard extends GerenciadorCartoes {
 	public String getNomeOperadoraCartao() {
 		return "MasterCard";
 	}
-
-	@Override
-	protected void populaTabelas() throws BaseDadosException, SQLException {
-		// Já populada.
-		if (buscaCartao(123456789) != null) return;
-		
-		insereCartao(new Cartao(123456789, 21, 2, 123, 50000));
-		insereCartao(new Cartao(999999999, 22, 5, 999, 0));
-	}
 }
