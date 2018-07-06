@@ -179,4 +179,8 @@ public class FachadaRegrasNegocio {
 	public void realizaAluguel(Livro livro, Usuario usuario) throws NegocioException {
 		regrasNegocioAluguel.realizaAluguel(livro, usuario);
 	}
+	
+	public void reativaUsuarioNoLogin(Usuario usuario) throws NegocioException {
+		regrasNegocioUsuario.reativaUsuarioNoLogin(usuario);
+	}
 }

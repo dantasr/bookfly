@@ -114,7 +114,8 @@ public class TelaLogin extends JFrame {
 			
 			if (!usuario.isAtivado()) {
 				JOptionPane.showMessageDialog(null, "Usuario estava desativado! 20% do seu saldo foi removido!");
-				return;
+				
+				contexto.getFachadaRegrasNegocio().reativaUsuarioNoLogin(usuario);
 			}
 			
 			if (!senha.getText().equals(usuario.getSenha())) {

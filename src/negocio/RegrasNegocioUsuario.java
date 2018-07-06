@@ -108,4 +108,16 @@ public class RegrasNegocioUsuario {
 			throw new NegocioException("Problemas no acesso ao banco de dados.");
 		}
 	}
+	
+	public void reativaUsuarioNoLogin(Usuario usuario) throws NegocioException {
+		try {
+			usuario.setSaldoCartaoClube((int) (0.8 * usuario.getSaldoCartaoClube()));
+			usuario.setAtivado(true);
+			
+			fachadaBaseDados.alteraUsuario(usuario);
+		} catch (BaseDadosException e) {
+			Log.gravaLog(e);
+			throw new NegocioException("Problemas no acesso ao banco de dados.");
+		}
+	}
 }
