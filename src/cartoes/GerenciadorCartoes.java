@@ -48,6 +48,9 @@ public abstract class GerenciadorCartoes extends ConectorDaoJdbc {
 	public Cartao buscaCartaoComCampos(int codigo, int ano, int mes, int cvv) throws BaseDadosException {
 		Cartao cartao = buscaCartao(codigo);
 		
+		if (cartao == null)
+			return null;
+		
 		if (cartao.getCodigo() != codigo || cartao.getAno() != ano
 				|| cartao.getMes() != mes || cartao.getCvv() != cvv)
 			return null;
