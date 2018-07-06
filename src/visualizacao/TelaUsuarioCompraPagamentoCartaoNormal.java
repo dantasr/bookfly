@@ -23,6 +23,7 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -34,6 +35,7 @@ public class TelaUsuarioCompraPagamentoCartaoNormal extends JFrame {
 	private JTextField campoMes;
 	private JTextField campoAno;
 	private JTextField campoCvv;
+	private final ButtonGroup buttonGroupFormaPagamento = new ButtonGroup();
 	private JRadioButton radioVisa;
 	private JRadioButton radioMaster;
 	private JRadioButton radioElo;
@@ -91,15 +93,18 @@ public class TelaUsuarioCompraPagamentoCartaoNormal extends JFrame {
 		contentPane.add(label);
 		
 		radioVisa = new JRadioButton("VISA");
+		buttonGroupFormaPagamento.add(radioVisa);
 		radioVisa.setSelected(true);
 		radioVisa.setBounds(223, 77, 109, 23);
 		contentPane.add(radioVisa);
 		
 		radioMaster = new JRadioButton("MASTER CARD");
+		buttonGroupFormaPagamento.add(radioMaster);
 		radioMaster.setBounds(223, 108, 109, 23);
 		contentPane.add(radioMaster);
 		
 		radioElo = new JRadioButton("ELO");
+		buttonGroupFormaPagamento.add(radioElo);
 		radioElo.setBounds(223, 139, 109, 23);
 		contentPane.add(radioElo);
 		
